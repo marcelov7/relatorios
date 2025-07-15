@@ -250,6 +250,9 @@ class RelatorioController extends Controller
         $podeEditar = $user->can('update', $relatorio);
         $podeExcluir = $user->can('delete', $relatorio);
         
+        // Verificar se o relatório está concluído
+        $relatorioConcluido = $relatorio->progresso >= 100;
+        
         // Calcular tempo restante para exclusão (se aplicável)
         $tempoRestanteExclusao = null;
         if ($ehAutor && !$user->isAdmin()) {
@@ -265,6 +268,7 @@ class RelatorioController extends Controller
             'podeEditar' => $podeEditar,
             'podeExcluir' => $podeExcluir,
             'tempoRestanteExclusao' => $tempoRestanteExclusao,
+            'relatorioConcluido' => $relatorioConcluido,
         ]);
     }
 

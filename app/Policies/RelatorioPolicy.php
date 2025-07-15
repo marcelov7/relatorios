@@ -40,8 +40,26 @@ class RelatorioPolicy
      */
     public function update(User $user, Relatorio $relatorio): bool
     {
-        // Apenas o autor ou administrador pode editar
-        return $user->isAdmin() || $relatorio->autor_id === $user->id;
+        // Se o relatório está 100% concluído, ninguém pode editar (exceto admin)
+        if ($relatorio->progresso >= 100) {
+            return $user->isAdmin();
+        }
+
+        // Administrador sempre pode editar
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // Autor pode editar apenas nas primeiras 24 horas
+        if ($relatorio->autor_id === $user->id) {
+            $created_at = $relatorio->created_at;
+            $now = now();
+            $hoursElapsed = $created_at->diffInHours($now);
+            
+            return $hoursElapsed <= 24;
+        }
+
+        return false;
     }
 
     /**
@@ -89,6 +107,11 @@ class RelatorioPolicy
      */
     public function canEditWithinTimeLimit(User $user, Relatorio $relatorio): bool
     {
+        // Se o relatório está 100% concluído, ninguém pode editar (exceto admin)
+        if ($relatorio->progresso >= 100) {
+            return $user->isAdmin();
+        }
+
         if ($user->isAdmin()) {
             return true;
         }
@@ -97,7 +120,12 @@ class RelatorioPolicy
             return false;
         }
 
-        return true; // Autor sempre pode editar (não há limite de tempo para edição)
+        // Autor pode editar apenas nas primeiras 24 horas
+        $created_at = $relatorio->created_at;
+        $now = now();
+        $hoursElapsed = $created_at->diffInHours($now);
+        
+        return $hoursElapsed <= 24;
     }
 
     /**
@@ -130,5 +158,25 @@ class RelatorioPolicy
         $hoursElapsed = $created_at->diffInHours($now);
         
         return max(0, 24 - $hoursElapsed);
+    }
+
+    /**
+     * Obter tempo restante para edição (em horas)
+     */
+    public function getTimeRemainingForEdit(Relatorio $relatorio): int
+    {
+        $created_at = $relatorio->created_at;
+        $now = now();
+        $hoursElapsed = $created_at->diffInHours($now);
+        
+        return max(0, 24 - $hoursElapsed);
+    }
+
+    /**
+     * Verificar se o relatório está concluído (progresso 100%)
+     */
+    public function isRelatorioConcluido(Relatorio $relatorio): bool
+    {
+        return $relatorio->progresso >= 100;
     }
 }

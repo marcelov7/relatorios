@@ -33,6 +33,17 @@
                                 Editar
                             </Link>
                             
+                            <!-- Mensagem quando relatório concluído e não pode editar -->
+                            <div v-else-if="relatorioConcluido && !podeEditar" 
+                                 class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-xs text-gray-600 dark:text-gray-400"
+                                 title="Relatório concluído. Apenas administradores podem editar relatórios com 100% de progresso."
+                            >
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Concluído
+                            </div>
+                            
                             <!-- Botão Excluir -->
                             <button v-if="podeExcluir"
                                 @click="confirmarExclusao"
@@ -76,6 +87,17 @@
                                 </svg>
                                 Editar
                             </Link>
+                            
+                            <!-- Mensagem quando relatório concluído e não pode editar -->
+                            <div v-else-if="relatorioConcluido && !podeEditar" 
+                                 class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-xs text-gray-600 dark:text-gray-400"
+                                 title="Relatório concluído. Apenas administradores podem editar relatórios com 100% de progresso."
+                            >
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Concluído
+                            </div>
                             
                             <!-- Botão Excluir Mobile -->
                             <button v-if="podeExcluir"
@@ -727,6 +749,7 @@ const props = defineProps({
     podeEditar: Boolean,
     podeExcluir: Boolean,
     tempoRestanteExclusao: Number,
+    relatorioConcluido: Boolean,
 })
 
 const equipamentosTeste = props.equipamentosTeste
