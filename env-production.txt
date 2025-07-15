@@ -1,0 +1,84 @@
+APP_NAME="Sistema de Relatórios"
+APP_ENV=production
+APP_KEY=
+APP_DEBUG=false
+APP_TIMEZONE=America/Sao_Paulo
+APP_URL=https://seu-dominio.com
+APP_VERSION=V1.00
+
+APP_LOCALE=pt_BR
+APP_FALLBACK_LOCALE=pt_BR
+APP_FAKER_LOCALE=pt_BR
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=error
+
+# Configurações do Banco de Dados MySQL
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=relatodb
+DB_USERNAME=appuser
+DB_PASSWORD="M@rcelo1809@3033"
+
+# Configurações de Cache
+CACHE_STORE=database
+CACHE_PREFIX=relatorios_cache
+
+# Configurações de Sessão
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+# Configurações de Queue
+QUEUE_CONNECTION=database
+
+# Configurações de Email
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="noreply@seu-dominio.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+# Configurações do Sistema de Arquivos
+FILESYSTEM_DISK=public
+
+# Configurações de Broadcasting
+BROADCAST_CONNECTION=log
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_HOST=
+PUSHER_PORT=443
+PUSHER_SCHEME=https
+PUSHER_APP_CLUSTER=mt1
+
+VITE_APP_NAME="${APP_NAME}"
+VITE_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+VITE_PUSHER_HOST="${PUSHER_HOST}"
+VITE_PUSHER_PORT="${PUSHER_PORT}"
+VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
+VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+# Configurações de Segurança
+SANCTUM_STATEFUL_DOMAINS=seu-dominio.com
+SESSION_DOMAIN=.seu-dominio.com
+
+# Configurações específicas do Sistema de Relatórios
+RELATORIO_MAX_IMAGES=10
+RELATORIO_MAX_IMAGE_SIZE=10240
+RELATORIO_ITEMS_PER_PAGE=12
+RELATORIO_DELETE_TIMEOUT_HOURS=24
+
+# Configurações de Upload
+UPLOAD_MAX_SIZE=20480
+ALLOWED_IMAGE_TYPES=jpeg,png,jpg,gif,webp 
