@@ -103,7 +103,7 @@
                                 <!-- Data de Criação -->
                                 <div>
                                     <label for="date_created" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Data de Criação *
+                                        Data e hora do relato *
                                     </label>
                                     <input
                                         id="date_created"

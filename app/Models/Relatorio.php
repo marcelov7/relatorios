@@ -18,6 +18,7 @@ class Relatorio extends Model
         'nome_responsavel',
         'cargo_responsavel',
         'date_created',
+        'time_created',
         'local_id',
         'status',
         'progresso',
@@ -27,6 +28,7 @@ class Relatorio extends Model
 
     protected $casts = [
         'date_created' => 'date',
+        'time_created' => 'datetime:H:i',
         'progresso' => 'integer',
         'images' => 'array'
     ];

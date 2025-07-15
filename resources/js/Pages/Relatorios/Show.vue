@@ -16,7 +16,7 @@
                                 {{ relatorio.titulo }}
                             </h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
-                                Criado em {{ formatarData(relatorio.date_created) }}
+                                Criado em {{ formatarData(relatorio.date_created) }}{{ relatorio.time_created ? ' às ' + relatorio.time_created : '' }}
                             </p>
                         </div>
                         
@@ -162,10 +162,10 @@
                             <!-- Data de Criação -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Data de Criação
+                                    Data e hora do relato
                                 </label>
                                 <p class="text-sm text-gray-900 dark:text-gray-200 font-medium">
-                                    {{ formatarData(relatorio.date_created) }}
+                                    {{ formatarData(relatorio.date_created) }}{{ relatorio.time_created ? ' às ' + relatorio.time_created : '' }}
                                 </p>
                             </div>
                         </div>

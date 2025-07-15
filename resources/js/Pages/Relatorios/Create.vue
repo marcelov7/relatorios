@@ -104,21 +104,53 @@
                                     </p>
                                 </div>
 
-                                <!-- Data de Criação -->
-                                <div>
-                                    <label for="date_created" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Data de Criação *
+                                <!-- Data e Hora de Criação -->
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Data e Hora de Criação *
                                     </label>
-                                    <input
-                                        id="date_created"
-                                        v-model="form.date_created"
-                                        type="date"
-                                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
-                                        :class="{ 'border-red-500': form.errors.date_created }"
-                                        required
-                                    />
-                                    <div v-if="form.errors.date_created" class="text-red-600 text-sm mt-1">
-                                        {{ form.errors.date_created }}
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Data -->
+                                        <div>
+                                            <label for="date_created" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Data
+                                            </label>
+                                            <input
+                                                id="date_created"
+                                                v-model="form.date_created"
+                                                type="date"
+                                                class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm"
+                                                :class="{ 'border-red-500': form.errors.date_created }"
+                                                required
+                                            />
+                                            <div v-if="form.errors.date_created" class="text-red-600 text-sm mt-1">
+                                                {{ form.errors.date_created }}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Hora -->
+                                        <div>
+                                            <label for="time_created" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Hora
+                                            </label>
+                                            <div class="relative">
+                                                <input
+                                                    id="time_created"
+                                                    v-model="form.time_created"
+                                                    type="time"
+                                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm pr-10"
+                                                    :class="{ 'border-red-500': form.errors.time_created }"
+                                                />
+                                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div v-if="form.errors.time_created" class="text-red-600 text-sm mt-1">
+                                                {{ form.errors.time_created }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -411,6 +443,7 @@ const form = useForm({
     nome_responsavel: props.userName || '',
     cargo_responsavel: props.userCargo || '',
     date_created: getTodayLocalYMD(),
+    time_created: (new Date()).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', hour12: false }),
     setor_id: '',
     equipment_ids: [],
     progresso: 0,

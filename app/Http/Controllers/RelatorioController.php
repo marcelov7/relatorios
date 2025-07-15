@@ -147,6 +147,7 @@ class RelatorioController extends Controller
             'nome_responsavel' => 'required|string|max:255',
             'cargo_responsavel' => 'nullable|string|max:255',
             'date_created' => 'required|date',
+            'time_created' => 'nullable|date_format:H:i',
             // 'setor_id' => 'required|exists:setores,id', // removido
             // 'local_id' => 'nullable|exists:locais,id', // removido
             'equipment_ids' => 'nullable|array',
@@ -339,6 +340,7 @@ class RelatorioController extends Controller
                 'nome_responsavel' => 'required|string|max:255',
                 'cargo_responsavel' => 'nullable|string|max:255',
                 'date_created' => 'required|date',
+                'time_created' => 'nullable|date_format:H:i',
                 'local_id' => 'nullable|exists:locais,id',
                 'equipment_ids' => 'nullable|array',
                 'equipment_ids.*' => 'exists:equipamentos,id',
