@@ -150,8 +150,8 @@ class RelatorioController extends Controller
             'time_created' => 'nullable|date_format:H:i',
             // 'setor_id' => 'required|exists:setores,id', // removido
             // 'local_id' => 'nullable|exists:locais,id', // removido
-            'equipment_ids' => 'nullable|array',
-            'equipment_ids.*' => 'integer', // ou 'exists:equipamento_tests,id' se for tabela nova
+            'equipment_ids' => 'required|array|min:1',
+            'equipment_ids.*' => 'integer|exists:equipamento_tests,id',
             'detalhes' => 'required|string',
             'status' => 'required|in:Aberta,Em Andamento,Concluída,Cancelada',
             'progresso' => 'nullable|integer|min:0|max:100',
@@ -342,8 +342,8 @@ class RelatorioController extends Controller
                 'date_created' => 'required|date',
                 'time_created' => 'nullable|date_format:H:i',
                 'local_id' => 'nullable|exists:locais,id',
-                'equipment_ids' => 'nullable|array',
-                'equipment_ids.*' => 'exists:equipamentos,id',
+                'equipment_ids' => 'required|array|min:1',
+                'equipment_ids.*' => 'exists:equipamento_tests,id',
                 'detalhes' => 'required|string',
                 'status' => 'required|in:Aberta,Em Andamento,Concluída,Cancelada',
                 'progresso' => 'nullable|integer|min:0|max:100',
@@ -423,8 +423,8 @@ class RelatorioController extends Controller
 
         $relatorio->update($validated);
 
-        // Sincronizar equipamentos (relacionamento many-to-many)
-        $relatorio->equipamentos()->sync($equipmentIds);
+        // Sincronizar equipamentos de teste (relacionamento many-to-many)
+        $relatorio->equipamentosTeste()->sync($equipmentIds);
 
         return redirect()->route('relatorios.index')
             ->with('success', 'Relatório atualizado com sucesso!');

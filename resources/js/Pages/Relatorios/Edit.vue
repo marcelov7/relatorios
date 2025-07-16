@@ -153,7 +153,7 @@
                                 <!-- Equipamentos de Teste -->
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Equipamentos
+                                        Equipamentos *
                                     </label>
                                     <div class="mb-2 flex gap-2 items-center relative">
                                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -669,6 +669,12 @@ function submit() {
         error('O campo Detalhes é obrigatório')
         return
     }
+    
+    // Validação dos equipamentos
+    if (!form.equipment_test_ids || form.equipment_test_ids.length === 0) {
+        error('É obrigatório selecionar pelo menos um equipamento.')
+        return
+    }
 
     // Garantir que a data está no formato correto
     const formattedDate = formatDateForInput(form.date_created)
@@ -709,9 +715,9 @@ function submit() {
     formData.append('progresso', form.progresso)
     formData.append('detalhes', form.detalhes)
     
-    // Adicionar equipment_test_ids
+    // Adicionar equipment_ids
     form.equipment_test_ids.forEach((id, index) => {
-        formData.append(`equipment_test_ids[${index}]`, id)
+        formData.append(`equipment_ids[${index}]`, id)
     })
     
     // Adicionar keep_images

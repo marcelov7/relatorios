@@ -157,7 +157,7 @@
                                 <!-- Equipamentos (Nova Lista Global) -->
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Equipamentos
+                                        Equipamentos *
                                     </label>
                                     <div class="mb-2 flex gap-2 items-center relative">
                                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -594,6 +594,12 @@ const removerEquipamentoSelecionado = (id) => {
 }
 
 const submit = () => {
+    // Validação dos equipamentos
+    if (!form.equipment_ids || form.equipment_ids.length === 0) {
+        error('É obrigatório selecionar pelo menos um equipamento.')
+        return
+    }
+    
     // Adicionar arquivos ao form
     form.images = selectedFiles.value
     
