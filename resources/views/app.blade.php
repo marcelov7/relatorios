@@ -14,12 +14,7 @@
         <!-- FontAwesome 6 CDN -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <!-- Manifest PWA -->
-        <link rel="manifest" href="/manifest.json">
-        <meta name="theme-color" content="#4F46E5">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <link rel="apple-touch-icon" href="/android-chrome-192x192.png">
+
 
         <!-- Scripts -->
         @routes

@@ -33,7 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('equipamentos', EquipamentoController::class)->middleware('admin');
     
     // Motores (apenas para admins)
-    Route::resource('motores', MotorController::class)->middleware('admin');
+    Route::resource('motores', MotorController::class)
+        ->parameters(['motores' => 'motor'])
+        ->middleware('admin');
     
     // Página Inertia para Equipamentos de Teste
     Route::get('equipamento-tests', [App\Http\Controllers\EquipamentoTestController::class, 'indexPage'])->middleware('admin');

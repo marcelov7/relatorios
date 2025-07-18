@@ -48,6 +48,18 @@
                         Relatórios
                     </Link>
 
+                    <!-- Motores -->
+                    <Link href="/motores" 
+                          class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group"
+                          :class="isActive('/motores') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                        <svg class="w-5 h-5 mr-3 transition-colors"
+                             :class="isActive('/motores') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-400'"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Motores
+                    </Link>
+
                     <!-- Equipamentos de Teste (apenas para admins) -->
                     <Link v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" 
                           href="/equipamento-tests" 

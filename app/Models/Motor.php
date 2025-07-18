@@ -9,21 +9,27 @@ class Motor extends Model
 {
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'motores';
+
     protected $fillable = [
         'tag',
         'equipamento',
-        'carcaca',
+        'carcaca_fabricante',
         'potencia_kw',
         'potencia_cv',
         'rotacao',
         'corrente_placa',
         'corrente_configurada',
-        'tipo_equipamento',
+        'tipo_equipamento_modelo',
         'fabricante',
         'reserva_almox',
-        'local_id',
+        'local',
         'foto',
-        'armazenamento',
         'observacoes',
         'ativo',
     ];
@@ -34,17 +40,12 @@ class Motor extends Model
         'rotacao' => 'integer',
         'corrente_placa' => 'decimal:2',
         'corrente_configurada' => 'decimal:2',
-        'reserva_almox' => 'boolean',
         'ativo' => 'boolean',
     ];
 
-    /**
-     * Relacionamento: Um motor pertence a um local
-     */
-    public function local()
-    {
-        return $this->belongsTo(Local::class);
-    }
+
+
+
 
     /**
      * Scope para motores ativos
@@ -55,36 +56,14 @@ class Motor extends Model
     }
 
     /**
-     * Scope para motores instalados
+     * Scope para motores em reserva no almoxarifado
      */
-    public function scopeInstalados($query)
+    public function scopeReservaAlmox($query)
     {
-        return $query->where('armazenamento', 'Instalado');
+        return $query->whereNotNull('reserva_almox')->where('reserva_almox', '!=', '');
     }
 
-    /**
-     * Scope para motores em almoxarifado
-     */
-    public function scopeAlmoxarifado($query)
-    {
-        return $query->where('armazenamento', 'Almoxarifado');
-    }
 
-    /**
-     * Scope para motores em manutenção
-     */
-    public function scopeManutencao($query)
-    {
-        return $query->where('armazenamento', 'Manutenção');
-    }
-
-    /**
-     * Scope por local
-     */
-    public function scopePorLocal($query, $localId)
-    {
-        return $query->where('local_id', $localId);
-    }
 
     /**
      * Scope por fabricante
@@ -92,14 +71,6 @@ class Motor extends Model
     public function scopePorFabricante($query, $fabricante)
     {
         return $query->where('fabricante', 'like', "%{$fabricante}%");
-    }
-
-    /**
-     * Scope por tipo de equipamento
-     */
-    public function scopePorTipoEquipamento($query, $tipo)
-    {
-        return $query->where('tipo_equipamento', 'like', "%{$tipo}%");
     }
 
     /**
@@ -111,92 +82,28 @@ class Motor extends Model
     }
 
     /**
-     * Accessor para potência formatada
-     */
-    public function getPotenciaFormatadaAttribute()
-    {
-        $potencia = [];
-        if ($this->potencia_kw) {
-            $potencia[] = "{$this->potencia_kw} kW";
-        }
-        if ($this->potencia_cv) {
-            $potencia[] = "{$this->potencia_cv} CV";
-        }
-        return implode(' / ', $potencia) ?: 'N/A';
-    }
-
-    /**
-     * Accessor para corrente formatada
-     */
-    public function getCorrenteFormatadaAttribute()
-    {
-        $corrente = [];
-        if ($this->corrente_placa) {
-            $corrente[] = "Placa: {$this->corrente_placa}A";
-        }
-        if ($this->corrente_configurada) {
-            $corrente[] = "Config: {$this->corrente_configurada}A";
-        }
-        return implode(' / ', $corrente) ?: 'N/A';
-    }
-
-    /**
-     * Accessor para armazenamento com cor
-     */
-    public function getArmazenamentoClassAttribute()
-    {
-        return match($this->armazenamento) {
-            'Instalado' => 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
-            'Almoxarifado' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
-            'Manutenção' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400',
-            'Descartado' => 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400',
-            default => 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400',
-        };
-    }
-
-    /**
-     * Accessor para reserva almox com cor
+     * Accessor para reserva no almoxarifado com cor
      */
     public function getReservaAlmoxClassAttribute()
     {
-        return $this->reserva_almox 
-            ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400'
+        return !empty($this->reserva_almox)
+            ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
             : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
     }
 
     /**
-     * Accessor para URL da foto
+     * Accessor para tipo de equipamento/modelo com cor
      */
-    public function getFotoUrlAttribute()
+    public function getTipoEquipamentoModeloClassAttribute()
     {
-        if (!$this->foto) {
-            return null;
-        }
-        
-        return asset('storage/' . $this->foto);
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
     }
 
     /**
-     * Mutator para converter tag para maiúsculas
+     * Verificar se está em reserva no almoxarifado
      */
-    public function setTagAttribute($value)
+    public function getEstaReservaAlmoxAttribute()
     {
-        $this->attributes['tag'] = strtoupper($value);
+        return !empty($this->reserva_almox);
     }
-
-    /**
-     * Mutator para converter equipamento para title case
-     */
-    public function setEquipamentoAttribute($value)
-    {
-        $this->attributes['equipamento'] = ucwords(strtolower($value));
-    }
-
-    /**
-     * Mutator para converter fabricante para title case
-     */
-    public function setFabricanteAttribute($value)
-    {
-        $this->attributes['fabricante'] = ucwords(strtolower($value));
-    }
-}
+} 

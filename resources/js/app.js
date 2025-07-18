@@ -47,18 +47,7 @@ const initTheme = () => {
 // Inicializar tema imediatamente
 initTheme();
 
-// Registrar o service worker do PWA
-if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(reg => {
-                // console.log('Service Worker registrado:', reg);
-            })
-            .catch(err => {
-                // console.error('Erro ao registrar Service Worker:', err);
-            });
-    });
-}
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
