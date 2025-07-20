@@ -54,7 +54,7 @@
             </div>
 
             <!-- Filtros -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
                     <select v-model="form.status" @change="aplicarFiltros" 
@@ -68,12 +68,23 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Local</label>
-                    <select v-model="form.local_id" @change="aplicarFiltros" 
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Setor</label>
+                    <select v-model="form.setor_id" @change="aplicarFiltros" 
                             class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-blue-500 dark:focus:border-blue-600">
-                        <option value="">Todos os Locais</option>
-                        <option v-for="local in locais" :key="local.id" :value="local.id">
-                            {{ local.nome }}
+                        <option value="">Todos os Setores</option>
+                        <option v-for="setor in setores" :key="setor.id" :value="setor.id">
+                            {{ setor.nome }}
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Autor</label>
+                    <select v-model="form.autor_id" @change="aplicarFiltros" 
+                            class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-blue-500 dark:focus:border-blue-600">
+                        <option value="">Todos os Autores</option>
+                        <option v-for="autor in autores" :key="autor.id" :value="autor.id">
+                            {{ autor.name }}
                         </option>
                     </select>
                 </div>
@@ -275,7 +286,21 @@
 
         <!-- Paginação -->
         <div v-if="relatorios.data.length > 0" class="mt-6">
-            <Pagination :links="relatorios" />
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <!-- Seletor de itens por página -->
+                <div class="flex items-center gap-2">
+                    <label class="text-sm text-gray-700 dark:text-gray-300">Itens por página:</label>
+                    <select v-model="form.per_page" @change="aplicarFiltros" 
+                            class="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md focus:ring-blue-500 dark:focus:ring-blue-600 focus:border-blue-500 dark:focus:border-blue-600 text-sm">
+                        <option v-for="option in perPageOptions" :key="option" :value="option">
+                            {{ option }}
+                        </option>
+                    </select>
+                </div>
+                
+                <!-- Componente de paginação -->
+                <Pagination :links="relatorios" />
+            </div>
         </div>
     </AppLayout>
 </template>
@@ -294,6 +319,8 @@ const props = defineProps({
     filtros: Object,
     locais: Array,
     setores: Array,
+    autores: Array,
+    perPageOptions: Array,
 })
 
 const { confirmDelete } = useConfirm()
@@ -302,9 +329,11 @@ const { success, error } = useNotifications()
 const form = ref({
     busca: props.filtros.busca || '',
     status: props.filtros.status || '',
-    local_id: props.filtros.local_id || '',
+    setor_id: props.filtros.setor_id || '',
+    autor_id: props.filtros.autor_id || '',
     data_inicio: props.filtros.data_inicio || '',
     data_fim: props.filtros.data_fim || '',
+    per_page: props.filtros.per_page || 12,
 })
 
 const isRefreshing = ref(false)
@@ -314,7 +343,7 @@ let currentY = 0
 let isPulling = false
 
 const temFiltros = computed(() => {
-    return form.value.busca || form.value.status || form.value.local_id || form.value.data_inicio || form.value.data_fim
+    return form.value.busca || form.value.status || form.value.setor_id || form.value.autor_id || form.value.data_inicio || form.value.data_fim
 })
 
 const buscar = () => {
@@ -335,9 +364,11 @@ const limparFiltros = () => {
     form.value = {
         busca: '',
         status: '',
-        local_id: '',
+        setor_id: '',
+        autor_id: '',
         data_inicio: '',
         data_fim: '',
+        per_page: 12,
     }
     aplicarFiltros()
 }

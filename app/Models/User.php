@@ -67,4 +67,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Relatorio::class, 'autor_id');
     }
+
+    /**
+     * Relatórios criados pelo usuário (alias para relatorios)
+     */
+    public function relatoriosCriados()
+    {
+        return $this->hasMany(Relatorio::class, 'autor_id');
+    }
 }

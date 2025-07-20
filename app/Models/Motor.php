@@ -30,6 +30,7 @@ class Motor extends Model
         'reserva_almox',
         'local',
         'foto',
+        'armazenamento',
         'observacoes',
         'ativo',
     ];
@@ -42,10 +43,6 @@ class Motor extends Model
         'corrente_configurada' => 'decimal:2',
         'ativo' => 'boolean',
     ];
-
-
-
-
 
     /**
      * Scope para motores ativos
@@ -62,8 +59,6 @@ class Motor extends Model
     {
         return $query->whereNotNull('reserva_almox')->where('reserva_almox', '!=', '');
     }
-
-
 
     /**
      * Scope por fabricante

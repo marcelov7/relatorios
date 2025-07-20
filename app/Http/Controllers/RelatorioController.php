@@ -14,6 +14,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Intervention\Image\Encoders\JpegEncoder;
+use App\Models\User; // Adicionado para buscar autores
 
 class RelatorioController extends Controller
 {
@@ -34,8 +35,16 @@ class RelatorioController extends Controller
             $query->status($request->status);
         }
 
-        if ($request->filled('setor')) {
-            $query->setor($request->setor);
+        // Filtro por setor (dos equipamentos de teste)
+        if ($request->filled('setor_id')) {
+            $query->whereHas('equipamentosTeste', function($q) use ($request) {
+                $q->where('setor', $request->setor_id);
+            });
+        }
+
+        // Filtro por autor
+        if ($request->filled('autor_id')) {
+            $query->where('autor_id', $request->autor_id);
         }
 
         if ($request->filled('local_id')) {
@@ -57,7 +66,14 @@ class RelatorioController extends Controller
             $query->whereDate('created_at', '<=', $request->data_fim);
         }
 
-        $relatorios = $query->latest()->paginate(12)->withQueryString();
+        // Paginação com limite configurável
+        $perPage = $request->get('per_page', 12);
+        $allowedPerPage = [12, 30, 60, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 12;
+        }
+
+        $relatorios = $query->latest()->paginate($perPage)->withQueryString();
 
         // Adicionar permissões e dados extras para cada relatório
         $user = auth()->user();
@@ -65,6 +81,7 @@ class RelatorioController extends Controller
             $relatorio->podeEditar = $user->can('update', $relatorio);
             $relatorio->podeExcluir = $user->can('delete', $relatorio);
             $relatorio->ehAutor = $relatorio->autor_id === $user->id;
+            
             // Calcular tempo restante para exclusão (se aplicável)
             if ($relatorio->ehAutor && !$user->isAdmin()) {
                 $policy = new \App\Policies\RelatorioPolicy();
@@ -72,51 +89,43 @@ class RelatorioController extends Controller
             } else {
                 $relatorio->tempoRestanteExclusao = null;
             }
-            // Calcular total de fotos (galeria + históricos)
-            $totalFotos = 0;
-            if (is_array($relatorio->images)) {
-                $totalFotos += count($relatorio->images);
-            }
-            if ($relatorio->relationLoaded('atualizacoes')) {
-                foreach ($relatorio->atualizacoes as $atualizacao) {
-                    if (is_array($atualizacao->imagens)) {
-                        $totalFotos += count($atualizacao->imagens);
-                    }
-                }
-            }
-            $relatorio->totalFotos = $totalFotos;
-            $relatorio->totalHistoricos = $relatorio->relationLoaded('atualizacoes') ? $relatorio->atualizacoes->count() : 0;
-            // Adicionar lista de equipamentos de teste para o card
-            $relatorio->loadMissing('equipamentosTeste');
-            $relatorio->equipamentosTesteArr = $relatorio->equipamentosTeste->map(function($equip) {
-                return [
-                    'id' => $equip->id,
-                    'tag' => $equip->tag,
-                    'nome' => $equip->nome,
-                    'setor' => $equip->setor,
-                    'status' => $equip->status,
-                ];
-            });
-            // Adicionar setor e tag do equipamento para exibição no card
+
+            // Adicionar informações extras para exibição
             $relatorio->setor_nome = $relatorio->setor ? $relatorio->setor->nome : 'Sem setor';
             $relatorio->tag_equipamento = optional($relatorio->equipamentos->first())->equipment_tag ?? 'Sem tag';
         }
 
         // Dados para filtros
         $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
-        $setores = Relatorio::select('sector')
-            ->whereNotNull('sector')
+        
+        // Buscar setores únicos dos equipamentos de teste (agrupando setores com mesmo nome)
+        $setores = \App\Models\EquipamentoTest::select('setor')
+            ->whereNotNull('setor')
+            ->where('setor', '!=', '')
             ->distinct()
-            ->pluck('sector')
+            ->orderBy('setor')
+            ->pluck('setor')
             ->filter()
-            ->sort()
-            ->values();
+            ->values()
+            ->map(function($setor) {
+                return ['id' => $setor, 'nome' => $setor];
+            });
+
+        // Buscar autores (usuários que criaram relatórios)
+        $autores = User::whereHas('relatorios', function($q) {
+                $q->where('autor_id', '!=', null);
+            })
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('Relatorios/Index', [
             'relatorios' => $relatorios,
-            'filtros' => $request->only(['busca', 'status', 'setor', 'local_id', 'equipment_id', 'data_inicio', 'data_fim']),
+            'filtros' => $request->only(['busca', 'status', 'setor_id', 'autor_id', 'data_inicio', 'data_fim', 'per_page']),
             'locais' => $locais,
             'setores' => $setores,
+            'autores' => $autores,
+            'perPageOptions' => $allowedPerPage,
         ]);
     }
 
