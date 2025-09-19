@@ -9,6 +9,7 @@ use App\Http\Controllers\MotorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SetorController;
+use App\Http\Controllers\InspecaoGeradorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,8 +19,29 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+// Rotas de teste públicas (fora do middleware de auth)
+Route::get('/teste-rota', [App\Http\Controllers\TesteController::class, 'testeRota'])->name('testeRota');
+
+// Rota para teste de PDF com Browsershot (local, fora do grupo auth)
+Route::get('/relatorios/pdf-browsershot', [App\Http\Controllers\RelatorioController::class, 'generatePdfBrowsershot'])->name('relatorios.pdfBrowsershot');
+
+// Rota para PDF individual de relatório com Browsershot
+Route::get('/relatorios/{id}/pdf-browsershot', [App\Http\Controllers\RelatorioController::class, 'pdfBrowsershot'])->name('relatorios.pdf-browsershot');
+
+// Rota de teste para imagens
+Route::get('/test-image/{path}', function ($path) {
+    $fullPath = storage_path("app/public/{$path}");
+    if (file_exists($fullPath)) {
+        return response()->file($fullPath);
+    }
+    return response('Imagem não encontrada', 404);
+})->where('path', '.*');
+
 // Rotas protegidas por autenticação
 Route::middleware(['auth'])->group(function () {
+    // Nova rota para geração de PDF com Spatie Laravel PDF
+    Route::get('/relatorios/pdf-spatie', [App\Http\Controllers\RelatorioController::class, 'generatePdfSpatie'])->name('relatorios.pdfSpatie');
+
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
@@ -56,6 +78,9 @@ Route::middleware(['auth'])->group(function () {
         ->parameters(['setores' => 'setor'])
         ->middleware('admin');
     
+    // Inspeções de Gerador
+    Route::resource('inspecao-geradores', InspecaoGeradorController::class);
+    
     // Perfil do usuário
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -79,9 +104,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('setores-ativos', [SetorController::class, 'apiSetoresAtivos'])->name('api.setores.ativos');
         Route::get('setores/{setor}/equipamentos', [SetorController::class, 'apiEquipamentosPorSetor'])->name('api.setores.equipamentos');
     });
-
-    Route::post('/relatorios/pdf-lote', [App\Http\Controllers\RelatorioController::class, 'pdfLote'])->name('relatorios.pdfLote');
 });
 
 // Rotas de autenticação
 require __DIR__.'/auth.php';
+

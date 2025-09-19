@@ -7,14 +7,15 @@ use App\Models\Local;
 use App\Models\Equipamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Intervention\Image\Encoders\JpegEncoder;
 use App\Models\User; // Adicionado para buscar autores
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class RelatorioController extends Controller
 {
@@ -93,6 +94,34 @@ class RelatorioController extends Controller
             // Adicionar informações extras para exibição
             $relatorio->setor_nome = $relatorio->setor ? $relatorio->setor->nome : 'Sem setor';
             $relatorio->tag_equipamento = optional($relatorio->equipamentos->first())->equipment_tag ?? 'Sem tag';
+            
+            // Calcular total de fotos
+            $totalFotos = 0;
+            if (is_array($relatorio->images)) {
+                $totalFotos += count($relatorio->images);
+            }
+            
+            // Calcular total de fotos das atualizações
+            $relatorio->load('atualizacoes');
+            foreach ($relatorio->atualizacoes as $atualizacao) {
+                if (is_array($atualizacao->imagens)) {
+                    $totalFotos += count($atualizacao->imagens);
+                }
+            }
+            
+            $relatorio->totalFotos = $totalFotos;
+            $relatorio->totalHistoricos = $relatorio->atualizacoes->count();
+            
+            // Preparar equipamentos de teste para o frontend
+            $relatorio->equipamentosTesteArr = $relatorio->equipamentosTeste->map(function($equip) {
+                return [
+                    'id' => $equip->id,
+                    'tag' => $equip->tag,
+                    'nome' => $equip->nome,
+                    'setor' => $equip->setor,
+                    'status' => $equip->status,
+                ];
+            });
         }
 
         // Dados para filtros
@@ -157,57 +186,55 @@ class RelatorioController extends Controller
             'cargo_responsavel' => 'nullable|string|max:255',
             'date_created' => 'required|date',
             'time_created' => 'nullable|date_format:H:i',
-            // 'setor_id' => 'required|exists:setores,id', // removido
-            // 'local_id' => 'nullable|exists:locais,id', // removido
             'equipment_ids' => 'required|array|min:1',
             'equipment_ids.*' => 'integer|exists:equipamento_tests,id',
             'detalhes' => 'required|string',
             'status' => 'required|in:Aberta,Em Andamento,Concluída,Cancelada',
             'progresso' => 'nullable|integer|min:0|max:100',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
         ]);
 
         // Definir automaticamente o usuário logado como responsável e autor
         $validated['user_id'] = auth()->id();
         $validated['autor_id'] = auth()->id();
-        
-        // Usar setor do usuário logado (se ainda fizer sentido)
         $validated['sector'] = auth()->user()->setor;
-
-        // Processar upload de imagens
-        $imagesPaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('relatorios', $fileName, 'public');
-                $thumbFileName = pathinfo($fileName, PATHINFO_FILENAME) . '_thumb.jpg';
-                $thumbPath = 'relatorios/thumbs/' . $thumbFileName;
-                $manager = new ImageManager(new GdDriver());
-                $img = $manager->read($image)->cover(600, 400);
-                $encoded = $img->encode(new JpegEncoder(75));
-                \Storage::disk('public')->put($thumbPath, $encoded->toString());
-                $imagesPaths[] = [
-                    'path' => $path,
-                    'thumb' => $thumbPath,
-                    'original_name' => $image->getClientOriginalName(),
-                    'size' => $image->getSize(),
-                    'mime_type' => $image->getMimeType(),
-                ];
-                $this->syncImageToPublic($path);
-                $this->syncImageToPublic($thumbPath);
-            }
-        }
-        $validated['images'] = $imagesPaths;
 
         // Remover equipment_ids do validated para não tentar salvar na tabela relatorios
         $equipmentIds = $validated['equipment_ids'] ?? [];
         unset($validated['equipment_ids']);
 
+        // Criar o relatório primeiro
         $relatorio = \App\Models\Relatorio::create($validated);
 
-        // Sincronizar equipamentos de teste (relacionamento many-to-many)
+        // Sincronizar equipamentos de teste
         if (!empty($equipmentIds)) {
             $relatorio->equipamentosTeste()->sync($equipmentIds);
+        }
+
+        // Processar upload de imagens usando o service
+        if ($request->hasFile('images')) {
+            $arquivos = $request->file('images');
+            \Log::info('RelatorioController@store - Quantidade de imagens recebidas:', ['count' => is_array($arquivos) ? count($arquivos) : 1]);
+            $imageService = new \App\Services\ImageUploadService();
+            
+            foreach ($arquivos as $index => $image) {
+                try {
+                    $imageData = $imageService->uploadImageForRelatorio($image, $relatorio->id, $index);
+                    
+                    // Salvar no banco
+                    $relatorio->imagens()->create($imageData);
+                    
+                } catch (\Exception $e) {
+                    \Log::error('Erro ao fazer upload de imagem', [
+                        'relatorio_id' => $relatorio->id,
+                        'image_index' => $index,
+                        'error' => $e->getMessage()
+                    ]);
+                    
+                    // Continuar com as outras imagens mesmo se uma falhar
+                    continue;
+                }
+            }
         }
 
         return redirect()->route('relatorios.index')
@@ -223,22 +250,31 @@ class RelatorioController extends Controller
             'user', 
             'autor', 
             'local', 
-            // 'equipamentos', // Remover equipamentos antigos
             'equipamentosTeste', // Novo relacionamento
             'setor', // Adicionado para exibir o setor corretamente
+            'imagens', // Novo relacionamento de imagens
             'atualizacoes' => function($query) {
                 $query->with('usuario:id,name,cargo')->orderBy('created_at', 'desc');
             }
         ]);
-        // Fallback para imagens antigas: garantir array de objetos
-        if (is_array($relatorio->images)) {
-            $relatorio->images = array_map(function($img) {
-                if (is_string($img)) {
-                    return ['path' => $img];
-                }
-                return $img;
-            }, $relatorio->images);
-        }
+        
+        // Converter imagens para formato compatível com frontend
+        $relatorio->images = $relatorio->imagens->map(function($imagem) {
+            return [
+                'path' => $imagem->caminho_original,
+                'thumb' => $imagem->caminho_thumb,
+                'medium' => $imagem->caminho_medium,
+                'original_name' => $imagem->nome_original,
+                'size' => $imagem->tamanho,
+                'mime_type' => $imagem->mime_type,
+                'id' => $imagem->id,
+                'ordem' => $imagem->ordem,
+                // Adicionar URLs completas
+                'url' => url("/test-image/{$imagem->caminho_original}"),
+                'thumb_url' => $imagem->caminho_thumb ? url("/test-image/{$imagem->caminho_thumb}") : url("/test-image/{$imagem->caminho_original}"),
+                'medium_url' => $imagem->caminho_medium ? url("/test-image/{$imagem->caminho_medium}") : url("/test-image/{$imagem->caminho_original}"),
+            ];
+        })->toArray();
         
         // Montar lista de equipamentos de teste com setor
         $equipamentosTeste = $relatorio->equipamentosTeste->map(function($equip) {
@@ -270,6 +306,32 @@ class RelatorioController extends Controller
             $tempoRestanteExclusao = $policy->getTimeRemainingForDeletion($relatorio);
         }
         
+        // Buscar relatórios anterior e próximo para navegação (baseado na ordem de criação)
+        $relatorioAnterior = null;
+        $relatorioProximo = null;
+        $relatorioAtual = 0;
+        $totalRelatorios = 0;
+        
+        try {
+            $relatorioAnterior = Relatorio::where('created_at', '<', $relatorio->created_at)
+                ->orderBy('created_at', 'desc')
+                ->first(['id', 'titulo', 'created_at']);
+                
+            $relatorioProximo = Relatorio::where('created_at', '>', $relatorio->created_at)
+                ->orderBy('created_at', 'asc')
+                ->first(['id', 'titulo', 'created_at']);
+                
+            // Calcular posição atual e total
+            $relatorioAtual = Relatorio::where('created_at', '<=', $relatorio->created_at)->count();
+            $totalRelatorios = Relatorio::count();
+        } catch (\Exception $e) {
+            // Se houver erro, usar valores padrão
+            $relatorioAnterior = null;
+            $relatorioProximo = null;
+            $relatorioAtual = 1;
+            $totalRelatorios = 1;
+        }
+        
         return Inertia::render('Relatorios/Show', [
             'relatorio' => $relatorio,
             'equipamentosTeste' => $equipamentosTeste,
@@ -279,6 +341,10 @@ class RelatorioController extends Controller
             'podeExcluir' => $podeExcluir,
             'tempoRestanteExclusao' => $tempoRestanteExclusao,
             'relatorioConcluido' => $relatorioConcluido,
+            'relatorioAnterior' => $relatorioAnterior,
+            'relatorioProximo' => $relatorioProximo,
+            'relatorioAtual' => $relatorioAtual,
+            'totalRelatorios' => $totalRelatorios,
         ]);
     }
 
@@ -287,18 +353,27 @@ class RelatorioController extends Controller
      */
     public function edit(Relatorio $relatorio)
     {
-        // Verificar permissão para editar
         $this->authorize('update', $relatorio);
         
-        $relatorio->load(['equipamentosTeste']);
-        
-        $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
-        $equipamentos = [];
+        $relatorio->load(['imagens', 'equipamentosTeste']);
 
-        // Buscar setores ativos para o select
+        // Mapear imagens para o formato esperado pelo frontend
+        $relatorio->images = $relatorio->imagens->map(function($imagem) {
+            return [
+                'id' => $imagem->id,
+                'path' => $imagem->caminho_original,
+                'thumb' => $imagem->caminho_thumb,
+                'medium' => $imagem->caminho_medium,
+                'original_name' => $imagem->nome_original,
+                'size' => $imagem->tamanho,
+                'mime_type' => $imagem->mime_type,
+                'ordem' => $imagem->ordem,
+            ];
+        })->toArray();
+
+        $locais = \App\Models\Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
+        $equipamentos = []; // Carregue se necessário
         $setores = \App\Models\Setor::where('ativo', true)->orderBy('nome')->get(['id', 'nome']);
-
-        // Montar lista de equipamentos de teste para o formulário
         $equipamentosTeste = $relatorio->equipamentosTeste->map(function($equip) {
             return [
                 'id' => $equip->id,
@@ -325,115 +400,72 @@ class RelatorioController extends Controller
     {
         // Verificar permissão para editar
         $this->authorize('update', $relatorio);
-        
-        // Log dos dados recebidos para debug
-        \Log::info('Dados recebidos para update do relatório:', [
-            'relatorio_id' => $relatorio->id,
-            'titulo' => $request->titulo,
-            'sector' => $request->sector,
-            'activity' => $request->activity,
-            'date_created' => $request->date_created,
-            'date_created_type' => gettype($request->date_created),
-            'local_id' => $request->local_id,
-            'equipment_ids' => $request->equipment_ids,
-            'status' => $request->status,
-            'progresso' => $request->progresso,
-            'detalhes' => $request->detalhes,
-            'all_request_data' => $request->all()
+
+        // Validação
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'activity' => 'required|string|max:255',
+            'nome_responsavel' => 'required|string|max:255',
+            'cargo_responsavel' => 'nullable|string|max:255',
+            'date_created' => 'required|date',
+            'time_created' => 'nullable|date_format:H:i',
+            'equipment_ids' => 'required|array|min:1',
+            'equipment_ids.*' => 'exists:equipamento_tests,id',
+            'detalhes' => 'required|string',
+            'status' => 'required|in:Aberta,Em Andamento,Concluída,Cancelada',
+            'progresso' => 'nullable|integer|min:0|max:100',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'imagens_remover' => 'nullable|array', // IDs das imagens a remover
+            'imagens_remover.*' => 'integer|exists:relatorio_imagens,id',
         ]);
 
-        try {
-            $validated = $request->validate([
-                'titulo' => 'required|string|max:255',
-                'activity' => 'required|string|max:255',
-                'nome_responsavel' => 'required|string|max:255',
-                'cargo_responsavel' => 'nullable|string|max:255',
-                'date_created' => 'required|date',
-                'time_created' => 'nullable|date_format:H:i',
-                'local_id' => 'nullable|exists:locais,id',
-                'equipment_ids' => 'required|array|min:1',
-                'equipment_ids.*' => 'exists:equipamento_tests,id',
-                'detalhes' => 'required|string',
-                'status' => 'required|in:Aberta,Em Andamento,Concluída,Cancelada',
-                'progresso' => 'nullable|integer|min:0|max:100',
-                'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240', // 10MB max per image
-                'keep_images' => 'nullable|array', // IDs das imagens existentes para manter
-            ]);
-            
-            \Log::info('Validação passou com sucesso:', $validated);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Erro de validação:', [
-                'errors' => $e->errors(),
-                'date_created_value' => $request->date_created,
-                'date_created_raw' => $request->input('date_created')
-            ]);
-            throw $e;
-        }
+        // Atualizar campos básicos
+        $relatorio->update([
+            'titulo' => $validated['titulo'],
+            'activity' => $validated['activity'],
+            'nome_responsavel' => $validated['nome_responsavel'],
+            'cargo_responsavel' => $validated['cargo_responsavel'] ?? null,
+            'date_created' => $validated['date_created'],
+            'time_created' => $validated['time_created'] ?? null,
+            'detalhes' => $validated['detalhes'],
+            'status' => $validated['status'],
+            'progresso' => $validated['progresso'] ?? 0,
+            'sector' => auth()->user()->setor,
+        ]);
 
-        // Processar imagens existentes que devem ser mantidas
-        $existingImages = $relatorio->images ?? [];
-        $keepImages = $request->input('keep_images', []);
-        $imagesToKeep = [];
-
-        foreach ($existingImages as $index => $image) {
-            if (in_array($index, $keepImages)) {
-                $imagesToKeep[] = $image;
-            } else {
-                // Excluir arquivo físico da imagem removida
-                if (isset($image['path']) && Storage::disk('public')->exists($image['path'])) {
-                    Storage::disk('public')->delete($image['path']);
-                }
-                // Excluir arquivo físico da miniatura removida
-                if (isset($image['thumb']) && Storage::disk('public')->exists($image['thumb'])) {
-                    Storage::disk('public')->delete($image['thumb']);
-                }
-            }
-        }
-
-        // Processar novas imagens
-        $newImages = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                // Gerar nome único para o arquivo
-                $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                
-                // Salvar na pasta storage/app/public/relatorios
-                $path = $image->storeAs('relatorios', $fileName, 'public');
-                
-                // Gerar thumbnail 600x400 JPG
-                $thumbFileName = pathinfo($fileName, PATHINFO_FILENAME) . '_thumb.jpg';
-                $thumbPath = 'relatorios/thumbs/' . $thumbFileName;
-                $manager = new ImageManager(new GdDriver());
-                $img = $manager->read($image)->cover(600, 400);
-                $encoded = $img->encode(new JpegEncoder(75));
-                \Storage::disk('public')->put($thumbPath, $encoded->toString());
-
-                $newImages[] = [
-                    'path' => $path,
-                    'thumb' => $thumbPath,
-                    'original_name' => $image->getClientOriginalName(),
-                    'size' => $image->getSize(),
-                    'mime_type' => $image->getMimeType(),
-                ];
-                $this->syncImageToPublic($path); // <-- cópia automática
-                $this->syncImageToPublic($thumbPath); // <-- cópia automática para thumb
-            }
-        }
-
-        // Combinar imagens mantidas com novas imagens
-        $validated['images'] = array_merge($imagesToKeep, $newImages);
-        
-        // Usar setor do usuário logado
-        $validated['sector'] = auth()->user()->setor;
-
-        // Remover equipment_ids do validated para não tentar salvar na tabela relatorios
+        // Sincronizar equipamentos de teste
         $equipmentIds = $validated['equipment_ids'] ?? [];
-        unset($validated['equipment_ids']);
-
-        $relatorio->update($validated);
-
-        // Sincronizar equipamentos de teste (relacionamento many-to-many)
         $relatorio->equipamentosTeste()->sync($equipmentIds);
+
+        // Remover imagens marcadas para exclusão
+        if ($request->filled('imagens_remover')) {
+            foreach ($request->imagens_remover as $imagemId) {
+                $imagem = $relatorio->imagens()->find($imagemId);
+                if ($imagem) {
+                    $imagem->deleteWithFiles();
+                }
+            }
+        }
+
+        // Adicionar novas imagens
+        if ($request->hasFile('images')) {
+            $imageService = new \App\Services\ImageUploadService();
+            $nextOrder = $relatorio->imagens()->max('ordem') + 1;
+            foreach ($request->file('images') as $index => $image) {
+                try {
+                    $imageData = $imageService->uploadImageForRelatorio($image, $relatorio->id, $nextOrder + $index);
+                    $imageData['relatorio_id'] = $relatorio->id;
+                    $relatorio->imagens()->create($imageData);
+                } catch (\Exception $e) {
+                    \Log::error('Erro ao fazer upload de imagem (update)', [
+                        'relatorio_id' => $relatorio->id,
+                        'image_index' => $index,
+                        'error' => $e->getMessage()
+                    ]);
+                    continue;
+                }
+            }
+        }
 
         return redirect()->route('relatorios.index')
             ->with('success', 'Relatório atualizado com sucesso!');
@@ -454,28 +486,102 @@ class RelatorioController extends Controller
     }
 
     /**
-     * Gera um PDF técnico personalizado de até 20 relatórios selecionados.
+     * Gera PDF personalizado de relatórios selecionados usando Spatie Laravel PDF.
+     * Recebe os IDs via GET (?ids=1,2,3)
      */
-    public function pdfLote(Request $request)
+    public function generatePdfSpatie(Request $request)
     {
         $ids = $request->input('ids', []);
-        if (!is_array($ids) || count($ids) == 0) {
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids));
+        }
+        if (empty($ids)) {
             return back()->with('error', 'Selecione ao menos um relatório.');
         }
-        if (count($ids) > 20) {
-            return back()->with('error', 'Selecione no máximo 20 relatórios por vez.');
-        }
-        $relatorios = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste'])
+        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario'])
             ->whereIn('id', $ids)
             ->get();
+        if ($relatorios->isEmpty()) {
+            return back()->with('error', 'Nenhum relatório encontrado.');
+        }
         $data = [
             'relatorios' => $relatorios,
             'data_geracao' => now()->format('d/m/Y H:i'),
             'nome_sistema' => config('app.name', 'Sistema de Relatórios'),
-            'logo_path' => public_path('storage/logo.png'), // ajuste se necessário
         ];
-        $pdf = Pdf::loadView('relatorios.pdf', $data)->setPaper('a4', 'portrait');
-        return $pdf->download('relatorios-tecnicos.pdf');
+        return Pdf::view('relatorios.pdf-spatie', $data)
+            ->format('a4')
+            ->name('relatorios-personalizados.pdf')
+            ->download();
+    }
+
+    /**
+     * Gera PDF personalizado de relatórios selecionados usando Browsershot (ambiente local Windows).
+     * Recebe os IDs via GET (?ids=1,2,3)
+     */
+    public function generatePdfBrowsershot(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids));
+        }
+        if (empty($ids)) {
+            return back()->with('error', 'Selecione ao menos um relatório.');
+        }
+        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario'])
+            ->whereIn('id', $ids)
+            ->get();
+        if ($relatorios->isEmpty()) {
+            return back()->with('error', 'Nenhum relatório encontrado.');
+        }
+        $data = [
+            'relatorios' => $relatorios,
+            'data_geracao' => now()->format('d/m/Y H:i'),
+            'nome_sistema' => config('app.name', 'Sistema de Relatórios'),
+        ];
+
+        $html = view('relatorios.pdf-browsershot', $data)->render();
+        $pdfPath = storage_path('app/public/relatorios-personalizados-' . uniqid() . '.pdf');
+
+        // Detecta ambiente e define o caminho do Chrome/Chromium
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // Ambiente Windows
+            $chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+            if (!file_exists($chromePath)) {
+                $chromePath = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+            }
+        } else {
+            // Ambiente Linux (produção)
+            $chromePath = '/snap/bin/chromium';
+            if (!file_exists($chromePath)) {
+                $chromePath = '/usr/bin/chromium-browser';
+                if (!file_exists($chromePath)) {
+                    $chromePath = '/usr/bin/chromium';
+                }
+            }
+        }
+
+        \Spatie\Browsershot\Browsershot::html($html)
+            ->setChromePath($chromePath)
+            ->addChromiumArguments([
+                '--no-sandbox',
+                '--disable-gpu',
+                '--disable-dev-shm-usage',
+                '--disable-setuid-sandbox',
+                '--user-data-dir=/tmp/chromium-data',
+                '--data-path=/tmp/chromium-data',
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-features=TranslateUI',
+                '--disable-ipc-flooding-protection'
+            ])
+            ->format('A4')
+            ->showBackground()
+            ->timeout(120)
+            ->save($pdfPath);
+
+        return response()->download($pdfPath, 'relatorios-personalizados.pdf')->deleteFileAfterSend(true);
     }
 
     // Função auxiliar para copiar imagem para public/storage/relatorios
@@ -489,6 +595,72 @@ class RelatorioController extends Controller
         }
         if (file_exists($source) && !file_exists($dest)) {
             copy($source, $dest);
+        }
+    }
+
+    /**
+     * Gera PDF de um relatório individual usando Browsershot
+     */
+    public function pdfBrowsershot($id)
+    {
+        try {
+            $relatorio = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
+                ->findOrFail($id);
+            
+            // Detectar caminho do Chrome/Chromium
+            $chromePaths = [
+                '/snap/bin/chromium',
+                '/usr/bin/chromium-browser',
+                '/usr/bin/chromium',
+                '/usr/bin/google-chrome-stable',
+                '/usr/bin/google-chrome'
+            ];
+            
+            $chromePath = null;
+            foreach ($chromePaths as $path) {
+                if (file_exists($path)) {
+                    $chromePath = $path;
+                    break;
+                }
+            }
+            
+            if (!$chromePath) {
+                throw new \Exception('Chrome/Chromium não encontrado no sistema');
+            }
+            
+            Log::info("Gerando PDF com Browsershot usando Chrome: $chromePath");
+            
+            $html = view('relatorios.pdf-browsershot', compact('relatorio'))->render();
+            
+            $pdf = \Spatie\Browsershot\Browsershot::html($html)
+                ->setChromePath($chromePath)
+                ->addChromiumArguments([
+                    '--no-sandbox',
+                    '--disable-gpu',
+                    '--disable-dev-shm-usage',
+                    '--disable-setuid-sandbox',
+                    '--user-data-dir=/tmp/chromium-data',
+                    '--data-path=/tmp/chromium-data',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    '--disable-renderer-backgrounding',
+                    '--disable-features=TranslateUI',
+                    '--disable-ipc-flooding-protection'
+                ])
+                ->format('A4')
+                ->margins(10, 10, 10, 10)
+                ->showBackground()
+                ->waitUntilNetworkIdle()
+                ->timeout(120)
+                ->pdf();
+                
+            return response($pdf)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="relatorio-' . $relatorio->id . '.pdf"');
+                
+        } catch (\Exception $e) {
+            Log::error('Erro ao gerar PDF com Browsershot: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao gerar PDF: ' . $e->getMessage()], 500);
         }
     }
 }

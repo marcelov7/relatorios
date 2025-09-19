@@ -496,6 +496,7 @@ const carregandoEquipamentos = ref(false)
 const imagePreviews = ref([])
 const selectedFiles = ref([])
 const existingImages = ref([...(props.relatorio.images || [])])
+const imagensRemover = ref([])
 const isSubmitting = ref(false)
 
 // Form
@@ -504,15 +505,15 @@ const form = useForm({
     activity: props.relatorio.activity || '',
     nome_responsavel: props.relatorio.nome_responsavel || (props.relatorio.autor ? props.relatorio.autor.name : ''),
     cargo_responsavel: props.relatorio.cargo_responsavel || (props.relatorio.autor ? props.relatorio.autor.cargo : ''),
-    date_created: formatDateForInput(props.relatorio.date_created),
-    time_created: props.relatorio.time_created || '', // Adicionado campo de hora
+    date_created: props.relatorio.date_created ? formatDateForInput(props.relatorio.date_created) : '',
+    time_created: props.relatorio.time_created || '',
     setor_id: props.relatorio.setor_id ? String(props.relatorio.setor_id) : '',
     equipment_test_ids: (props.equipamentosTeste || []).map(e => e.id),
     status: props.relatorio.status || 'Aberta',
     progresso: props.relatorio.progresso || 0,
     detalhes: props.relatorio.detalhes || '',
     images: [],
-    keep_images: []
+    imagens_remover: []
 })
 
 onMounted(() => {
@@ -597,6 +598,11 @@ async function carregarEquipamentos() {
 
 // Funções para imagens
 function removeExistingImage(index) {
+    // Adiciona o ID da imagem removida ao array imagensRemover
+    const img = existingImages.value[index]
+    if (img && img.id) {
+        imagensRemover.value.push(img.id)
+    }
     existingImages.value.splice(index, 1)
 }
 
@@ -694,6 +700,8 @@ function submit() {
 
     // Adicionar arquivos ao form
     form.images = selectedFiles.value
+    // Adicionar imagens_remover com os IDs das imagens removidas
+    form.imagens_remover = imagensRemover.value
     
     // Adicionar índices das imagens existentes que devem ser mantidas
     form.keep_images = existingImages.value.map((_, index) => index)
@@ -728,6 +736,11 @@ function submit() {
     // Adicionar images
     form.images.forEach((file, index) => {
         formData.append(`images[${index}]`, file)
+    })
+
+    // Adicionar imagens_remover
+    form.imagens_remover.forEach((id, i) => {
+        formData.append(`imagens_remover[${i}]`, id)
     })
 
     // Enviar via axios mas com notificações elegantes

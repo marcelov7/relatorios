@@ -8,6 +8,41 @@
 
         <div class="py-6 sm:py-12">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Navegação entre Relatórios -->
+                <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            Relatório {{ relatorioAtual }} de {{ totalRelatorios }}
+                        </div>
+                        <div class="flex items-center justify-center gap-4">
+                            <Link 
+                                v-if="relatorioAnterior"
+                                :href="route('relatorios.show', relatorioAnterior.id)"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                            >
+                                ← Anterior
+                            </Link>
+                            <span v-else class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                                ← Anterior
+                            </span>
+                            
+                            <Link 
+                                v-if="relatorioProximo"
+                                :href="route('relatorios.show', relatorioProximo.id)"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                            >
+                                Próximo →
+                            </Link>
+                            <span v-else class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                                Próximo →
+                            </span>
+                        </div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                            Use as setas ← → do teclado para navegar
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Cabeçalho da Página -->
                 <div class="mb-6">
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
@@ -159,13 +194,23 @@
                                 </p>
                             </div>
 
-                            <!-- Data de Criação -->
+                            <!-- Data e Hora do Relato -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Data e hora do relato
                                 </label>
                                 <p class="text-sm text-gray-900 dark:text-gray-200 font-medium">
-                                    {{ formatarData(relatorio.date_created) }}{{ relatorio.time_created ? ' às ' + relatorio.time_created : '' }}
+                                    {{ formatarData(relatorio.date_created) }}{{ formatarHora(relatorio.time_created) }}
+                                </p>
+                            </div>
+
+                            <!-- Data de Criação no Sistema -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Data de criação
+                                </label>
+                                <p class="text-sm text-gray-900 dark:text-gray-200 font-medium">
+                                    {{ formatarDataHora(relatorio.created_at) }}
                                 </p>
                             </div>
                         </div>
@@ -283,10 +328,11 @@
                                     @click="openImageModal(image, index)"
                                 >
                                     <img
-                                        :src="`/storage/${image.thumb || image.path}`"
-                                        :alt="image.original_name"
+                                        :src="image.thumb_url || image.url || `/storage/${image.path}`"
+                                        :alt="image.original_name || 'Imagem do relatório'"
                                         loading="lazy"
                                         class="w-full h-24 sm:h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-shadow duration-200"
+                                        @error="handleImageError"
                                     />
                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center">
                                         <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -362,7 +408,7 @@
                                                             </span>
                                                         </div>
                                                         <time class="text-xs text-gray-500 dark:text-gray-400">
-                                                            {{ formatarData(atualizacao.created_at) }}
+                                                            {{ formatarDataHora(atualizacao.created_at) }}
                                                         </time>
                                                     </div>
                                                     
@@ -501,7 +547,7 @@
                     <!-- Imagem -->
                     <div class="flex-1 p-2 sm:p-4 flex items-center justify-center overflow-hidden">
                         <img
-                            :src="`/storage/${imageModal.image?.path}`"
+                            :src="imageModal.image?.url || `/storage/${imageModal.image?.path}`"
                             :alt="imageModal.image?.original_name"
                             class="max-w-full max-h-full object-contain rounded-lg"
                         />
@@ -734,7 +780,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useConfirm } from '@/composables/useConfirm'
@@ -750,9 +796,54 @@ const props = defineProps({
     podeExcluir: Boolean,
     tempoRestanteExclusao: Number,
     relatorioConcluido: Boolean,
+    relatorioAnterior: {
+        type: Object,
+        default: null
+    },
+    relatorioProximo: {
+        type: Object,
+        default: null
+    },
+    relatorioAtual: {
+        type: Number,
+        default: 0
+    },
+    totalRelatorios: {
+        type: Number,
+        default: 0
+    },
 })
 
 const equipamentosTeste = props.equipamentosTeste
+
+
+
+// Navegação por teclado
+const handleKeydown = (event) => {
+    // Não navegar se estiver em um campo de input
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.contentEditable === 'true') {
+        return
+    }
+    
+    // Navegar com setas do teclado
+    if (event.key === 'ArrowLeft' && props.relatorioAnterior) {
+        event.preventDefault()
+        window.location.href = route('relatorios.show', props.relatorioAnterior.id)
+    } else if (event.key === 'ArrowRight' && props.relatorioProximo) {
+        event.preventDefault()
+        window.location.href = route('relatorios.show', props.relatorioProximo.id)
+    }
+}
+
+// Adicionar listener de teclado quando o componente for montado
+onMounted(() => {
+    document.addEventListener('keydown', handleKeydown)
+})
+
+// Remover listener quando o componente for desmontado
+onUnmounted(() => {
+    document.removeEventListener('keydown', handleKeydown)
+})
 
 const { confirmDelete } = useConfirm()
 const { success, error } = useNotifications()
@@ -836,6 +927,50 @@ const formatarData = (dateString) => {
     return dateString // Se não bater nenhum formato, retorna como veio
 }
 
+const formatarDataHora = (dateString) => {
+    if (!dateString) return 'Não informada'
+    
+    try {
+        const dataObj = new Date(dateString)
+        const dataFormatada = dataObj.toLocaleDateString('pt-BR')
+        const horaFormatada = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        return `${dataFormatada} às ${horaFormatada}`
+    } catch (error) {
+        return formatarData(dateString)
+    }
+}
+
+const formatarHora = (timeString) => {
+    if (!timeString) return ''
+    
+    // Se já vier no formato HH:mm, apenas retorna
+    if (/^\d{2}:\d{2}$/.test(timeString)) {
+        return ` às ${timeString}`
+    }
+    
+    // Se vier como objeto Date ou string de data completa, extrai só a hora
+    let hora, minuto
+    
+    if (timeString instanceof Date) {
+        hora = timeString.getHours().toString().padStart(2, '0')
+        minuto = timeString.getMinutes().toString().padStart(2, '0')
+    } else if (typeof timeString === 'string') {
+        // Tenta extrair hora e minuto de diferentes formatos
+        const match = timeString.match(/(\d{1,2}):(\d{2})/)
+        if (match) {
+            hora = match[1].padStart(2, '0')
+            minuto = match[2]
+        } else {
+            // Se não conseguir extrair, retorna vazio
+            return ''
+        }
+    } else {
+        return ''
+    }
+    
+    return ` às ${hora}:${minuto}`
+}
+
 const formatFileSize = (bytes) => {
     if (!bytes) return '0 Bytes'
     const k = 1024
@@ -900,7 +1035,15 @@ const getImagePreview = (arquivo) => {
 }
 
 // Função para tratar erro de carregamento de imagens
-const handleImageError = (index) => {
+const handleImageError = (event) => {
+    console.error('Erro ao carregar imagem:', event.target.src)
+    // Substituir por uma imagem placeholder
+    event.target.src = '/images/placeholder-image.jpg'
+    event.target.alt = 'Imagem não disponível'
+}
+
+// Função para tratar erro de carregamento de preview de imagens
+const handlePreviewError = (index) => {
     console.error(`Erro ao carregar preview da imagem ${index}`)
     const imagem = modalProgresso.value.imagens[index]
     if (imagem && imagem.preview) {

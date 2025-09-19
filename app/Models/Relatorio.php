@@ -22,15 +22,13 @@ class Relatorio extends Model
         'local_id',
         'status',
         'progresso',
-        'detalhes',
-        'images'
+        'detalhes'
     ];
 
     protected $casts = [
         'date_created' => 'date',
         'time_created' => 'datetime:H:i',
-        'progresso' => 'integer',
-        'images' => 'array'
+        'progresso' => 'integer'
     ];
 
     /**
@@ -60,6 +58,14 @@ class Relatorio extends Model
     public function atualizacoes()
     {
         return $this->hasMany(RelatorioAtualizacao::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Relacionamento com imagens do relatório
+     */
+    public function imagens()
+    {
+        return $this->hasMany(RelatorioImagem::class)->ordered();
     }
 
     // Verifica se o usuário pode atualizar este relatório

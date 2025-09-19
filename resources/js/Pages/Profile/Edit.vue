@@ -60,7 +60,14 @@ defineProps({
                             <li v-for="relatorio in $page.props.relatorios.data" :key="relatorio.id" class="py-3 flex items-center justify-between">
                                 <div>
                                     <div class="font-medium text-gray-900 dark:text-gray-100">{{ relatorio.titulo }}</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ relatorio.created_at ? new Date(relatorio.created_at).toLocaleDateString('pt-BR') : '' }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                        {{ relatorio.created_at ? (() => {
+                                            const data = new Date(relatorio.created_at);
+                                            const dataFormatada = data.toLocaleDateString('pt-BR');
+                                            const horaFormatada = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                                            return `${dataFormatada} às ${horaFormatada}`;
+                                        })() : '' }}
+                                    </div>
                                     <div class="text-xs">
                                         Status:
                                         <span :class="{

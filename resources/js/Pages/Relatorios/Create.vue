@@ -556,29 +556,31 @@ const getProgressBarClass = (progresso) => {
 
 const handleFileUpload = (event) => {
     const files = Array.from(event.target.files)
-    
+    // Acumular arquivos, evitando sobrescrever
     files.forEach(file => {
         if (file.type.startsWith('image/')) {
             if (file.size > 10 * 1024 * 1024) { // 10MB
                 error(`Arquivo ${file.name} é muito grande. Máximo 10MB.`)
                 return
             }
-            
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                imagePreviews.value.push({
-                    url: e.target.result,
-                    name: file.name,
-                    file: file
-                })
-                selectedFiles.value.push(file)
+            // Evitar duplicatas pelo nome e tamanho
+            const exists = selectedFiles.value.some(f => f.name === file.name && f.size === file.size)
+            if (!exists) {
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    imagePreviews.value.push({
+                        url: e.target.result,
+                        name: file.name,
+                        file: file
+                    })
+                    selectedFiles.value.push(file)
+                }
+                reader.readAsDataURL(file)
             }
-            reader.readAsDataURL(file)
         } else {
             error(`Arquivo ${file.name} não é uma imagem válida.`)
         }
     })
-    
     // Limpar o input
     event.target.value = ''
 }

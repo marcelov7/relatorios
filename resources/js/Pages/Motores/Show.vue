@@ -85,6 +85,15 @@
                                             </span>
                                         </dd>
                                     </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Status de Armazenamento</dt>
+                                        <dd class="mt-1">
+                                            <span v-if="motor.armazenamento" class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+                                                {{ motor.armazenamento }}
+                                            </span>
+                                            <span v-else class="text-sm text-gray-500 dark:text-gray-400">Não informado</span>
+                                        </dd>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,4 +286,6 @@ const getReservaAlmoxClass = (reservaAlmox) => {
 const getTipoEquipamentoModeloClass = (tipo) => {
     return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
 }
+
+
 </script> 

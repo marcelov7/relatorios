@@ -23,15 +23,16 @@ class RelatorioAtualizacao extends Model
     ];
 
     protected $casts = [
-        'imagens' => 'array'
+        'imagens' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
-    // Accessor para garantir que created_at seja serializado como data local (Y-m-d H:i:s)
-    public function getCreatedAtAttribute($value)
-    {
-        // Força o timezone para America/Sao_Paulo e retorna a data no formato d/m/Y
-        return \Carbon\Carbon::parse($value)->timezone(config('app.timezone'))->format('d/m/Y');
-    }
+    // Remover o accessor problemático que estava causando erro no Carbon::parse
+    // public function getCreatedAtAttribute($value)
+    // {
+    //     return \Carbon\Carbon::parse($value)->timezone(config('app.timezone'))->format('d/m/Y');
+    // }
 
     // Relacionamentos
     public function relatorio()

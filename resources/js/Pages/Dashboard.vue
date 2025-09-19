@@ -1,11 +1,20 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 const props = defineProps({
     stats: Object,
     relatoriosRecentes: Array,
+    relatoriosAbertos: Array,
+    relatoriosEmAndamento: Array,
 })
+
+// Estado para controlar a expansão do card de relatórios abertos
+const mostrarRelatoriosAbertos = ref(false)
+
+// Estado para controlar a expansão do card de relatórios em andamento
+const mostrarRelatoriosEmAndamento = ref(false)
 
 const getStatusClass = (status) => {
     switch (status) {
@@ -120,7 +129,7 @@ const getProgressClass = (progresso) => {
         </div>
 
         <!-- Action Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Criar Novo Relatório -->
             <Link href="/relatorios/create" 
                   class="group bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 rounded-lg shadow-lg dark:shadow-gray-900/30 p-6 text-white transition-all duration-200 hover:shadow-xl dark:hover:shadow-gray-900/40 transform hover:scale-105">
@@ -149,16 +158,174 @@ const getProgressClass = (progresso) => {
                 </div>
             </Link>
 
-            <!-- Estatísticas -->
-            <div class="group bg-gradient-to-br from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 hover:from-purple-600 hover:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-800 rounded-lg shadow-lg dark:shadow-gray-900/30 p-6 text-white transition-all duration-200 hover:shadow-xl dark:hover:shadow-gray-900/40 transform hover:scale-105 cursor-pointer">
+            <!-- Relatórios Abertos Aguardando Atenção -->
+            <div class="group bg-gradient-to-br from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 hover:from-purple-600 hover:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-800 rounded-lg shadow-lg dark:shadow-gray-900/30 p-6 text-white transition-all duration-200 hover:shadow-xl dark:hover:shadow-gray-900/40 transform hover:scale-105 cursor-pointer"
+                 @click="mostrarRelatoriosAbertos = !mostrarRelatoriosAbertos">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="text-lg font-semibold mb-2">Relatórios Abertos</h3>
-                        <p class="text-purple-100 dark:text-purple-200 text-sm">{{ stats.abertos }} aguardando atenção</p>
+                        <p class="text-purple-100 dark:text-purple-200 text-sm">
+                            {{ stats.abertos }} aguardando atenção
+                            <span v-if="relatoriosAbertos.filter(r => r.prioridade === 'alta').length > 0" class="ml-2 text-xs bg-purple-400 dark:bg-purple-500 px-2 py-1 rounded-full">
+                                {{ relatoriosAbertos.filter(r => r.prioridade === 'alta').length }} alta prioridade
+                            </span>
+                        </p>
                     </div>
-                    <svg class="w-8 h-8 text-purple-200 dark:text-purple-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg class="w-8 h-8 text-purple-200 dark:text-purple-300 group-hover:text-white transition-colors" 
+                         :class="{ 'rotate-180': mostrarRelatoriosAbertos }"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
+                </div>
+                
+                <!-- Lista de relatórios abertos (expandível) -->
+                <div v-if="mostrarRelatoriosAbertos && relatoriosAbertos.length > 0" 
+                     class="mt-4 pt-4 border-t border-purple-400 dark:border-purple-500">
+                    <div class="space-y-3">
+                        <div v-for="relatorio in relatoriosAbertos" 
+                             :key="relatorio.id"
+                             class="bg-purple-400 dark:bg-purple-500/30 rounded-lg p-3 hover:bg-purple-400/80 dark:hover:bg-purple-500/50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm mb-1">{{ relatorio.titulo }}</h4>
+                                    <div class="flex items-center space-x-2 text-xs text-purple-100 dark:text-purple-200">
+                                        <span>{{ relatorio.autor }}</span>
+                                        <span>•</span>
+                                        <span>{{ relatorio.setor }}</span>
+                                        <span>•</span>
+                                        <span>{{ relatorio.tempoAberto }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <!-- Indicador de prioridade -->
+                                    <span :class="{
+                                        'bg-red-500': relatorio.prioridade === 'alta',
+                                        'bg-yellow-500': relatorio.prioridade === 'media',
+                                        'bg-green-500': relatorio.prioridade === 'baixa'
+                                    }" class="w-3 h-3 rounded-full"></span>
+                                    
+                                    <!-- Botão para ver relatório -->
+                                    <Link :href="`/relatorios/${relatorio.id}`" 
+                                          class="text-purple-100 dark:text-purple-200 hover:text-white p-1 rounded transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botão para ver todos -->
+                    <div class="mt-3 pt-3 border-t border-purple-400 dark:border-purple-500">
+                        <Link href="/relatorios?status=Aberta" 
+                              class="inline-flex items-center text-sm text-purple-100 dark:text-purple-200 hover:text-white transition-colors">
+                            Ver todos os relatórios abertos
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+                
+                <!-- Mensagem quando não há relatórios abertos -->
+                <div v-else-if="mostrarRelatoriosAbertos && relatoriosAbertos.length === 0" 
+                     class="mt-4 pt-4 border-t border-purple-400 dark:border-purple-500">
+                    <div class="text-center py-4">
+                        <svg class="mx-auto h-8 w-8 text-purple-200 dark:text-purple-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-purple-100 dark:text-purple-200 text-sm">Nenhum relatório aberto!</p>
+                        <p class="text-purple-200 dark:text-purple-300 text-xs">Todos os relatórios estão em dia.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Relatórios em Andamento que Precisam de Atenção -->
+            <div class="group bg-gradient-to-br from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700 hover:from-orange-600 hover:to-orange-700 dark:hover:from-orange-700 dark:hover:to-orange-800 rounded-lg shadow-lg dark:shadow-gray-900/30 p-6 text-white transition-all duration-200 hover:shadow-xl dark:hover:shadow-gray-900/40 transform hover:scale-105 cursor-pointer"
+                 @click="mostrarRelatoriosEmAndamento = !mostrarRelatoriosEmAndamento">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Em Andamento</h3>
+                        <p class="text-orange-100 dark:text-orange-200 text-sm">
+                            {{ stats.emAndamento }} sendo trabalhados
+                            <span v-if="relatoriosEmAndamento.filter(r => r.precisaAtencao).length > 0" class="ml-2 text-xs bg-orange-400 dark:bg-orange-500 px-2 py-1 rounded-full">
+                                {{ relatoriosEmAndamento.filter(r => r.precisaAtencao).length }} precisam atenção
+                            </span>
+                        </p>
+                    </div>
+                    <svg class="w-8 h-8 text-orange-200 dark:text-orange-300 group-hover:text-white transition-colors" 
+                         :class="{ 'rotate-180': mostrarRelatoriosEmAndamento }"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                
+                <!-- Lista de relatórios em andamento (expandível) -->
+                <div v-if="mostrarRelatoriosEmAndamento && relatoriosEmAndamento.length > 0" 
+                     class="mt-4 pt-4 border-t border-orange-400 dark:border-orange-500">
+                    <div class="space-y-3">
+                        <div v-for="relatorio in relatoriosEmAndamento" 
+                             :key="relatorio.id"
+                             class="bg-orange-400 dark:bg-orange-500/30 rounded-lg p-3 hover:bg-orange-400/80 dark:hover:bg-orange-500/50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm mb-1">{{ relatorio.titulo }}</h4>
+                                    <div class="flex items-center space-x-2 text-xs text-orange-100 dark:text-orange-200 mb-2">
+                                        <span>{{ relatorio.autor }}</span>
+                                        <span>•</span>
+                                        <span>{{ relatorio.setor }}</span>
+                                        <span>•</span>
+                                        <span>{{ relatorio.tempoSemAtualizacao }}</span>
+                                    </div>
+                                    <!-- Barra de progresso -->
+                                    <div class="w-full bg-orange-300 dark:bg-orange-600 rounded-full h-2">
+                                        <div class="bg-white h-2 rounded-full transition-all duration-300"
+                                             :style="`width: ${relatorio.progresso}%`">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-1">
+                                        <span class="text-xs text-orange-100 dark:text-orange-200">{{ relatorio.progresso }}%</span>
+                                        <span v-if="relatorio.precisaAtencao" class="text-xs bg-red-500 text-white px-2 py-1 rounded-full">
+                                            Precisa atenção
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <!-- Botão para ver relatório -->
+                                    <Link :href="`/relatorios/${relatorio.id}`" 
+                                          class="text-orange-100 dark:text-orange-200 hover:text-white p-1 rounded transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botão para ver todos -->
+                    <div class="mt-3 pt-3 border-t border-orange-400 dark:border-orange-500">
+                        <Link href="/relatorios?status=Em Andamento" 
+                              class="inline-flex items-center text-sm text-orange-100 dark:text-orange-200 hover:text-white transition-colors">
+                            Ver todos em andamento
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+                
+                <!-- Mensagem quando não há relatórios em andamento -->
+                <div v-else-if="mostrarRelatoriosEmAndamento && relatoriosEmAndamento.length === 0" 
+                     class="mt-4 pt-4 border-t border-orange-400 dark:border-orange-500">
+                    <div class="text-center py-4">
+                        <svg class="mx-auto h-8 w-8 text-orange-200 dark:text-orange-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-orange-100 dark:text-orange-200 text-sm">Nenhum relatório em andamento!</p>
+                        <p class="text-orange-200 dark:text-orange-300 text-xs">Todos os relatórios estão atualizados.</p>
+                    </div>
                 </div>
             </div>
         </div>

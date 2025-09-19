@@ -168,6 +168,18 @@
                                         />
                                         <InputError class="mt-2" :message="form.errors.reserva_almox" />
                                     </div>
+
+                                    <div>
+                                        <InputLabel for="armazenamento" value="Status de Armazenamento" class="text-gray-700 dark:text-gray-300" />
+                                        <TextInput
+                                            id="armazenamento"
+                                            v-model="form.armazenamento"
+                                            type="text"
+                                            placeholder="Ex: Instalado, Almoxarifado, Manutenção, etc."
+                                            class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                        />
+                                        <InputError class="mt-2" :message="form.errors.armazenamento" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -269,6 +281,7 @@ const form = useForm({
     tipo_equipamento_modelo: props.motor.tipo_equipamento_modelo || '',
     fabricante: props.motor.fabricante || '',
     reserva_almox: props.motor.reserva_almox || '',
+    armazenamento: props.motor.armazenamento || '',
     local: props.motor.local || '',
     foto: null,
     observacoes: props.motor.observacoes || '',

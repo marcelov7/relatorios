@@ -86,6 +86,24 @@
                             </select>
                         </div>
                         
+                        <!-- Status de Armazenamento -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Status de Armazenamento
+                            </label>
+                            <select
+                                v-model="filtros.armazenamento"
+                                class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 shadow-sm text-sm"
+                            >
+                                <option value="">Todos os status</option>
+                                <option value="Almoxarifado">Almoxarifado</option>
+                                <option value="Instalado">Instalado</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Reserva">Reserva</option>
+                                <option value="Descartado">Descartado</option>
+                            </select>
+                        </div>
+                        
                         <!-- Tipo de Equipamento/Modelo -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -133,8 +151,9 @@
                             <button
                                 type="button"
                                 @click="limparFiltros"
-                                class="px-3 py-2.5 sm:py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                                title="Limpar filtros"
+                                :class="temFiltrosAtivos ? 'text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'"
+                                class="px-3 py-2.5 sm:py-2 rounded-md transition-colors"
+                                :title="temFiltrosAtivos ? 'Limpar filtros ativos' : 'Limpar filtros'"
                             >
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -290,11 +309,32 @@
 
                 <!-- Contador de Resultados -->
                 <div class="mb-4 flex justify-between items-center">
-                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                        {{ motores.total }} motor{{ motores.total !== 1 ? 'es' : '' }} encontrado{{ motores.total !== 1 ? 's' : '' }}
-                        <span class="hidden sm:inline">{{ motores.data.length < motores.total ? `(mostrando ${motores.data.length} de ${motores.total})` : '' }}</span>
-                        <span class="sm:hidden">{{ motores.data.length < motores.total ? `(${motores.data.length}/${motores.total})` : '' }}</span>
-                    </p>
+                    <div class="flex items-center gap-3">
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                            {{ motores.total }} motor{{ motores.total !== 1 ? 'es' : '' }} encontrado{{ motores.total !== 1 ? 's' : '' }}
+                            <span class="hidden sm:inline">{{ motores.data.length < motores.total ? `(mostrando ${motores.data.length} de ${motores.total})` : '' }}</span>
+                            <span class="sm:hidden">{{ motores.data.length < motores.total ? `(${motores.data.length}/${motores.total})` : '' }}</span>
+                        </p>
+                        
+                        <!-- Indicador de Filtros Ativos -->
+                        <div v-if="temFiltrosAtivos" class="flex items-center gap-2">
+                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 rounded-full">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+                                </svg>
+                                Filtros ativos
+                            </span>
+                            <button
+                                @click="limparFiltros"
+                                class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20"
+                                title="Limpar todos os filtros"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Grid de Motores -->
@@ -353,6 +393,7 @@
                                 </svg>
                                 {{ motor.rotacao }} RPM
                             </div>
+
                         </div>
 
                         <div class="flex justify-end space-x-1 sm:space-x-2">
@@ -420,7 +461,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '@/Components/Pagination.vue'
@@ -439,10 +480,47 @@ const props = defineProps({
     carcacas: Array,
 })
 
-const filtros = ref({ ...props.filtros })
+// Função para salvar filtros no localStorage
+const salvarFiltros = (filtrosData) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('motores_filtros', JSON.stringify(filtrosData))
+    }
+}
+
+// Função para carregar filtros do localStorage
+const carregarFiltros = () => {
+    if (typeof window !== 'undefined') {
+        const filtrosSalvos = localStorage.getItem('motores_filtros')
+        if (filtrosSalvos) {
+            return JSON.parse(filtrosSalvos)
+        }
+    }
+    return {}
+}
+
+// Função para limpar filtros do localStorage
+const limparFiltrosStorage = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('motores_filtros')
+    }
+}
+
+// Inicializar filtros com dados do servidor ou localStorage
+const filtrosIniciais = Object.keys(props.filtros).length > 0 ? props.filtros : carregarFiltros()
+const filtros = ref(filtrosIniciais)
 const mostrarFiltrosAvancados = ref(false)
 
+// Verificar se há filtros ativos
+const temFiltrosAtivos = computed(() => {
+    return Object.values(filtros.value).some(valor => 
+        valor !== null && valor !== undefined && valor !== ''
+    )
+})
+
 const aplicarFiltros = () => {
+    // Salvar filtros no localStorage antes de aplicar
+    salvarFiltros(filtros.value)
+    
     router.get(route('motores.index'), filtros.value, {
         preserveState: true,
         preserveScroll: true,
@@ -451,6 +529,9 @@ const aplicarFiltros = () => {
 
 const limparFiltros = () => {
     filtros.value = {}
+    // Limpar filtros do localStorage
+    limparFiltrosStorage()
+    
     router.get(route('motores.index'), {}, {
         preserveState: true,
         preserveScroll: true,
@@ -485,6 +566,8 @@ const getReservaAlmoxClass = (reservaAlmox) => {
         : 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'
 }
 
+
+
 onMounted(() => {
     // Debounce para busca
     let timeout
@@ -497,6 +580,11 @@ onMounted(() => {
                 aplicarFiltros()
             }, 500)
         })
+    }
+    
+    // Aplicar filtros salvos automaticamente se não vierem do servidor
+    if (Object.keys(props.filtros).length === 0 && temFiltrosAtivos.value) {
+        aplicarFiltros()
     }
 })
 </script> 

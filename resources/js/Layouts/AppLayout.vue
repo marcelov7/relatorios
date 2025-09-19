@@ -60,6 +60,18 @@
                         Motores
                     </Link>
 
+                    <!-- Inspeção de Gerador -->
+                    <Link href="/inspecao-geradores" 
+                          class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group"
+                          :class="isActive('/inspecao-geradores') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                        <svg class="w-5 h-5 mr-3 transition-colors"
+                             :class="isActive('/inspecao-geradores') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-400'"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Inspeção Gerador
+                    </Link>
+
                     <!-- Equipamentos de Teste (apenas para admins) -->
                     <Link v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" 
                           href="/equipamento-tests" 
@@ -234,6 +246,15 @@
                     <span class="text-xs mt-1 truncate">Relatórios</span>
                 </Link>
                 
+                <Link href="/inspecao-geradores" 
+                      class="flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-colors min-w-0 flex-1"
+                      :class="isActive('/inspecao-geradores') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span class="text-xs mt-1 truncate">Gerador</span>
+                </Link>
+                
                 <Link href="/relatorios/create" 
                       class="flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-colors min-w-0 flex-1"
                       :class="isActive('/relatorios/create') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'">
@@ -292,6 +313,10 @@ const pageSubtitle = computed(() => {
     if (url.startsWith('/relatorios') && url.includes('/edit')) return 'Editar relatório'
     if (url.startsWith('/relatorios') && url.match(/\/\d+$/)) return 'Visualizar relatório'
     if (url.startsWith('/relatorios')) return 'Gerenciar relatórios'
+    if (url.startsWith('/inspecao-geradores/create')) return 'Criar nova inspeção'
+    if (url.startsWith('/inspecao-geradores') && url.includes('/edit')) return 'Editar inspeção'
+    if (url.startsWith('/inspecao-geradores') && url.match(/\/\d+$/)) return 'Visualizar inspeção'
+    if (url.startsWith('/inspecao-geradores')) return 'Gerenciar inspeções'
     
     return ''
 })

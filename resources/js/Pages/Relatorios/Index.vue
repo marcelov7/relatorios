@@ -10,17 +10,17 @@
                 Atualizando...
             </div>
         </div>
-        <!-- Botão de PDF Técnico -->
-        <div class="mb-4 flex items-center gap-4">
+        <!-- Botão de PDF Spatie -->
+        <div class="mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <button
                 :disabled="selectedIds.length === 0 || selectedIds.length > 20"
-                @click="gerarPdf"
-                class="inline-flex items-center px-4 py-2 bg-green-600 dark:bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 dark:hover:bg-green-800 focus:bg-green-700 dark:focus:bg-green-800 active:bg-green-900 dark:active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-600 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+                @click="gerarPdfBrowsershot()"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 dark:hover:bg-blue-800 focus:bg-blue-700 dark:focus:bg-blue-800 active:bg-blue-900 dark:active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
             >
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
-                Gerar PDF Técnico
+                PDF Moderno
             </button>
             <span v-if="selectedIds.length > 20" class="text-red-500 text-sm">
                 Selecione no máximo 20 relatórios.
@@ -105,16 +105,38 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-600 dark:text-gray-400">
-                    <span v-if="temFiltros" class="inline-flex items-center space-x-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                        <span>Filtros ativos</span>
-                    </span>
+                <div class="flex items-center gap-3">
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        <span v-if="temFiltros" class="inline-flex items-center space-x-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                            <span>Filtros ativos</span>
+                        </span>
+                    </div>
+                    
+                    <!-- Indicador de Filtros Ativos -->
+                    <div v-if="temFiltros" class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400 rounded-full">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.5V4z" />
+                            </svg>
+                            Filtros ativos
+                        </span>
+                        <button
+                            @click="limparFiltros"
+                            class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20"
+                            title="Limpar todos os filtros"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <button @click="limparFiltros" 
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                        :class="temFiltros ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/30' : 'bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500'"
+                        class="px-4 py-2 rounded-md transition-colors">
                     Limpar Filtros
                 </button>
             </div>
@@ -194,8 +216,34 @@
                             <span class="text-gray-900 dark:text-gray-100">{{ relatorio.local.nome }}</span>
                         </div>
                         <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-500 dark:text-gray-400">Data do relato:</span>
+                            <span class="text-gray-900 dark:text-gray-100">{{ formatarData(relatorio.date_created) }}{{ formatarHora(relatorio.time_created) }}</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500 dark:text-gray-400">Criado em:</span>
-                            <span class="text-gray-900 dark:text-gray-100">{{ formatarData(relatorio.created_at) }}</span>
+                            <span class="text-gray-900 dark:text-gray-100">{{ formatarDataHora(relatorio.created_at) }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Resumo dos Detalhes -->
+                    <div v-if="relatorio.detalhes && limparHTML(relatorio.detalhes).length > 0" class="mb-4">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-gray-500 dark:text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <div class="flex-1 min-w-0">
+                                <span class="text-xs font-medium text-gray-500 dark:text-gray-400 block mb-1">Detalhes:</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed overflow-hidden" :class="detalhesExpandidos[relatorio.id] ? '' : 'max-h-12'">
+                                    {{ truncarDetalhes(relatorio.detalhes, relatorio.id) }}
+                                </p>
+                                <button 
+                                    v-if="limparHTML(relatorio.detalhes).length > 150"
+                                    @click.stop="toggleDetalhes(relatorio.id)"
+                                    class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mt-1 font-medium"
+                                >
+                                    {{ detalhesExpandidos[relatorio.id] ? 'Ver menos' : 'Ver mais' }}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -326,17 +374,46 @@ const props = defineProps({
 const { confirmDelete } = useConfirm()
 const { success, error } = useNotifications()
 
+// Função para salvar filtros no localStorage
+const salvarFiltros = (filtrosData) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('relatorios_filtros', JSON.stringify(filtrosData))
+    }
+}
+
+// Função para carregar filtros do localStorage
+const carregarFiltros = () => {
+    if (typeof window !== 'undefined') {
+        const filtrosSalvos = localStorage.getItem('relatorios_filtros')
+        if (filtrosSalvos) {
+            return JSON.parse(filtrosSalvos)
+        }
+    }
+    return {}
+}
+
+// Função para limpar filtros do localStorage
+const limparFiltrosStorage = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('relatorios_filtros')
+    }
+}
+
+// Inicializar filtros com dados do servidor ou localStorage
+const filtrosIniciais = Object.keys(props.filtros).length > 0 ? props.filtros : carregarFiltros()
+
 const form = ref({
-    busca: props.filtros.busca || '',
-    status: props.filtros.status || '',
-    setor_id: props.filtros.setor_id || '',
-    autor_id: props.filtros.autor_id || '',
-    data_inicio: props.filtros.data_inicio || '',
-    data_fim: props.filtros.data_fim || '',
-    per_page: props.filtros.per_page || 12,
+    busca: filtrosIniciais.busca || '',
+    status: filtrosIniciais.status || '',
+    setor_id: filtrosIniciais.setor_id || '',
+    autor_id: filtrosIniciais.autor_id || '',
+    data_inicio: filtrosIniciais.data_inicio || '',
+    data_fim: filtrosIniciais.data_fim || '',
+    per_page: filtrosIniciais.per_page || 12,
 })
 
 const isRefreshing = ref(false)
+const detalhesExpandidos = ref({})
 let timeoutBusca = null
 let startY = 0
 let currentY = 0
@@ -346,6 +423,44 @@ const temFiltros = computed(() => {
     return form.value.busca || form.value.status || form.value.setor_id || form.value.autor_id || form.value.data_inicio || form.value.data_fim
 })
 
+// Função para limpar HTML e extrair texto puro
+const limparHTML = (html) => {
+    if (!html) return ''
+    
+    // Remove tags HTML e comentários
+    let textoLimpo = html
+        .replace(/<!--[\s\S]*?-->/g, '') // Remove comentários HTML
+        .replace(/<[^>]*>/g, '') // Remove tags HTML
+        .replace(/&nbsp;/g, ' ') // Substitui &nbsp; por espaço
+        .replace(/&amp;/g, '&') // Substitui &amp; por &
+        .replace(/&lt;/g, '<') // Substitui &lt; por <
+        .replace(/&gt;/g, '>') // Substitui &gt; por >
+        .replace(/&quot;/g, '"') // Substitui &quot; por "
+        .replace(/&#39;/g, "'") // Substitui &#39; por '
+        .replace(/\s+/g, ' ') // Remove múltiplos espaços
+        .trim() // Remove espaços extras
+    
+    return textoLimpo
+}
+
+// Função para truncar detalhes
+const truncarDetalhes = (detalhes, relatorioId) => {
+    if (!detalhes) return ''
+    
+    const textoLimpo = limparHTML(detalhes)
+    
+    if (detalhesExpandidos.value[relatorioId]) {
+        return textoLimpo
+    }
+    
+    return textoLimpo.length > 150 ? textoLimpo.substring(0, 150) + '...' : textoLimpo
+}
+
+// Função para expandir/recolher detalhes
+const toggleDetalhes = (relatorioId) => {
+    detalhesExpandidos.value[relatorioId] = !detalhesExpandidos.value[relatorioId]
+}
+
 const buscar = () => {
     clearTimeout(timeoutBusca)
     timeoutBusca = setTimeout(() => {
@@ -354,6 +469,9 @@ const buscar = () => {
 }
 
 const aplicarFiltros = () => {
+    // Salvar filtros no localStorage antes de aplicar
+    salvarFiltros(form.value)
+    
     router.get('/relatorios', form.value, {
         preserveState: true,
         replace: true,
@@ -370,6 +488,9 @@ const limparFiltros = () => {
         data_fim: '',
         per_page: 12,
     }
+    // Limpar filtros do localStorage
+    limparFiltrosStorage()
+    
     aplicarFiltros()
 }
 
@@ -400,6 +521,44 @@ const formatarData = (data) => {
     return new Date(data).toLocaleDateString('pt-BR')
 }
 
+const formatarDataHora = (data) => {
+    const dataObj = new Date(data)
+    const dataFormatada = dataObj.toLocaleDateString('pt-BR')
+    const horaFormatada = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+    return `${dataFormatada} às ${horaFormatada}`
+}
+
+const formatarHora = (timeString) => {
+    if (!timeString) return ''
+    
+    // Se já vier no formato HH:mm, apenas retorna
+    if (/^\d{2}:\d{2}$/.test(timeString)) {
+        return ` às ${timeString}`
+    }
+    
+    // Se vier como objeto Date ou string de data completa, extrai só a hora
+    let hora, minuto
+    
+    if (timeString instanceof Date) {
+        hora = timeString.getHours().toString().padStart(2, '0')
+        minuto = timeString.getMinutes().toString().padStart(2, '0')
+    } else if (typeof timeString === 'string') {
+        // Tenta extrair hora e minuto de diferentes formatos
+        const match = timeString.match(/(\d{1,2}):(\d{2})/)
+        if (match) {
+            hora = match[1].padStart(2, '0')
+            minuto = match[2]
+        } else {
+            // Se não conseguir extrair, retorna vazio
+            return ''
+        }
+    } else {
+        return ''
+    }
+    
+    return ` às ${hora}:${minuto}`
+}
+
 const confirmarExclusao = async (relatorio) => {
     const confirmado = await confirmDelete(`"${relatorio.titulo}"`)
     
@@ -423,32 +582,12 @@ const confirmarExclusao = async (relatorio) => {
 
 const selectedIds = ref([])
 
-const gerarPdf = () => {
-    if (selectedIds.value.length === 0 || selectedIds.value.length > 20) return
-    const form = document.createElement('form')
-    form.method = 'POST'
-    form.action = '/relatorios/pdf-lote'
-    form.target = '_blank'
-    form.style.display = 'none'
-    // CSRF token
-    const csrf = document.querySelector('meta[name=csrf-token]').content
-    const csrfInput = document.createElement('input')
-    csrfInput.type = 'hidden'
-    csrfInput.name = '_token'
-    csrfInput.value = csrf
-    form.appendChild(csrfInput)
-    // IDs
-    selectedIds.value.forEach(id => {
-        const input = document.createElement('input')
-        input.type = 'hidden'
-        input.name = 'ids[]'
-        input.value = id
-        form.appendChild(input)
-    })
-    document.body.appendChild(form)
-    form.submit()
-    document.body.removeChild(form)
-}
+const gerarPdfBrowsershot = () => {
+    if (selectedIds.value.length === 0 || selectedIds.value.length > 20) return;
+    const ids = selectedIds.value.join(',');
+    const url = `/relatorios/pdf-browsershot?ids=${ids}`;
+    window.open(url, '_blank');
+};
 
 // Pull to Refresh
 const handleTouchStart = (e) => {
@@ -495,6 +634,11 @@ onMounted(() => {
     document.addEventListener('touchstart', handleTouchStart, { passive: false })
     document.addEventListener('touchmove', handleTouchMove, { passive: false })
     document.addEventListener('touchend', handleTouchEnd)
+    
+    // Aplicar filtros salvos automaticamente se não vierem do servidor
+    if (Object.keys(props.filtros).length === 0 && temFiltros.value) {
+        aplicarFiltros()
+    }
 })
 
 onUnmounted(() => {
@@ -502,4 +646,14 @@ onUnmounted(() => {
     document.removeEventListener('touchmove', handleTouchMove)
     document.removeEventListener('touchend', handleTouchEnd)
 })
-</script> 
+</script>
+
+<style scoped>
+.max-h-12 {
+    max-height: 3rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style> 
