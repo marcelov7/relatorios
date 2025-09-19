@@ -2,104 +2,202 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatórios PDF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório {{ isset($relatorio) ? $relatorio->id : 'PDF' }}</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             font-size: 12px;
-            color: #222;
+            line-height: 1.4;
+            color: #333;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background: #fff;
         }
-        .header {
-            padding: 24px 0 12px 0;
-            border-bottom: 2px solid #1976d2;
-            text-align: center;
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1976d2;
+        }
+        
         .header h1 {
             color: #1976d2;
             font-size: 24px;
-            margin: 0;
+            margin: 0 0 10px 0;
         }
-        .meta {
-            text-align: center;
-            color: #888;
+        
+        .meta-info {
+            color: #666;
             font-size: 11px;
-            margin-bottom: 16px;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .relatorio {
-            margin: 0 0 32px 0;
-            padding: 18px 24px;
+        
+        .relatorio-card {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            background: #fafbfc;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            background: #fafafa;
             page-break-inside: avoid;
         }
-        .relatorio .titulo {
-            font-size: 16px;
+        
+        .relatorio-title {
+            font-size: 18px;
             font-weight: bold;
             color: #1976d2;
-            margin-bottom: 4px;
+            margin-bottom: 15px;
         }
-        .relatorio .info {
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
             font-size: 12px;
-            color: #444;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .detalhes-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detalhes-title {
+            font-weight: bold;
             margin-bottom: 8px;
+            color: #333;
         }
-        .relatorio .detalhes {
-            margin-top: 8px;
+        
+        .detalhes-content {
             font-size: 12px;
-            color: #222;
-            white-space: pre-line;
+            line-height: 1.5;
+            color: #444;
+            white-space: pre-wrap;
         }
+        
+        .equipamentos-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .equipamento-item {
+            background: #f5f5f5;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        
+        .images-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .image-item {
+            text-align: center;
+        }
+        
+        .image-item img {
+            max-width: 100%;
+            max-height: 120px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        
+        .image-caption {
+            font-size: 10px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
         .footer {
             text-align: center;
-            color: #aaa;
+            color: #999;
             font-size: 10px;
             margin-top: 40px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
-            padding-top: 8px;
         }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-aberta { background: #fff3cd; color: #856404; }
+        .status-andamento { background: #d1ecf1; color: #0c5460; }
+        .status-concluida { background: #d4edda; color: #155724; }
+        .status-cancelada { background: #f8d7da; color: #721c24; }
+        
         @media print {
-            .relatorio { box-shadow: none; }
+            body { padding: 15px; }
+            .relatorio-card { box-shadow: none; }
             .header, .footer { page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Relatórios</h1>
-    </div>
-    <div class="meta">
-        Gerado em: {{ $data_geracao }}<br>
-        Sistema: {{ $nome_sistema }}
-    </div>
-    @foreach($relatorios as $relatorio)
-        <div class="relatorio">
-            <div class="titulo">{{ $relatorio->titulo }}</div>
-            <div class="info">
-                <b>Responsável:</b> {{ $relatorio->nome_responsavel ?? '-' }}<br>
-                <b>Status:</b> {{ $relatorio->status }}<br>
-                <b>Progresso:</b> {{ $relatorio->progresso }}%<br>
-                <b>Data:</b> {{ \Carbon\Carbon::parse($relatorio->date_created ?? $relatorio->created_at)->format('d/m/Y') }}
-            </div>
-            <div class="detalhes">
-                {!! nl2br(e($relatorio->detalhes)) !!}
-            </div>
-            @if(isset($relatorio->images) && is_array($relatorio->images) && count($relatorio->images))
-                <div style="margin-top:12px;">
-                    <b>Imagens:</b><br>
-                    @foreach($relatorio->images as $img)
-                        <img src="{{ public_path('storage/' . ($img['thumb'] ?? $img['path'])) }}" style="max-width:120px; max-height:90px; margin:2px; border:1px solid #ccc; border-radius:4px;">
-                    @endforeach
-                </div>
-            @endif
+    <div class="container">
+        <div class="header">
+            <h1>{{ isset($relatorios) ? 'Relatórios de Manutenção' : 'Relatório de Manutenção' }}</h1>
         </div>
-    @endforeach
-    <div class="footer">
-        PDF gerado automaticamente pelo sistema em {{ $data_geracao }}
+        
+        <div class="meta-info">
+            Gerado em: {{ isset($data_geracao) ? $data_geracao : now()->format('d/m/Y H:i') }}<br>
+            Sistema: {{ isset($nome_sistema) ? $nome_sistema : config('app.name', 'Sistema de Relatórios') }}
+        </div>
+        
+        @if(isset($relatorios))
+            {{-- Múltiplos relatórios --}}
+            @foreach($relatorios as $rel)
+                @include('relatorios.pdf-single-report', ['relatorio' => $rel])
+            @endforeach
+        @elseif(isset($relatorio))
+            {{-- Relatório único --}}
+            @include('relatorios.pdf-single-report', ['relatorio' => $relatorio])
+        @else
+            <div class="relatorio-card">
+                <p>Nenhum relatório encontrado.</p>
+            </div>
+        @endif
+        
+        <div class="footer">
+            <p>Relatório gerado automaticamente pelo sistema em {{ now()->format('d/m/Y H:i:s') }}</p>
+        </div>
     </div>
 </body>
 </html> 

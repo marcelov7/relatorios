@@ -607,14 +607,26 @@ class RelatorioController extends Controller
             $relatorio = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
                 ->findOrFail($id);
             
-            // Detectar caminho do Chrome/Chromium
-            $chromePaths = [
-                '/snap/bin/chromium',
-                '/usr/bin/chromium-browser',
-                '/usr/bin/chromium',
-                '/usr/bin/google-chrome-stable',
-                '/usr/bin/google-chrome'
-            ];
+            // Detectar ambiente e configurar caminho do Chrome/Chromium
+            $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+            $isLocal = app()->environment('local');
+            
+            if ($isWindows || $isLocal) {
+                // Ambiente Windows/Local
+                $chromePaths = [
+                    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+                    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+                ];
+            } else {
+                // Ambiente Linux/Produção - CloudPanel
+                $chromePaths = [
+                    '/snap/bin/chromium',
+                    '/usr/bin/chromium-browser',
+                    '/usr/bin/chromium',
+                    '/usr/bin/google-chrome-stable',
+                    '/usr/bin/google-chrome'
+                ];
+            }
             
             $chromePath = null;
             foreach ($chromePaths as $path) {
@@ -625,42 +637,122 @@ class RelatorioController extends Controller
             }
             
             if (!$chromePath) {
-                throw new \Exception('Chrome/Chromium não encontrado no sistema');
+                Log::error('Chrome/Chromium não encontrado. Tentativa de usar Spatie Laravel PDF como fallback');
+                return $this->pdfFallback($id);
             }
             
-            Log::info("Gerando PDF com Browsershot usando Chrome: $chromePath");
+            Log::info("Gerando PDF com Browsershot", [
+                'chrome_path' => $chromePath,
+                'ambiente' => app()->environment(),
+                'relatorio_id' => $id
+            ]);
+            
+            // Preparar diretório temporário para produção
+            $tempDir = '/tmp/browsershot-' . uniqid();
+            if (!$isWindows && !$isLocal) {
+                @mkdir($tempDir, 0755, true);
+                @chmod($tempDir, 0755);
+            }
             
             $html = view('relatorios.pdf-browsershot', compact('relatorio'))->render();
             
-            $pdf = \Spatie\Browsershot\Browsershot::html($html)
+            $browsershot = \Spatie\Browsershot\Browsershot::html($html)
                 ->setChromePath($chromePath)
-                ->addChromiumArguments([
+                ->format('A4')
+                ->margins(10, 10, 10, 10)
+                ->showBackground()
+                ->timeout(120);
+            
+            // Configurar argumentos específicos para ambiente
+            if ($isWindows || $isLocal) {
+                // Argumentos para Windows/Local
+                $browsershot->addChromiumArguments([
+                    '--no-sandbox',
+                    '--disable-gpu',
+                    '--disable-dev-shm-usage'
+                ]);
+            } else {
+                // Argumentos robustos para produção Linux/CloudPanel
+                $browsershot->addChromiumArguments([
                     '--no-sandbox',
                     '--disable-gpu',
                     '--disable-dev-shm-usage',
                     '--disable-setuid-sandbox',
-                    '--user-data-dir=/tmp/chromium-data',
-                    '--data-path=/tmp/chromium-data',
+                    '--disable-web-security',
+                    '--disable-features=VizDisplayCompositor',
+                    '--run-all-compositor-stages-before-draw',
                     '--disable-background-timer-throttling',
                     '--disable-backgrounding-occluded-windows',
                     '--disable-renderer-backgrounding',
                     '--disable-features=TranslateUI',
-                    '--disable-ipc-flooding-protection'
-                ])
-                ->format('A4')
-                ->margins(10, 10, 10, 10)
-                ->showBackground()
-                ->waitUntilNetworkIdle()
-                ->timeout(120)
-                ->pdf();
+                    '--disable-ipc-flooding-protection',
+                    '--disable-extensions',
+                    '--disable-plugins',
+                    '--disable-sync',
+                    '--disable-default-apps',
+                    '--no-first-run',
+                    '--disable-background-networking',
+                    '--user-data-dir=' . $tempDir,
+                    '--data-path=' . $tempDir
+                ]);
+            }
+            
+            $pdf = $browsershot->pdf();
+            
+            // Limpar diretório temporário
+            if (!$isWindows && !$isLocal && is_dir($tempDir)) {
+                exec("rm -rf " . escapeshellarg($tempDir));
+            }
                 
             return response($pdf)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'inline; filename="relatorio-' . $relatorio->id . '.pdf"');
                 
         } catch (\Exception $e) {
-            Log::error('Erro ao gerar PDF com Browsershot: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao gerar PDF: ' . $e->getMessage()], 500);
+            Log::error('Erro ao gerar PDF com Browsershot', [
+                'error' => $e->getMessage(),
+                'relatorio_id' => $id,
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            // Fallback para Spatie Laravel PDF
+            Log::info('Tentando fallback com Spatie Laravel PDF');
+            return $this->pdfFallback($id);
+        }
+    }
+
+    /**
+     * Fallback para geração de PDF usando Spatie Laravel PDF
+     */
+    private function pdfFallback($id)
+    {
+        try {
+            $relatorio = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
+                ->findOrFail($id);
+            
+            Log::info('Gerando PDF com fallback (Spatie Laravel PDF)', ['relatorio_id' => $id]);
+            
+            $data = [
+                'relatorio' => $relatorio,
+                'data_geracao' => now()->format('d/m/Y H:i'),
+                'nome_sistema' => config('app.name', 'Sistema de Relatórios'),
+            ];
+            
+            return Pdf::view('relatorios.pdf-spatie', $data)
+                ->format('a4')
+                ->name('relatorio-' . $relatorio->id . '.pdf')
+                ->download();
+                
+        } catch (\Exception $e) {
+            Log::error('Erro no fallback PDF', [
+                'error' => $e->getMessage(),
+                'relatorio_id' => $id
+            ]);
+            
+            return response()->json([
+                'error' => 'Erro ao gerar PDF. Tente novamente ou contate o suporte.',
+                'details' => app()->environment('local') ? $e->getMessage() : 'Erro interno'
+            ], 500);
         }
     }
 }
