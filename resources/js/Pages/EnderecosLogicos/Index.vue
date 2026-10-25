@@ -211,6 +211,16 @@
                                 <!-- Ações -->
                                 <td class="px-5 py-3.5 whitespace-nowrap text-right text-sm">
                                     <div class="flex items-center justify-end gap-1">
+                                        <!-- WhatsApp Share -->
+                                        <button
+                                            @click="compartilharWhatsApp(item)"
+                                            class="p-1.5 rounded-lg text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors"
+                                            title="Enviar dados no WhatsApp"
+                                        >
+                                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.523 0-10 4.477-10 10 0 1.767.459 3.428 1.261 4.872l-1.34 4.898 5.034-1.321c1.401.764 3.003 1.2 4.707 1.2 5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10zm0 18.25c-1.528 0-2.973-.418-4.218-1.144l-.303-.178-3.134.822.836-3.053-.195-.311c-.799-1.274-1.224-2.753-1.224-4.286 0-4.549 3.701-8.25 8.25-8.25 4.548 0 8.25 3.701 8.25 8.25 0 4.548-3.702 8.25-8.25 8.25z"/>
+                                            </svg>
+                                        </button>
                                         <button
                                             @click="abrirModalEdicao(item)"
                                             class="p-1.5 rounded-lg text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -255,6 +265,16 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-1 flex-shrink-0">
+                            <!-- WhatsApp Share Mobile -->
+                            <button
+                                @click="compartilharWhatsApp(item)"
+                                class="p-1.5 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30"
+                                title="Enviar no WhatsApp"
+                            >
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.523 0-10 4.477-10 10 0 1.767.459 3.428 1.261 4.872l-1.34 4.898 5.034-1.321c1.401.764 3.003 1.2 4.707 1.2 5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10zm0 18.25c-1.528 0-2.973-.418-4.218-1.144l-.303-.178-3.134.822.836-3.053-.195-.311c-.799-1.274-1.224-2.753-1.224-4.286 0-4.549 3.701-8.25 8.25-8.25 4.548 0 8.25 3.701 8.25 8.25 0 4.548-3.702 8.25-8.25 8.25z"/>
+                                </svg>
+                            </button>
                             <button
                                 @click="abrirModalEdicao(item)"
                                 class="p-1.5 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -679,6 +699,28 @@ const copiarTexto = async (texto, id) => {
         console.error('Falha ao copiar:', err)
         error('Não foi possível copiar o texto automaticamente.')
     }
+}
+
+// Enviar dados no WhatsApp com texto estruturado e limpo
+const compartilharWhatsApp = (item) => {
+    if (!item) return
+
+    const linhas = [
+        `*Dados do Endereço Lógico* 🏭`,
+        ``,
+        `*TAG:* ${item.tag || '-'}`,
+        `*Endereço:* \`${item.endereco || '-'}\``,
+        `*Descrição:* ${item.descricao || '-'}`,
+        item.area ? `*Área:* ${item.area}` : null,
+        item.observacoes ? `*Obs:* ${item.observacoes}` : null,
+        ``,
+        `_Enviado pelo Sistema de Relatórios DevAxis_`
+    ].filter(l => l !== null)
+
+    const textoFormatado = encodeURIComponent(linhas.join('\n'))
+    const url = `https://api.whatsapp.com/send?text=${textoFormatado}`
+
+    window.open(url, '_blank')
 }
 
 // Abertura de Modais
