@@ -49,13 +49,11 @@ onMounted(() => {
         <!-- Logo e Título -->
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
             <div class="flex justify-center">
-                <div class="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+                <div class="w-20 h-20 p-2 bg-white/10 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/60 flex items-center justify-center transform hover:scale-105 transition-transform">
+                    <img src="/images/app-logo.png" alt="Sistema de Relatórios" class="w-full h-full object-contain filter drop-shadow-md" />
                 </div>
             </div>
-            <h2 class="mt-6 text-center text-3xl font-bold text-gray-900 dark:text-white">
+            <h2 class="mt-5 text-center text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                 Sistema de Relatórios
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">

@@ -7,14 +7,12 @@
                 <!-- Logo/Brand -->
                 <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 h-16">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
+                        <div class="w-10 h-10 p-1 bg-white/60 dark:bg-gray-700/60 rounded-xl flex items-center justify-center mr-3 shadow-sm border border-gray-100 dark:border-gray-700">
+                            <img src="/images/app-logo.png" alt="Logo" class="w-full h-full object-contain" />
                         </div>
                         <div>
-                            <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Relatórios</h2>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Sistema</p>
+                            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 leading-tight">Relatórios</h2>
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400">DevAxis Industrial</p>
                         </div>
                     </div>
                     <button @click="toggleSidebar" class="p-2 rounded-md text-gray-500 hover:text-gray-700 md:hidden">
