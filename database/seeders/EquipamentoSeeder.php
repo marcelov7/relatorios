@@ -19,7 +19,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'PROD-A-001',
                 'nome' => 'Torno CNC Principal',
                 'descricao' => 'Torno CNC de alta precisão para usinagem de peças',
-                'local_id' => 2, // Galpão de Produção A
+                'setor_id' => 2, // Galpão de Produção A
                 'tipo' => 'Máquina CNC',
                 'marca' => 'Haas',
                 'modelo' => 'ST-30',
@@ -35,7 +35,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'PROD-A-002',
                 'nome' => 'Fresadora Universal',
                 'descricao' => 'Fresadora universal para operações diversas',
-                'local_id' => 2,
+                'setor_id' => 2,
                 'tipo' => 'Fresadora',
                 'marca' => 'Romi',
                 'modelo' => 'U-30',
@@ -51,7 +51,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'PROD-A-003',
                 'nome' => 'Compressor de Ar',
                 'descricao' => 'Compressor de ar para alimentação pneumática',
-                'local_id' => 2,
+                'setor_id' => 2,
                 'tipo' => 'Compressor',
                 'marca' => 'Schulz',
                 'modelo' => 'MSV-60',
@@ -69,7 +69,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'PROD-B-001',
                 'nome' => 'Prensa Hidráulica',
                 'descricao' => 'Prensa hidráulica de 100 toneladas',
-                'local_id' => 3, // Galpão de Produção B
+                'setor_id' => 3, // Galpão de Produção B
                 'tipo' => 'Prensa',
                 'marca' => 'Vamaq',
                 'modelo' => 'PH-100',
@@ -85,7 +85,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'PROD-B-002',
                 'nome' => 'Solda MIG/MAG',
                 'descricao' => 'Máquina de solda MIG/MAG industrial',
-                'local_id' => 3,
+                'setor_id' => 3,
                 'tipo' => 'Solda',
                 'marca' => 'Esab',
                 'modelo' => 'LAI-418',
@@ -103,7 +103,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'EST-001',
                 'nome' => 'Empilhadeira Elétrica',
                 'descricao' => 'Empilhadeira elétrica para movimentação de materiais',
-                'local_id' => 4, // Estoque Central
+                'setor_id' => 4, // Estoque Central
                 'tipo' => 'Empilhadeira',
                 'marca' => 'Hyster',
                 'modelo' => 'E2.0XN',
@@ -119,7 +119,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'EST-002',
                 'nome' => 'Transpaleteira Elétrica',
                 'descricao' => 'Transpaleteira elétrica para cargas leves',
-                'local_id' => 4,
+                'setor_id' => 4,
                 'tipo' => 'Transpaleteira',
                 'marca' => 'Crown',
                 'modelo' => 'PE-4000',
@@ -137,7 +137,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'LAB-001',
                 'nome' => 'Microscópio Digital',
                 'descricao' => 'Microscópio digital para análise de materiais',
-                'local_id' => 5, // Laboratório de Qualidade
+                'setor_id' => 5, // Laboratório de Qualidade
                 'tipo' => 'Microscópio',
                 'marca' => 'Olympus',
                 'modelo' => 'DSX1000',
@@ -153,7 +153,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'LAB-002',
                 'nome' => 'Balança de Precisão',
                 'descricao' => 'Balança analítica de alta precisão',
-                'local_id' => 5,
+                'setor_id' => 5,
                 'tipo' => 'Balança',
                 'marca' => 'Mettler Toledo',
                 'modelo' => 'XPR205',
@@ -171,7 +171,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'TI-001',
                 'nome' => 'Servidor Principal',
                 'descricao' => 'Servidor Dell PowerEdge para aplicações críticas',
-                'local_id' => 7, // Sala de Servidores
+                'setor_id' => 7, // Sala de Servidores
                 'tipo' => 'Servidor',
                 'marca' => 'Dell',
                 'modelo' => 'PowerEdge R750',
@@ -187,7 +187,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'TI-002',
                 'nome' => 'Switch Principal',
                 'descricao' => 'Switch Cisco 48 portas para rede principal',
-                'local_id' => 7,
+                'setor_id' => 7,
                 'tipo' => 'Switch',
                 'marca' => 'Cisco',
                 'modelo' => 'Catalyst 2960-X',
@@ -205,7 +205,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'MAN-001',
                 'nome' => 'Furadeira de Bancada',
                 'descricao' => 'Furadeira de bancada para reparos diversos',
-                'local_id' => 6, // Oficina de Manutenção
+                'setor_id' => 6, // Oficina de Manutenção
                 'tipo' => 'Furadeira',
                 'marca' => 'Bosch',
                 'modelo' => 'GBM-32',
@@ -221,7 +221,7 @@ class EquipamentoSeeder extends Seeder
                 'equipment_tag' => 'MAN-002',
                 'nome' => 'Esmerilhadeira Industrial',
                 'descricao' => 'Esmerilhadeira de bancada para acabamento',
-                'local_id' => 6,
+                'setor_id' => 6,
                 'tipo' => 'Esmerilhadeira',
                 'marca' => 'Makita',
                 'modelo' => 'GB801',

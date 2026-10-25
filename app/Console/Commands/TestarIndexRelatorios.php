@@ -39,7 +39,6 @@ class TestarIndexRelatorios extends Command
             $this->info("   🗓️  Criado em: " . $relatorio->created_at->format('d/m/Y'));
             $this->info("   👤 Responsável: " . ($relatorio->nome_responsavel ?: ($relatorio->autor ? $relatorio->autor->name : 'Não informado')));
             $this->info("   📊 Status: {$relatorio->status} ({$relatorio->progresso}%)");
-            $this->info("   📍 Local: " . ($relatorio->local ? $relatorio->local->nome : 'Não informado'));
             $this->info('');
         }
 

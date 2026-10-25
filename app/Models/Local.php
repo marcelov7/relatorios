@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToTenant;
+
 class Local extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     protected $table = 'locais';
 
     protected $fillable = [
+        'tenant_id',
         'nome',
         'descricao',
         'setor',
@@ -28,19 +31,9 @@ class Local extends Model
     /**
      * Relacionamento: Um local tem muitos equipamentos
      */
-    public function equipamentos()
-    {
-        return $this->hasMany(Equipamento::class);
-    }
-
     /**
      * Relacionamento: Um local pode ter muitos relatórios
      */
-    public function relatorios()
-    {
-        return $this->hasMany(Relatorio::class);
-    }
-
     /**
      * Scope para locais ativos
      */

@@ -32,7 +32,6 @@
                 <span class="campo-label">Progresso:</span> {{ $relatorio->progresso }}%<br>
                 <span class="campo-label">Data de Criação:</span> {{ \Carbon\Carbon::parse($relatorio->created_at)->format('d/m/Y H:i') }}<br>
                 <span class="campo-label">Autor:</span> {{ $relatorio->autor->name ?? 'N/A' }}<br>
-                <span class="campo-label">Local:</span> {{ $relatorio->local->nome ?? 'N/A' }}<br>
                 <span class="campo-label">Setor:</span> {{ $relatorio->setor->nome ?? 'N/A' }}<br>
             </div>
             <div class="secao">

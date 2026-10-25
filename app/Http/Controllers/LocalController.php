@@ -33,9 +33,7 @@ class LocalController extends Controller
             $query->where('ativo', $request->ativo === 'true');
         }
 
-        $locais = $query->with(['equipamentos' => function ($q) {
-            $q->where('ativo', true);
-        }])->paginate(12)->withQueryString();
+        $locais = $query->paginate(12)->withQueryString();
 
         // Obter setores únicos para filtro
         $setores = Local::select('setor')
@@ -87,11 +85,6 @@ class LocalController extends Controller
      */
     public function show(Local $local)
     {
-        $local->load([
-            'equipamentos:id,equipment_tag,nome,local_id',
-            'relatorios:id,titulo,created_at,local_id'
-        ]);
-
         return Inertia::render('Locais/Show', [
             'local' => $local,
         ]);
@@ -138,20 +131,6 @@ class LocalController extends Controller
      */
     public function destroy(Local $local)
     {
-        // Verificar se há equipamentos associados
-        if ($local->equipamentos()->count() > 0) {
-            return back()->withErrors([
-                'delete' => 'Não é possível excluir este local pois há equipamentos associados a ele.'
-            ]);
-        }
-
-        // Verificar se há relatórios associados
-        if ($local->relatorios()->count() > 0) {
-            return back()->withErrors([
-                'delete' => 'Não é possível excluir este local pois há relatórios associados a ele.'
-            ]);
-        }
-
         $local->delete();
 
         return redirect()->route('locais.index')

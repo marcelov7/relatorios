@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToTenant;
+
 class Motor extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     /**
      * The table associated with the model.
@@ -17,6 +19,7 @@ class Motor extends Model
     protected $table = 'motores';
 
     protected $fillable = [
+        'tenant_id',
         'tag',
         'equipamento',
         'carcaca_fabricante',

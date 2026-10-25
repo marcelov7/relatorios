@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
+use App\Traits\BelongsToTenant;
+
 class InspecaoGerador extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     /**
      * Nome da tabela no banco de dados
@@ -16,6 +18,7 @@ class InspecaoGerador extends Model
     protected $table = 'inspecao_geradores';
 
     protected $fillable = [
+        'tenant_id',
         'data_inspecao',
         'colaborador_id',
         'nivel_oleo_motor_parado',

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\InspecaoGeradorController;
+use App\Http\Controllers\TenantController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,13 +29,44 @@ Route::get('/relatorios/pdf-browsershot', [App\Http\Controllers\RelatorioControl
 // Rota para PDF individual de relatório com Browsershot
 Route::get('/relatorios/{id}/pdf-browsershot', [App\Http\Controllers\RelatorioController::class, 'pdfBrowsershot'])->name('relatorios.pdf-browsershot');
 
-// Rota de teste para imagens
+// Rota de entrega de imagens (com busca exaustiva em todos os caminhos de storage da hospedagem)
 Route::get('/test-image/{path}', function ($path) {
-    $fullPath = storage_path("app/public/{$path}");
-    if (file_exists($fullPath)) {
-        return response()->file($fullPath);
+    // Normalizar barras duplas ou extras
+    $normalizedPath = preg_replace('#/+#', '/', ltrim($path, '/'));
+
+    // Lista de possíveis locais onde as imagens podem estar fisicamente salvas na hospedagem
+    $candidates = [
+        storage_path("app/public/{$normalizedPath}"),
+        storage_path("app/{$normalizedPath}"),
+        storage_path("{$normalizedPath}"),
+        public_path("storage/{$normalizedPath}"),
+        public_path("{$normalizedPath}"),
+        base_path("storage/app/public/{$normalizedPath}"),
+        base_path("public/storage/{$normalizedPath}"),
+    ];
+
+    foreach ($candidates as $filePath) {
+        if (file_exists($filePath) && !is_dir($filePath)) {
+            $mime = @mime_content_type($filePath) ?: 'image/jpeg';
+            return response()->file($filePath, ['Content-Type' => $mime]);
+        }
     }
-    return response('Imagem não encontrada', 404);
+
+    // Se a foto original não for encontrada, tentar buscar sem a pasta /thumbs/ ou /original/
+    $fallbackName = basename($normalizedPath);
+    $fallbackCandidates = [
+        storage_path("app/public/relatorios/{$fallbackName}"),
+        public_path("storage/relatorios/{$fallbackName}"),
+    ];
+
+    foreach ($fallbackCandidates as $filePath) {
+        if (file_exists($filePath) && !is_dir($filePath)) {
+            $mime = @mime_content_type($filePath) ?: 'image/jpeg';
+            return response()->file($filePath, ['Content-Type' => $mime]);
+        }
+    }
+
+    return response("Imagem não encontrada no servidor: {$normalizedPath}", 404);
 })->where('path', '.*');
 
 // Rotas protegidas por autenticação
@@ -49,7 +81,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('relatorios', RelatorioController::class);
     
     // Locais (apenas para admins)
-    Route::resource('locais', LocalController::class)->middleware('admin');
+    Route::resource('locais', LocalController::class)
+        ->parameters(['locais' => 'local'])
+        ->middleware('admin');
     
     // Equipamentos (apenas para admins)
     Route::resource('equipamentos', EquipamentoController::class)->middleware('admin');
@@ -73,6 +107,10 @@ Route::middleware(['auth'])->group(function () {
     // Gerenciamento de usuários (apenas para admins)
     Route::resource('users', UserController::class)->middleware('admin');
     
+    // Gerenciamento de Tenants/Empresas e troca de contexto
+    Route::post('/tenants/switch', [TenantController::class, 'switchTenant'])->name('tenants.switch');
+    Route::resource('tenants', TenantController::class)->middleware('admin');
+
     // Setores (apenas para admins)
     Route::resource('setores', SetorController::class)
         ->parameters(['setores' => 'setor'])
@@ -95,7 +133,6 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('api')->group(function () {
         Route::get('locais-ativos', [LocalController::class, 'apiLocaisAtivos'])->name('api.locais.ativos');
         Route::get('equipamentos-ativos', [EquipamentoController::class, 'apiEquipamentosAtivos'])->name('api.equipamentos.ativos');
-        Route::get('equipamentos-por-local', [EquipamentoController::class, 'apiEquipamentosPorLocal'])->name('api.equipamentos.por-local');
         Route::get('equipamentos-por-setor', [EquipamentoController::class, 'apiEquipamentosPorSetor'])->name('api.equipamentos.por-setor');
         Route::get('motores-ativos', [MotorController::class, 'apiMotoresAtivos'])->name('api.motores.ativos');
         Route::get('motores-por-local', [MotorController::class, 'apiMotoresPorLocal'])->name('api.motores.por-local');
@@ -108,4 +145,3 @@ Route::middleware(['auth'])->group(function () {
 
 // Rotas de autenticação
 require __DIR__.'/auth.php';
-

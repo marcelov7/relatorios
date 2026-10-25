@@ -106,7 +106,7 @@ class DashboardController extends Controller
                 ];
             });
 
-        $relatoriosRecentes = Relatorio::with(['autor', 'local', 'setor', 'equipamentos', 'equipamentosTeste'])
+        $relatoriosRecentes = Relatorio::with(['autor', 'setor', 'equipamentos', 'equipamentosTeste'])
                                      ->latest()
                                      ->take(5)
                                      ->get()

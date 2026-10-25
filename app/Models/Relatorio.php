@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use App\Traits\BelongsToTenant;
+
 class Relatorio extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     protected $fillable = [
+        'tenant_id',
         'titulo',
         'setor_id',
         'activity',
@@ -19,7 +22,6 @@ class Relatorio extends Model
         'cargo_responsavel',
         'date_created',
         'time_created',
-        'local_id',
         'status',
         'progresso',
         'detalhes'
@@ -83,11 +85,6 @@ class Relatorio extends Model
     /**
      * Relacionamento: Um relatório pode pertencer a um local
      */
-    public function local()
-    {
-        return $this->belongsTo(Local::class);
-    }
-
     /**
      * Relacionamento: Um relatório pode ter muitos equipamentos (many-to-many)
      */
@@ -118,14 +115,6 @@ class Relatorio extends Model
     public function scopeSetor($query, $setor)
     {
         return $query->where('sector', 'like', "%{$setor}%");
-    }
-
-    /**
-     * Scope para filtrar por local
-     */
-    public function scopePorLocal($query, $localId)
-    {
-        return $query->where('local_id', $localId);
     }
 
     /**
@@ -179,10 +168,6 @@ class Relatorio extends Model
     public function getIdentificacaoCompletaAttribute()
     {
         $parts = [$this->titulo];
-        
-        if ($this->local) {
-            $parts[] = "Local: {$this->local->nome}";
-        }
         
         return implode(' - ', $parts);
     }

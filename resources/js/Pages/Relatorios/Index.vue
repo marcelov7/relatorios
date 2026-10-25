@@ -211,10 +211,6 @@
 
                     <!-- Informações Adicionais -->
                     <div class="space-y-2 mb-4">
-                        <div v-if="relatorio.local?.nome" class="flex items-center justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Local:</span>
-                            <span class="text-gray-900 dark:text-gray-100">{{ relatorio.local.nome }}</span>
-                        </div>
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500 dark:text-gray-400">Data do relato:</span>
                             <span class="text-gray-900 dark:text-gray-100">{{ formatarData(relatorio.date_created) }}{{ formatarHora(relatorio.time_created) }}</span>

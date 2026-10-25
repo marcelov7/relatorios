@@ -9,6 +9,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
+use App\Models\Tenant;
+
 class UserController extends Controller
 {
 
@@ -45,7 +47,8 @@ class UserController extends Controller
             $query->where('ativo', $request->ativo === '1');
         }
 
-        $users = $query->orderBy('name')
+        $users = $query->with('tenant')
+                      ->orderBy('name')
                       ->paginate(12)
                       ->appends($request->all());
 
@@ -68,7 +71,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Users/Create');
+        $tenants = Tenant::select('id', 'nome')->where('ativo', true)->get();
+
+        return Inertia::render('Users/Create', [
+            'tenants' => $tenants,
+        ]);
     }
 
     /**
@@ -83,11 +90,18 @@ class UserController extends Controller
             'setor' => 'nullable|string|max:255',
             'cargo' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
-            'role' => 'required|in:user,admin',
+            'role' => 'required|in:user,admin,super_admin',
+            'tenant_id' => 'nullable|exists:tenants,id',
             'ativo' => 'boolean'
         ]);
 
-        User::create([
+        $tenantId = $request->tenant_id;
+        if (!$tenantId && Auth::user()->role !== 'super_admin') {
+            $tenantId = Auth::user()->tenant_id;
+        }
+
+        User::withoutTenancy()->create([
+            'tenant_id' => $tenantId,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -107,7 +121,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load(['relatorios' => function ($query) {
+        $user->load(['tenant', 'relatorios' => function ($query) {
             $query->latest()->take(10);
         }]);
 
@@ -121,8 +135,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $tenants = Tenant::select('id', 'nome')->where('ativo', true)->get();
+
         return Inertia::render('Users/Edit', [
-            'user' => $user
+            'user' => $user,
+            'tenants' => $tenants,
         ]);
     }
 
@@ -138,7 +155,8 @@ class UserController extends Controller
             'setor' => 'nullable|string|max:255',
             'cargo' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
-            'role' => 'required|in:user,admin',
+            'role' => 'required|in:user,admin,super_admin',
+            'tenant_id' => 'nullable|exists:tenants,id',
             'ativo' => 'boolean'
         ]);
 
@@ -151,6 +169,10 @@ class UserController extends Controller
             'role' => $request->role,
             'ativo' => $request->ativo ?? true
         ];
+
+        if ($request->has('tenant_id')) {
+            $data['tenant_id'] = $request->tenant_id;
+        }
 
         // Apenas atualizar senha se foi fornecida
         if ($request->filled('password')) {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Relatorio;
-use App\Models\Local;
 use App\Models\Equipamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +15,7 @@ use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Encoders\JpegEncoder;
 use App\Models\User; // Adicionado para buscar autores
 use Spatie\LaravelPdf\Facades\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as DomPdf;
 
 class RelatorioController extends Controller
 {
@@ -25,7 +25,7 @@ class RelatorioController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Relatorio::with(['user', 'autor', 'local', 'equipamentos', 'atualizacoes']);
+        $query = Relatorio::with(['user', 'autor', 'setor', 'equipamentos', 'atualizacoes']);
 
         // Filtros
         if ($request->filled('busca')) {
@@ -46,10 +46,6 @@ class RelatorioController extends Controller
         // Filtro por autor
         if ($request->filled('autor_id')) {
             $query->where('autor_id', $request->autor_id);
-        }
-
-        if ($request->filled('local_id')) {
-            $query->porLocal($request->local_id);
         }
 
         if ($request->filled('equipment_id')) {
@@ -125,8 +121,6 @@ class RelatorioController extends Controller
         }
 
         // Dados para filtros
-        $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
-        
         // Buscar setores únicos dos equipamentos de teste (agrupando setores com mesmo nome)
         $setores = \App\Models\EquipamentoTest::select('setor')
             ->whereNotNull('setor')
@@ -151,7 +145,6 @@ class RelatorioController extends Controller
         return Inertia::render('Relatorios/Index', [
             'relatorios' => $relatorios,
             'filtros' => $request->only(['busca', 'status', 'setor_id', 'autor_id', 'data_inicio', 'data_fim', 'per_page']),
-            'locais' => $locais,
             'setores' => $setores,
             'autores' => $autores,
             'perPageOptions' => $allowedPerPage,
@@ -163,11 +156,9 @@ class RelatorioController extends Controller
      */
     public function create()
     {
-        $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
         $user = auth()->user();
 
         return Inertia::render('Relatorios/Create', [
-            'locais' => $locais,
             'userSetor' => $user->setor, // Setor do usuário para preencher automaticamente
             'userName' => $user->name, // Nome do usuário para preencher automaticamente
             'userCargo' => $user->cargo, // Cargo do usuário para preencher automaticamente
@@ -249,7 +240,6 @@ class RelatorioController extends Controller
         $relatorio->load([
             'user', 
             'autor', 
-            'local', 
             'equipamentosTeste', // Novo relacionamento
             'setor', // Adicionado para exibir o setor corretamente
             'imagens', // Novo relacionamento de imagens
@@ -259,20 +249,29 @@ class RelatorioController extends Controller
         ]);
         
         // Converter imagens para formato compatível com frontend
-        $relatorio->images = $relatorio->imagens->map(function($imagem) {
+        $cleanPath = function($path) {
+            if (!$path) return '';
+            return preg_replace('#/+#', '/', ltrim($path, '/'));
+        };
+
+        $relatorio->images = $relatorio->imagens->map(function($imagem) use ($cleanPath) {
+            $origPath = $cleanPath($imagem->caminho_original);
+            $thumbPath = $cleanPath($imagem->caminho_thumb);
+            $mediumPath = $cleanPath($imagem->caminho_medium);
+
             return [
-                'path' => $imagem->caminho_original,
-                'thumb' => $imagem->caminho_thumb,
-                'medium' => $imagem->caminho_medium,
+                'path' => $origPath,
+                'thumb' => $thumbPath,
+                'medium' => $mediumPath,
                 'original_name' => $imagem->nome_original,
                 'size' => $imagem->tamanho,
                 'mime_type' => $imagem->mime_type,
                 'id' => $imagem->id,
                 'ordem' => $imagem->ordem,
-                // Adicionar URLs completas
-                'url' => url("/test-image/{$imagem->caminho_original}"),
-                'thumb_url' => $imagem->caminho_thumb ? url("/test-image/{$imagem->caminho_thumb}") : url("/test-image/{$imagem->caminho_original}"),
-                'medium_url' => $imagem->caminho_medium ? url("/test-image/{$imagem->caminho_medium}") : url("/test-image/{$imagem->caminho_original}"),
+                // Adicionar URLs completas via /storage/ (Compatível com Nginx/CloudPanel)
+                'url' => asset("storage/{$origPath}"),
+                'thumb_url' => $thumbPath ? asset("storage/{$thumbPath}") : asset("storage/{$origPath}"),
+                'medium_url' => $mediumPath ? asset("storage/{$mediumPath}") : asset("storage/{$origPath}"),
             ];
         })->toArray();
         
@@ -498,7 +497,7 @@ class RelatorioController extends Controller
         if (empty($ids)) {
             return back()->with('error', 'Selecione ao menos um relatório.');
         }
-        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario'])
+        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'setor', 'equipamentosTeste', 'imagens', 'atualizacoes.usuario'])
             ->whereIn('id', $ids)
             ->get();
         if ($relatorios->isEmpty()) {
@@ -516,7 +515,7 @@ class RelatorioController extends Controller
     }
 
     /**
-     * Gera PDF personalizado de relatórios selecionados usando Browsershot (ambiente local Windows).
+     * Gera PDF personalizado de relatórios selecionados usando DomPDF (sem necessidade de Chrome).
      * Recebe os IDs via GET (?ids=1,2,3)
      */
     public function generatePdfBrowsershot(Request $request)
@@ -528,60 +527,33 @@ class RelatorioController extends Controller
         if (empty($ids)) {
             return back()->with('error', 'Selecione ao menos um relatório.');
         }
-        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario'])
+
+        $relatorios = \App\Models\Relatorio::with(['user', 'autor', 'setor', 'equipamentosTeste', 'imagens', 'atualizacoes.usuario'])
             ->whereIn('id', $ids)
             ->get();
+
         if ($relatorios->isEmpty()) {
             return back()->with('error', 'Nenhum relatório encontrado.');
         }
+
         $data = [
-            'relatorios' => $relatorios,
+            'relatorios'   => $relatorios,
             'data_geracao' => now()->format('d/m/Y H:i'),
             'nome_sistema' => config('app.name', 'Sistema de Relatórios'),
         ];
 
-        $html = view('relatorios.pdf-browsershot', $data)->render();
-        $pdfPath = storage_path('app/public/relatorios-personalizados-' . uniqid() . '.pdf');
+        Log::info('Gerando PDF com DomPDF', ['ids' => $ids]);
 
-        // Detecta ambiente e define o caminho do Chrome/Chromium
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Ambiente Windows
-            $chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-            if (!file_exists($chromePath)) {
-                $chromePath = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
-            }
-        } else {
-            // Ambiente Linux (produção)
-            $chromePath = '/snap/bin/chromium';
-            if (!file_exists($chromePath)) {
-                $chromePath = '/usr/bin/chromium-browser';
-                if (!file_exists($chromePath)) {
-                    $chromePath = '/usr/bin/chromium';
-                }
-            }
-        }
+        $pdf = DomPdf::loadView('relatorios.pdf-browsershot', $data)
+            ->setPaper('a4', 'portrait')
+            ->setOptions([
+                'defaultFont'       => 'Arial',
+                'isRemoteEnabled'   => false,
+                'isHtml5ParserEnabled' => true,
+                'dpi'               => 150,
+            ]);
 
-        \Spatie\Browsershot\Browsershot::html($html)
-            ->setChromePath($chromePath)
-            ->addChromiumArguments([
-                '--no-sandbox',
-                '--disable-gpu',
-                '--disable-dev-shm-usage',
-                '--disable-setuid-sandbox',
-                '--user-data-dir=/tmp/chromium-data',
-                '--data-path=/tmp/chromium-data',
-                '--disable-background-timer-throttling',
-                '--disable-backgrounding-occluded-windows',
-                '--disable-renderer-backgrounding',
-                '--disable-features=TranslateUI',
-                '--disable-ipc-flooding-protection'
-            ])
-            ->format('A4')
-            ->showBackground()
-            ->timeout(120)
-            ->save($pdfPath);
-
-        return response()->download($pdfPath, 'relatorios-personalizados.pdf')->deleteFileAfterSend(true);
+        return $pdf->download('relatorios-personalizados.pdf');
     }
 
     // Função auxiliar para copiar imagem para public/storage/relatorios
@@ -599,125 +571,37 @@ class RelatorioController extends Controller
     }
 
     /**
-     * Gera PDF de um relatório individual usando Browsershot
+     * Gera PDF de um relatório individual usando DomPDF (sem necessidade de Chrome)
      */
     public function pdfBrowsershot($id)
     {
         try {
-            $relatorio = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
+            $relatorio = Relatorio::with(['user', 'autor', 'setor', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
                 ->findOrFail($id);
-            
-            // Detectar ambiente e configurar caminho do Chrome/Chromium
-            $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-            $isLocal = app()->environment('local');
-            
-            if ($isWindows || $isLocal) {
-                // Ambiente Windows/Local
-                $chromePaths = [
-                    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-                    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
-                ];
-            } else {
-                // Ambiente Linux/Produção - CloudPanel
-                $chromePaths = [
-                    '/snap/bin/chromium',
-                    '/usr/bin/chromium-browser',
-                    '/usr/bin/chromium',
-                    '/usr/bin/google-chrome-stable',
-                    '/usr/bin/google-chrome'
-                ];
-            }
-            
-            $chromePath = null;
-            foreach ($chromePaths as $path) {
-                if (file_exists($path)) {
-                    $chromePath = $path;
-                    break;
-                }
-            }
-            
-            if (!$chromePath) {
-                Log::error('Chrome/Chromium não encontrado. Tentativa de usar Spatie Laravel PDF como fallback');
-                return $this->pdfFallback($id);
-            }
-            
-            Log::info("Gerando PDF com Browsershot", [
-                'chrome_path' => $chromePath,
-                'ambiente' => app()->environment(),
-                'relatorio_id' => $id
-            ]);
-            
-            // Preparar diretório temporário para produção
-            $tempDir = '/tmp/browsershot-' . uniqid();
-            if (!$isWindows && !$isLocal) {
-                @mkdir($tempDir, 0755, true);
-                @chmod($tempDir, 0755);
-            }
-            
-            $html = view('relatorios.pdf-browsershot', compact('relatorio'))->render();
-            
-            $browsershot = \Spatie\Browsershot\Browsershot::html($html)
-                ->setChromePath($chromePath)
-                ->format('A4')
-                ->margins(10, 10, 10, 10)
-                ->showBackground()
-                ->timeout(120);
-            
-            // Configurar argumentos específicos para ambiente
-            if ($isWindows || $isLocal) {
-                // Argumentos para Windows/Local
-                $browsershot->addChromiumArguments([
-                    '--no-sandbox',
-                    '--disable-gpu',
-                    '--disable-dev-shm-usage'
+
+            Log::info('Gerando PDF com DomPDF', ['relatorio_id' => $id]);
+
+            $pdf = DomPdf::loadView('relatorios.pdf-browsershot', compact('relatorio'))
+                ->setPaper('a4', 'portrait')
+                ->setOptions([
+                    'defaultFont'          => 'Arial',
+                    'isRemoteEnabled'      => false,
+                    'isHtml5ParserEnabled' => true,
+                    'dpi'                  => 150,
                 ]);
-            } else {
-                // Argumentos robustos para produção Linux/CloudPanel
-                $browsershot->addChromiumArguments([
-                    '--no-sandbox',
-                    '--disable-gpu',
-                    '--disable-dev-shm-usage',
-                    '--disable-setuid-sandbox',
-                    '--disable-web-security',
-                    '--disable-features=VizDisplayCompositor',
-                    '--run-all-compositor-stages-before-draw',
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    '--disable-renderer-backgrounding',
-                    '--disable-features=TranslateUI',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-extensions',
-                    '--disable-plugins',
-                    '--disable-sync',
-                    '--disable-default-apps',
-                    '--no-first-run',
-                    '--disable-background-networking',
-                    '--user-data-dir=' . $tempDir,
-                    '--data-path=' . $tempDir
-                ]);
-            }
-            
-            $pdf = $browsershot->pdf();
-            
-            // Limpar diretório temporário
-            if (!$isWindows && !$isLocal && is_dir($tempDir)) {
-                exec("rm -rf " . escapeshellarg($tempDir));
-            }
-                
-            return response($pdf)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'inline; filename="relatorio-' . $relatorio->id . '.pdf"');
-                
+
+            return $pdf->stream('relatorio-' . $relatorio->id . '.pdf');
+
         } catch (\Exception $e) {
-            Log::error('Erro ao gerar PDF com Browsershot', [
-                'error' => $e->getMessage(),
+            Log::error('Erro ao gerar PDF com DomPDF', [
+                'error'        => $e->getMessage(),
                 'relatorio_id' => $id,
-                'trace' => $e->getTraceAsString()
             ]);
-            
-            // Fallback para Spatie Laravel PDF
-            Log::info('Tentando fallback com Spatie Laravel PDF');
-            return $this->pdfFallback($id);
+
+            return response()->json([
+                'error'   => 'Erro ao gerar PDF. Tente novamente.',
+                'details' => app()->environment('local') ? $e->getMessage() : 'Erro interno',
+            ], 500);
         }
     }
 
@@ -727,7 +611,7 @@ class RelatorioController extends Controller
     private function pdfFallback($id)
     {
         try {
-            $relatorio = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
+            $relatorio = Relatorio::with(['user', 'autor', 'setor', 'equipamentosTeste', 'atualizacoes.usuario', 'imagens'])
                 ->findOrFail($id);
             
             Log::info('Gerando PDF com fallback (Spatie Laravel PDF)', ['relatorio_id' => $id]);

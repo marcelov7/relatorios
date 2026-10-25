@@ -72,8 +72,8 @@
                         Inspeção Gerador
                     </Link>
 
-                    <!-- Equipamentos de Teste (apenas para admins) -->
-                    <Link v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" 
+                    <!-- Equipamentos de Teste (para admins/super_admin) -->
+                    <Link v-if="$page.props.auth.user && ($page.props.auth.user.role === 'admin' || $page.props.auth.user.role === 'super_admin')" 
                           href="/equipamento-tests" 
                           class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group"
                           :class="isActive('/equipamento-tests') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
@@ -85,14 +85,26 @@
                         Equipamentos
                     </Link>
 
-                    <!-- Seção Administrativa (apenas para admins) -->
-                    <div v-if="$page.props.auth.user && $page.props.auth.user.role === 'admin'" class="pt-4">
+                    <!-- Seção Administrativa (apenas para admins/super_admin) -->
+                    <div v-if="$page.props.auth.user && ($page.props.auth.user.role === 'admin' || $page.props.auth.user.role === 'super_admin')" class="pt-4">
                         <div class="px-4 mb-2">
                             <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                 Administração
                             </h3>
                         </div>
                         
+                        <Link v-if="$page.props.auth.user.is_super_admin || $page.props.auth.user.role === 'super_admin'"
+                              href="/tenants" 
+                              class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group mb-1"
+                              :class="isActive('/tenants') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                            <svg class="w-5 h-5 mr-3 transition-colors"
+                                 :class="isActive('/tenants') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-400'"
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            Empresas (Tenants)
+                        </Link>
+
                         <Link href="/users" 
                               class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group"
                               :class="isActive('/users') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
@@ -195,6 +207,23 @@
                             </div>
                         </div>
                         
+                        <!-- Tenant Switcher (Super Admin) or Badge (Regular User) -->
+                        <div v-if="$page.props.auth.user?.is_super_admin || $page.props.auth.user?.role === 'super_admin'" class="mr-2">
+                            <select 
+                                :value="$page.props.auth.active_tenant_id || 'all'" 
+                                @change="onTenantChange"
+                                class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-xs font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5"
+                            >
+                                <option value="all">🌐 Todas as Empresas (Global)</option>
+                                <option v-for="t in $page.props.available_tenants" :key="t.id" :value="t.id">
+                                    🏢 {{ t.nome }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-else-if="$page.props.auth.active_tenant || $page.props.auth.user?.tenant" class="hidden sm:flex items-center px-2.5 py-1 bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-lg border border-blue-200 dark:border-blue-800 mr-2">
+                            🏢 {{ $page.props.auth.active_tenant?.nome || $page.props.auth.user?.tenant?.nome }}
+                        </div>
+
                         <!-- Theme Toggle -->
                         <ThemeToggle />
                         
@@ -340,6 +369,8 @@ const getInitials = (name) => {
 
 const getUserRole = (role) => {
     if (!role) return 'Usuário'
+    if (role === 'super_admin') return 'Super Admin'
+    if (role === 'admin') return 'Administrador'
     return role.charAt(0).toUpperCase() + role.slice(1)
 }
 
@@ -392,5 +423,19 @@ const handleLogout = async () => {
         error('Erro inesperado durante o logout')
         console.error('Logout exception:', err)
     }
+}
+
+// Alternar Tenant ativo (Super Admin)
+const onTenantChange = (event) => {
+    const tenantId = event.target.value
+    router.post('/tenants/switch', { tenant_id: tenantId }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            success('Empresa/Tenant alternado com sucesso!')
+        },
+        onError: () => {
+            error('Erro ao alternar empresa.')
+        }
+    })
 }
 </script> 

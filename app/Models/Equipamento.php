@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\BelongsToTenant;
+
 class Equipamento extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     protected $fillable = [
+        'tenant_id',
         'equipment_tag',
         'nome',
         'descricao',
-        'local_id',
         'tipo',
         'marca',
         'modelo',
@@ -33,14 +35,6 @@ class Equipamento extends Model
         'proxima_manutencao' => 'date',
         'ativo' => 'boolean',
     ];
-
-    /**
-     * Relacionamento: Um equipamento pertence a um local
-     */
-    public function local()
-    {
-        return $this->belongsTo(Local::class);
-    }
 
     /**
      * Relacionamento: Um equipamento pode ter muitos relatórios (many-to-many)
@@ -80,14 +74,6 @@ class Equipamento extends Model
     public function scopeOperacionais($query)
     {
         return $query->where('status', 'Operacional');
-    }
-
-    /**
-     * Scope por local
-     */
-    public function scopePorLocal($query, $localId)
-    {
-        return $query->where('local_id', $localId);
     }
 
     /**

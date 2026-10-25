@@ -152,10 +152,20 @@
                                 </label>
                                 <div class="flex items-center">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                                          :class="user.role === 'admin' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300' : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'">
-                                        {{ user.role === 'admin' ? 'Administrador' : 'Usuário' }}
+                                          :class="user.role === 'super_admin' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 font-bold' : (user.role === 'admin' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300' : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300')">
+                                        {{ user.role === 'super_admin' ? 'Super Admin' : (user.role === 'admin' ? 'Administrador' : 'Usuário') }}
                                     </span>
                                 </div>
+                            </div>
+
+                            <!-- Empresa / Tenant -->
+                            <div v-if="user.tenant">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Empresa Vinculada
+                                </label>
+                                <p class="text-sm text-gray-900 dark:text-gray-200 font-medium">
+                                    🏢 {{ user.tenant.nome }}
+                                </p>
                             </div>
                         </div>
 

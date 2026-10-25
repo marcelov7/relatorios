@@ -29,10 +29,30 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $currentTenantId = \App\Scopes\TenantScope::getTenantId();
+        $currentTenant = null;
+
+        if ($currentTenantId && $currentTenantId !== 'all') {
+            $currentTenant = \App\Models\Tenant::find($currentTenantId);
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user ? array_merge($user->toArray(), [
+                    'tenant' => $user->tenant,
+                    'is_super_admin' => $user->isSuperAdmin(),
+                ]) : null,
+                'active_tenant' => $currentTenant,
+                'active_tenant_id' => $currentTenantId,
+            ],
+            'available_tenants' => fn () => ($user && $user->isSuperAdmin())
+                ? \App\Models\Tenant::select('id', 'nome', 'slug', 'ativo')->get()
+                : [],
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+                'error' => fn () => $request->session()->get('error'),
             ],
         ];
     }

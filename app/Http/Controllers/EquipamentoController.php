@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamento;
-use App\Models\Local;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -66,11 +65,7 @@ class EquipamentoController extends Controller
      */
     public function create()
     {
-        $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
-
-        return Inertia::render('Equipamentos/Create', [
-            'locais' => $locais,
-        ]);
+        return Inertia::render('Equipamentos/Create');
     }
 
     /**
@@ -106,7 +101,7 @@ class EquipamentoController extends Controller
      */
     public function show(Equipamento $equipamento)
     {
-        $equipamento->load(['local', 'relatorios' => function ($q) {
+        $equipamento->load(['setor', 'relatorios' => function ($q) {
             $q->orderBy('relatorios.created_at', 'desc')->limit(10);
         }]);
 
@@ -120,11 +115,8 @@ class EquipamentoController extends Controller
      */
     public function edit(Equipamento $equipamento)
     {
-        $locais = Local::ativos()->select('id', 'nome', 'setor')->orderBy('nome')->get();
-
         return Inertia::render('Equipamentos/Edit', [
             'equipamento' => $equipamento,
-            'locais' => $locais,
         ]);
     }
 
@@ -177,39 +169,14 @@ class EquipamentoController extends Controller
     /**
      * API: Obter equipamentos por local
      */
-    public function apiEquipamentosPorLocal(Request $request)
-    {
-        $localId = $request->get('local_id');
-        
-        if (!$localId) {
-            return response()->json([]);
-        }
-
-        $equipamentos = Equipamento::where('local_id', $localId)
-            ->ativos()
-            ->operacionais()
-            ->select('id', 'equipment_tag', 'nome')
-            ->orderBy('equipment_tag')
-            ->get()
-            ->map(function ($equipamento) {
-                return [
-                    'id' => $equipamento->id,
-                    'nome' => $equipamento->nome_completo,
-                    'tag' => $equipamento->equipment_tag,
-                ];
-            });
-
-        return response()->json($equipamentos);
-    }
-
     /**
      * API: Obter todos equipamentos ativos para select
      */
     public function apiEquipamentosAtivos()
     {
-        $equipamentos = Equipamento::with('local')
+        $equipamentos = Equipamento::with('setor')
             ->ativos()
-            ->select('id', 'equipment_tag', 'nome', 'local_id')
+            ->select('id', 'equipment_tag', 'nome', 'setor_id')
             ->orderBy('equipment_tag')
             ->get()
             ->map(function ($equipamento) {
@@ -217,7 +184,7 @@ class EquipamentoController extends Controller
                     'id' => $equipamento->id,
                     'nome' => $equipamento->nome_completo,
                     'tag' => $equipamento->equipment_tag,
-                    'local' => $equipamento->local->nome ?? '',
+                    'setor' => $equipamento->setor->nome ?? '',
                 ];
             });
 

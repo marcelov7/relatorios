@@ -14,10 +14,10 @@ class TestarSnappy extends Command
         $relatorioId = $this->argument('relatorio_id');
         
         if ($relatorioId) {
-            $relatorio = \App\Models\Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'local', 'setor', 'autor'])
+            $relatorio = \App\Models\Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'setor', 'autor'])
                 ->find($relatorioId);
         } else {
-            $relatorio = \App\Models\Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'local', 'setor', 'autor'])
+            $relatorio = \App\Models\Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'setor', 'autor'])
                 ->first();
         }
         

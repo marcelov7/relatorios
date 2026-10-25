@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Local;
+use App\Models\Setor;
 use App\Models\Equipamento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -33,7 +34,7 @@ class RelatorioFactory extends Factory
             'Teste de Funcionamento'
         ];
         
-        $local = Local::inRandomOrder()->first();
+        $setor = Setor::inRandomOrder()->first();
         
         return [
             'titulo' => $this->faker->sentence(4),
@@ -41,7 +42,7 @@ class RelatorioFactory extends Factory
             'activity' => $this->faker->randomElement($atividades),
             'user_id' => 1, // Assumindo que existe um usuário com ID 1
             'date_created' => $this->faker->dateTimeBetween('-60 days', 'now'),
-            'local_id' => $local?->id,
+            'setor_id' => $setor?->id,
             'detalhes' => $this->faker->paragraphs(3, true),
             'status' => $status,
             'progresso' => match($status) {
@@ -50,7 +51,7 @@ class RelatorioFactory extends Factory
                 'Concluída' => 100,
                 'Cancelada' => $this->faker->numberBetween(0, 50),
             },
-            'images' => [], // Array vazio para imagens
+            'images' => json_encode([]), // JSON vazio para imagens
             'created_at' => $this->faker->dateTimeBetween('-60 days', 'now'),
         ];
     }

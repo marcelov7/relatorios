@@ -3,37 +3,32 @@
         {{ $relatorio->titulo ?? 'Relatório #' . $relatorio->id }}
     </div>
     
-    <div class="info-grid">
-        <div class="info-item">
+    <table class="info-grid">
+        <tr><td class="info-item">
             <span class="info-label">Responsável:</span><br>
             {{ $relatorio->nome_responsavel ?? 'Não informado' }}
-        </div>
-        <div class="info-item">
+        </td><td class="info-item">
             <span class="info-label">Cargo:</span><br>
             {{ $relatorio->cargo_responsavel ?? 'Não informado' }}
-        </div>
-        <div class="info-item">
+        </td></tr><tr><td class="info-item">
             <span class="info-label">Status:</span><br>
             <span class="status-badge status-{{ strtolower(str_replace(' ', '', $relatorio->status)) }}">
                 {{ $relatorio->status }}
             </span>
-        </div>
-        <div class="info-item">
+        </td><td class="info-item">
             <span class="info-label">Progresso:</span><br>
             {{ $relatorio->progresso ?? 0 }}%
-        </div>
-        <div class="info-item">
+        </td></tr><tr><td class="info-item">
             <span class="info-label">Data Criação:</span><br>
             {{ \Carbon\Carbon::parse($relatorio->date_created ?? $relatorio->created_at)->format('d/m/Y') }}
             @if($relatorio->time_created)
                 às {{ $relatorio->time_created }}
             @endif
-        </div>
-        <div class="info-item">
+        </td><td class="info-item">
             <span class="info-label">Atividade:</span><br>
             {{ $relatorio->activity ?? 'Não especificada' }}
-        </div>
-    </div>
+        </td></tr>
+    </table>
     
     @if($relatorio->equipamentosTeste && $relatorio->equipamentosTeste->count() > 0)
     <div class="equipamentos-section">
@@ -55,50 +50,57 @@
     @if($relatorio->detalhes)
     <div class="detalhes-section">
         <div class="detalhes-title">Detalhes:</div>
-        <div class="detalhes-content">{{ $relatorio->detalhes }}</div>
+        @php
+            $detalhesPdf = preg_replace('/<br\\s*\\/?\\s*>/i', "\n", $relatorio->detalhes);
+            $detalhesPdf = strip_tags($detalhesPdf);
+        @endphp
+        <div class="detalhes-content">{!! nl2br(e($detalhesPdf)) !!}</div>
     </div>
     @endif
     
-    @if(isset($relatorio->images) && is_array($relatorio->images) && count($relatorio->images) > 0)
+    @if($relatorio->imagens && $relatorio->imagens->isNotEmpty())
     <div class="images-section">
-        <div class="detalhes-title">Imagens ({{ count($relatorio->images) }}):</div>
-        <div class="image-grid">
-            @foreach($relatorio->images as $index => $img)
-            <div class="image-item">
+        <div class="detalhes-title">Imagens ({{ $relatorio->imagens->count() }}):</div>
+        <table class="image-grid">
+            @foreach($relatorio->imagens->chunk(3) as $linha)
+            <tr>
+            @foreach($linha as $imagem)
+            <td class="image-item">
                 @php
                     // Tentar diferentes caminhos para a imagem
-                    $imagePath = null;
-                    $possiblePaths = [
-                        public_path('storage/' . ($img['thumb'] ?? $img['path'] ?? '')),
-                        public_path('storage/' . ($img['medium'] ?? $img['path'] ?? '')),
-                        public_path('storage/' . ($img['path'] ?? '')),
-                        storage_path('app/public/' . ($img['thumb'] ?? $img['path'] ?? '')),
-                        storage_path('app/public/' . ($img['medium'] ?? $img['path'] ?? '')),
-                        storage_path('app/public/' . ($img['path'] ?? '')),
-                    ];
+                    $imageDataUri = null;
+                    $possiblePaths = [$imagem->caminho_medium, $imagem->caminho_thumb, $imagem->caminho_original];
                     
                     foreach ($possiblePaths as $path) {
-                        if ($path && file_exists($path)) {
-                            $imagePath = $path;
+                        if ($path && \Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+                            $mime = ($path === $imagem->caminho_medium || $path === $imagem->caminho_thumb)
+                                ? 'image/jpeg'
+                                : ($imagem->mime_type ?: 'image/jpeg');
+                            $imageDataUri = 'data:' . $mime . ';base64,' . base64_encode(\Illuminate\Support\Facades\Storage::disk('public')->get($path));
                             break;
                         }
                     }
                 @endphp
                 
-                @if($imagePath)
-                    <img src="file://{{ $imagePath }}" alt="Imagem {{ $index + 1 }}" loading="lazy">
+                @if($imageDataUri)
+                    <img src="{{ $imageDataUri }}" alt="{{ $imagem->nome_original }}">
                 @else
                     <div style="width: 150px; height: 120px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; border-radius: 4px;">
                         <span style="color: #999; font-size: 11px;">Imagem não encontrada</span>
                     </div>
                 @endif
                 
-                @if(isset($img['original_name']))
-                <div class="image-caption">{{ $img['original_name'] }}</div>
+                @if($imagem->nome_original)
+                <div class="image-caption">{{ $imagem->nome_original }}</div>
                 @endif
-            </div>
+            </td>
             @endforeach
-        </div>
+            @for($vazias = $linha->count(); $vazias < 3; $vazias++)
+                <td class="image-item"></td>
+            @endfor
+            </tr>
+            @endforeach
+        </table>
     </div>
     @endif
     

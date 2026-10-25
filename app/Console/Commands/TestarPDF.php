@@ -30,7 +30,7 @@ class TestarPDF extends Command
         $this->info('🧪 Testando geração do PDF...');
 
         // Buscar alguns relatórios para teste
-        $relatorios = Relatorio::with(['user', 'autor', 'local', 'equipamentosTeste'])
+        $relatorios = Relatorio::with(['user', 'autor', 'setor', 'equipamentosTeste'])
             ->take(3)
             ->get();
 

@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  USER
+}
+
+enum EquipamentoStatus {
+  ATIVO
+  INATIVO
+  MANUTENCAO
+}
+
+enum RelatorioStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDO
+  CANCELADO
+}
+
+enum Prioridade {
+  BAIXA
+  MEDIA
+  ALTA
+  URGENTE
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  username  String    @unique
+  name      String
+  password  String
+  role      UserRole  @default(USER)
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  relatorios Relatorio[] @relation("autor")
+  revisoes   Relatorio[] @relation("revisor")
+
+  @@map("users")
+}
+
+model Setor {
+  id          String        @id @default(uuid())
+  nome        String        @unique
+  descricao   String?
+  ativo       Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  equipamentos Equipamento[]
+  relatorios   Relatorio[]
+
+  @@map("setores")
+}
+
+model Equipamento {
+  id           String            @id @default(uuid())
+  nome         String
+  modelo       String?
+  numeroSerie  String            @unique
+  localizacao  String?
+  status       EquipamentoStatus @default(ATIVO)
+  setorId      String
+  setor        Setor            @relation(fields: [setorId], references: [id])
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  relatorios   Relatorio[]
+
+  @@map("equipamentos")
+}
+
+model Relatorio {
+  id              String          @id @default(uuid())
+  titulo          String
+  descricao       String
+  status          RelatorioStatus @default(PENDENTE)
+  prioridade      Prioridade      @default(MEDIA)
+  dataInicio      DateTime        @default(now())
+  dataConclusao   DateTime?
+  observacoes     String?
+  autorId         String
+  autor           User            @relation("autor", fields: [autorId], references: [id])
+  revisorId       String?
+  revisor         User?           @relation("revisor", fields: [revisorId], references: [id])
+  equipamentoId   String
+  equipamento     Equipamento     @relation(fields: [equipamentoId], references: [id])
+  setorId         String
+  setor           Setor           @relation(fields: [setorId], references: [id])
+  anexos          Anexo[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("relatorios")
+}
+
+model Anexo {
+  id           String    @id @default(uuid())
+  nome         String
+  tipo         String
+  tamanho      Int
+  caminho      String
+  relatorioId  String
+  relatorio    Relatorio @relation(fields: [relatorioId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("anexos")
+}

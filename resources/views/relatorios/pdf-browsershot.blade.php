@@ -61,14 +61,16 @@
         }
         
         .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 15px;
         }
         
         .info-item {
             font-size: 12px;
+            width: 50%;
+            padding: 0 10px 10px 0;
+            vertical-align: top;
         }
         
         .info-label {
@@ -116,14 +118,16 @@
         }
         
         .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 10px;
         }
         
         .image-item {
             text-align: center;
+            width: 33.33%;
+            padding: 5px;
+            vertical-align: top;
         }
         
         .image-item img {
@@ -200,4 +204,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>

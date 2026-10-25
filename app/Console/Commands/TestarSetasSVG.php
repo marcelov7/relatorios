@@ -16,10 +16,10 @@ class TestarSetasSVG extends Command
         $relatorioId = $this->argument('relatorio_id');
         
         if ($relatorioId) {
-            $relatorio = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'local', 'setor', 'autor'])
+            $relatorio = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'setor', 'autor'])
                 ->find($relatorioId);
         } else {
-            $relatorio = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'local', 'setor', 'autor'])
+            $relatorio = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'setor', 'autor'])
                 ->whereHas('atualizacoes')
                 ->first();
         }

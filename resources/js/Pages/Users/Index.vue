@@ -143,7 +143,7 @@
                                         <div class="flex space-x-2">
                                             <span :class="getRoleClass(user.role)" 
                                                 class="px-2 py-1 text-xs rounded-full font-medium">
-                                                {{ user.role === 'admin' ? 'Admin' : 'Usuário' }}
+                                                {{ user.role === 'super_admin' ? 'Super Admin' : (user.role === 'admin' ? 'Admin' : 'Usuário') }}
                                             </span>
                                             <span :class="getStatusClass(user.ativo)" 
                                                 class="px-2 py-1 text-xs rounded-full font-medium">
@@ -291,6 +291,7 @@ const limparFiltros = () => {
 }
 
 const getRoleClass = (role) => {
+    if (role === 'super_admin') return 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 font-bold border border-amber-300 dark:border-amber-700'
     return role === 'admin' 
         ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300'
         : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'

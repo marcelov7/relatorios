@@ -20,7 +20,7 @@ class TestarPDFMultiplos extends Command
             return;
         }
         
-        $relatorios = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'local', 'setor', 'autor'])
+        $relatorios = Relatorio::with(['atualizacoes.usuario', 'equipamentos', 'setor', 'autor'])
             ->take($quantidade)
             ->get();
         
