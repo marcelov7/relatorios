@@ -50,7 +50,7 @@ onMounted(() => {
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
             <div class="flex justify-center">
                 <div class="w-20 h-20 p-2 bg-white/10 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/60 flex items-center justify-center transform hover:scale-105 transition-transform">
-                    <img src="/images/app-logo.png" alt="Sistema de Relatórios" class="w-full h-full object-contain filter drop-shadow-md" />
+                    <img src="/app-logo.png" alt="Sistema de Relatórios" class="w-full h-full object-contain filter drop-shadow-md" />
                 </div>
             </div>
             <h2 class="mt-5 text-center text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">

@@ -8,7 +8,7 @@
                 <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 h-16">
                     <div class="flex items-center">
                         <div class="w-10 h-10 p-1 bg-white/60 dark:bg-gray-700/60 rounded-xl flex items-center justify-center mr-3 shadow-sm border border-gray-100 dark:border-gray-700">
-                            <img src="/images/app-logo.png" alt="Logo" class="w-full h-full object-contain" />
+                            <img src="/app-logo.png" alt="Logo" class="w-full h-full object-contain" />
                         </div>
                         <div>
                             <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 leading-tight">Relatórios</h2>
