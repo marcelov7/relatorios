@@ -91,6 +91,8 @@ class UserController extends Controller
             'cargo' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
             'role' => 'required|in:user,admin,super_admin',
+            'can_edit_enderecos' => 'nullable|boolean',
+            'can_delete_enderecos' => 'nullable|boolean',
             'tenant_id' => 'nullable|exists:tenants,id',
             'ativo' => 'boolean'
         ]);
@@ -109,6 +111,8 @@ class UserController extends Controller
             'cargo' => $request->cargo,
             'telefone' => $request->telefone,
             'role' => $request->role,
+            'can_edit_enderecos' => (bool) $request->can_edit_enderecos,
+            'can_delete_enderecos' => (bool) $request->can_delete_enderecos,
             'ativo' => $request->ativo ?? true
         ]);
 
@@ -156,6 +160,8 @@ class UserController extends Controller
             'cargo' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
             'role' => 'required|in:user,admin,super_admin',
+            'can_edit_enderecos' => 'nullable|boolean',
+            'can_delete_enderecos' => 'nullable|boolean',
             'tenant_id' => 'nullable|exists:tenants,id',
             'ativo' => 'boolean'
         ]);
@@ -167,6 +173,8 @@ class UserController extends Controller
             'cargo' => $request->cargo,
             'telefone' => $request->telefone,
             'role' => $request->role,
+            'can_edit_enderecos' => (bool) $request->can_edit_enderecos,
+            'can_delete_enderecos' => (bool) $request->can_delete_enderecos,
             'ativo' => $request->ativo ?? true
         ];
 

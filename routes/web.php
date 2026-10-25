@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('inspecao-geradores', InspecaoGeradorController::class);
     
     // Endereços Lógicos (Tags e Endereços PLC/Supervisório)
+    Route::get('enderecos-logicos/logs', [EnderecoLogicoController::class, 'logs'])->name('enderecos-logicos.logs')->middleware('admin');
     Route::get('enderecos-logicos/export', [EnderecoLogicoController::class, 'export'])->name('enderecos-logicos.export');
     Route::post('enderecos-logicos/import', [EnderecoLogicoController::class, 'import'])->name('enderecos-logicos.import');
     Route::put('enderecos-logicos/{id}', [EnderecoLogicoController::class, 'update'])->name('enderecos-logicos.update');

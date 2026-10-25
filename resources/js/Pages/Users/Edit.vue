@@ -153,6 +153,43 @@
                                     <InputError class="mt-1 text-xs" :message="form.errors.cargo" />
                                 </div>
                             </div>
+
+                            <!-- Permissões Especiais: Endereços Lógicos -->
+                            <div class="mt-6 p-4 rounded-xl bg-purple-50/60 dark:bg-gray-900/60 border border-purple-100 dark:border-purple-900/40">
+                                <h5 class="text-xs font-bold text-purple-900 dark:text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                    Permissões para Endereços Lógicos (PLC / Supervisório)
+                                </h5>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 mb-3">
+                                    Por padrão todos os usuários podem pesquisar e visualizar. Marque abaixo caso este usuário possa alterar ou excluir registros:
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="flex items-start">
+                                        <Checkbox
+                                            id="can_edit_enderecos"
+                                            v-model:checked="form.can_edit_enderecos"
+                                            class="mt-0.5 rounded w-4 h-4 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                                        />
+                                        <label for="can_edit_enderecos" class="ml-2.5 text-xs text-gray-700 dark:text-gray-300 cursor-pointer">
+                                            <span class="font-semibold block text-gray-900 dark:text-white">Pode Cadastrar / Editar Endereços</span>
+                                            Permite adicionar novos tags e atualizar descrições e endereços.
+                                        </label>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <Checkbox
+                                            id="can_delete_enderecos"
+                                            v-model:checked="form.can_delete_enderecos"
+                                            class="mt-0.5 rounded w-4 h-4 text-red-600 focus:ring-red-500 cursor-pointer"
+                                        />
+                                        <label for="can_delete_enderecos" class="ml-2.5 text-xs text-gray-700 dark:text-gray-300 cursor-pointer">
+                                            <span class="font-semibold block text-red-700 dark:text-red-400">Pode Excluir Endereços</span>
+                                            Permissão crítica para deletar tags e endereços lógicos.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- SEÇÃO 3: REDEFINIR SENHA (OPCIONAL) -->
@@ -307,6 +344,8 @@ const form = useForm({
     cargo: props.user.cargo || '',
     telefone: props.user.telefone || '',
     role: props.user.role,
+    can_edit_enderecos: Boolean(props.user.can_edit_enderecos),
+    can_delete_enderecos: Boolean(props.user.can_delete_enderecos),
     tenant_id: props.user.tenant_id || '',
     ativo: props.user.ativo
 })

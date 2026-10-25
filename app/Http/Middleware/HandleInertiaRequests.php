@@ -43,6 +43,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user ? array_merge($user->toArray(), [
                     'tenant' => $user->tenant,
                     'is_super_admin' => $user->isSuperAdmin(),
+                    'is_admin' => $user->isAdmin(),
+                    'can_edit_enderecos' => $user->canEditEnderecos(),
+                    'can_delete_enderecos' => $user->canDeleteEnderecos(),
                 ]) : null,
                 'active_tenant' => $currentTenant,
                 'active_tenant_id' => $currentTenantId,

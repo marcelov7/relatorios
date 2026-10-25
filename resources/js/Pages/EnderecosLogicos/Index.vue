@@ -23,6 +23,19 @@
                 </div>
 
                 <div class="flex items-center gap-2 flex-wrap">
+                    <!-- Botão Histórico de Logs (Apenas Admin / Super Admin) -->
+                    <a
+                        v-if="$page.props.auth.user?.is_admin"
+                        href="/enderecos-logicos/logs"
+                        class="inline-flex items-center px-3.5 py-2 text-xs font-semibold rounded-xl border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 hover:bg-purple-100 dark:hover:bg-purple-900/50 shadow-sm transition-all"
+                        title="Ver histórico de auditoria e alterações"
+                    >
+                        <svg class="w-4 h-4 mr-1.5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Histórico / Logs
+                    </a>
+
                     <!-- Botão Exportar CSV -->
                     <a
                         :href="exportUrl"
@@ -35,8 +48,9 @@
                         Exportar
                     </a>
 
-                    <!-- Botão Importar CSV -->
+                    <!-- Botão Importar CSV (Apenas quem pode editar) -->
                     <button
+                        v-if="$page.props.auth.user?.can_edit_enderecos"
                         @click="abrirModalImport"
                         class="inline-flex items-center px-3.5 py-2 text-xs font-medium rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 shadow-sm transition-all"
                         title="Importar planilha CSV"
@@ -47,8 +61,9 @@
                         Importar
                     </button>
 
-                    <!-- Botão Novo Endereço -->
+                    <!-- Botão Novo Endereço (Apenas quem pode editar) -->
                     <button
+                        v-if="$page.props.auth.user?.can_edit_enderecos"
                         @click="abrirModalNovo"
                         class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-blue-500/20 transition-all transform active:scale-95"
                     >
@@ -221,7 +236,9 @@
                                                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.523 0-10 4.477-10 10 0 1.767.459 3.428 1.261 4.872l-1.34 4.898 5.034-1.321c1.401.764 3.003 1.2 4.707 1.2 5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10zm0 18.25c-1.528 0-2.973-.418-4.218-1.144l-.303-.178-3.134.822.836-3.053-.195-.311c-.799-1.274-1.224-2.753-1.224-4.286 0-4.549 3.701-8.25 8.25-8.25 4.548 0 8.25 3.701 8.25 8.25 0 4.548-3.702 8.25-8.25 8.25z"/>
                                             </svg>
                                         </button>
+                                        <!-- Editar (Apenas quem tem permissão) -->
                                         <button
+                                            v-if="$page.props.auth.user?.can_edit_enderecos"
                                             @click="abrirModalEdicao(item)"
                                             class="p-1.5 rounded-lg text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                             title="Editar"
@@ -230,7 +247,10 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </button>
+
+                                        <!-- Excluir (Apenas quem tem permissão de exclusão) -->
                                         <button
+                                            v-if="$page.props.auth.user?.can_delete_enderecos"
                                             @click="confirmarExclusao(item)"
                                             class="p-1.5 rounded-lg text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                                             title="Excluir"
@@ -275,7 +295,9 @@
                                     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-12.416c-5.523 0-10 4.477-10 10 0 1.767.459 3.428 1.261 4.872l-1.34 4.898 5.034-1.321c1.401.764 3.003 1.2 4.707 1.2 5.523 0 10-4.477 10-10 0-5.522-4.477-10-10-10zm0 18.25c-1.528 0-2.973-.418-4.218-1.144l-.303-.178-3.134.822.836-3.053-.195-.311c-.799-1.274-1.224-2.753-1.224-4.286 0-4.549 3.701-8.25 8.25-8.25 4.548 0 8.25 3.701 8.25 8.25 0 4.548-3.702 8.25-8.25 8.25z"/>
                                 </svg>
                             </button>
+                            <!-- Editar Mobile (Apenas quem tem permissão) -->
                             <button
+                                v-if="$page.props.auth.user?.can_edit_enderecos"
                                 @click="abrirModalEdicao(item)"
                                 class="p-1.5 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                                 title="Editar"
@@ -284,7 +306,9 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </button>
+                            <!-- Excluir Mobile (Apenas quem tem permissão de exclusão) -->
                             <button
+                                v-if="$page.props.auth.user?.can_delete_enderecos"
                                 @click="confirmarExclusao(item)"
                                 class="p-1.5 text-gray-400 hover:text-red-600 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
                                 title="Excluir"

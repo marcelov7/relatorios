@@ -29,6 +29,8 @@ class User extends Authenticatable
         'cargo',
         'telefone',
         'role',
+        'can_edit_enderecos',
+        'can_delete_enderecos',
         'ativo',
     ];
 
@@ -53,6 +55,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'ativo' => 'boolean',
+            'can_edit_enderecos' => 'boolean',
+            'can_delete_enderecos' => 'boolean',
         ];
     }
 
@@ -70,6 +74,22 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin' || $this->role === 'super_admin';
+    }
+
+    /**
+     * Verifica se o usuário tem permissão para criar/editar endereços lógicos
+     */
+    public function canEditEnderecos(): bool
+    {
+        return $this->isAdmin() || (bool) $this->can_edit_enderecos;
+    }
+
+    /**
+     * Verifica se o usuário tem permissão para excluir endereços lógicos
+     */
+    public function canDeleteEnderecos(): bool
+    {
+        return $this->isAdmin() || (bool) $this->can_delete_enderecos;
     }
 
     /**

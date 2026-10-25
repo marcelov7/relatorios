@@ -65,6 +65,11 @@ class EnderecoLogicoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+        if (!$user || !$user->canEditEnderecos()) {
+            abort(403, 'Você não tem permissão para cadastrar endereços lógicos. Solicite autorização a um Administrador.');
+        }
+
         $validated = $request->validate([
             'tag' => 'required|string|max:100',
             'endereco' => 'required|string|max:191',
@@ -76,7 +81,21 @@ class EnderecoLogicoController extends Controller
             'endereco.required' => 'O endereço lógico é obrigatório.',
         ]);
 
-        EnderecoLogico::create($validated);
+        $endereco = EnderecoLogico::create($validated);
+
+        // Registrar log de auditoria
+        \App\Models\EnderecoLogicoLog::create([
+            'tenant_id' => $user->tenant_id,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'user_email' => $user->email,
+            'endereco_logico_id' => $endereco->id,
+            'tag' => $endereco->tag,
+            'acao' => 'criou',
+            'dados_anteriores' => null,
+            'dados_novos' => $validated,
+            'ip' => $request->ip(),
+        ]);
 
         return redirect()->back()->with('success', "Endereço lógico {$validated['tag']} cadastrado com sucesso!");
     }
@@ -86,7 +105,13 @@ class EnderecoLogicoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = $request->user();
+        if (!$user || !$user->canEditEnderecos()) {
+            abort(403, 'Você não tem permissão para alterar endereços lógicos. Solicite autorização a um Administrador.');
+        }
+
         $endereco = EnderecoLogico::findOrFail($id);
+        $dadosAnteriores = $endereco->only(['tag', 'endereco', 'descricao', 'area', 'observacoes']);
 
         $validated = $request->validate([
             'tag' => 'required|string|max:100',
@@ -101,19 +126,94 @@ class EnderecoLogicoController extends Controller
 
         $endereco->update($validated);
 
+        // Registrar log de auditoria
+        \App\Models\EnderecoLogicoLog::create([
+            'tenant_id' => $user->tenant_id,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'user_email' => $user->email,
+            'endereco_logico_id' => $endereco->id,
+            'tag' => $endereco->tag,
+            'acao' => 'editou',
+            'dados_anteriores' => $dadosAnteriores,
+            'dados_novos' => $validated,
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->back()->with('success', "Endereço {$endereco->tag} atualizado com sucesso!");
     }
 
     /**
      * Excluir endereço lógico
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $user = $request->user();
+        if (!$user || !$user->canDeleteEnderecos()) {
+            abort(403, 'Você não tem permissão para excluir endereços lógicos. Apenas usuários expressamente autorizados por um Administrador podem excluir.');
+        }
+
         $endereco = EnderecoLogico::findOrFail($id);
         $tag = $endereco->tag;
+        $dadosAnteriores = $endereco->only(['tag', 'endereco', 'descricao', 'area', 'observacoes']);
+
         $endereco->delete();
 
+        // Registrar log de auditoria
+        \App\Models\EnderecoLogicoLog::create([
+            'tenant_id' => $user->tenant_id,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'user_email' => $user->email,
+            'endereco_logico_id' => $id,
+            'tag' => $tag,
+            'acao' => 'excluiu',
+            'dados_anteriores' => $dadosAnteriores,
+            'dados_novos' => null,
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->back()->with('success', "Endereço {$tag} excluído com sucesso!");
+    }
+
+    /**
+     * Histórico de Logs / Auditoria de Alterações (Apenas Admins e Super Admins)
+     */
+    public function logs(Request $request)
+    {
+        $user = $request->user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403, 'Acesso restrito: apenas Administradores podem visualizar o histórico de auditoria.');
+        }
+
+        $search = $request->input('search', '');
+        $acao = $request->input('acao', '');
+
+        $query = \App\Models\EnderecoLogicoLog::query();
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('tag', 'like', "%{$search}%")
+                    ->orWhere('user_name', 'like', "%{$search}%")
+                    ->orWhere('user_email', 'like', "%{$search}%");
+            });
+        }
+
+        if (!empty($acao)) {
+            $query->where('acao', $acao);
+        }
+
+        $logs = $query->latest()
+            ->paginate(30)
+            ->withQueryString();
+
+        return Inertia::render('EnderecosLogicos/Logs', [
+            'logs' => $logs,
+            'filters' => [
+                'search' => $search,
+                'acao' => $acao,
+            ],
+        ]);
     }
 
 
