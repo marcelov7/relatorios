@@ -84,8 +84,10 @@ class EnderecoLogicoController extends Controller
     /**
      * Atualizar endereço lógico existente
      */
-    public function update(Request $request, EnderecoLogico $enderecos_logico)
+    public function update(Request $request, $id)
     {
+        $endereco = EnderecoLogico::findOrFail($id);
+
         $validated = $request->validate([
             'tag' => 'required|string|max:100',
             'endereco' => 'required|string|max:191',
@@ -97,21 +99,23 @@ class EnderecoLogicoController extends Controller
             'endereco.required' => 'O endereço lógico é obrigatório.',
         ]);
 
-        $enderecos_logico->update($validated);
+        $endereco->update($validated);
 
-        return redirect()->back()->with('success', "Endereço {$enderecos_logico->tag} atualizado com sucesso!");
+        return redirect()->back()->with('success', "Endereço {$endereco->tag} atualizado com sucesso!");
     }
 
     /**
      * Excluir endereço lógico
      */
-    public function destroy(EnderecoLogico $enderecos_logico)
+    public function destroy($id)
     {
-        $tag = $enderecos_logico->tag;
-        $enderecos_logico->delete();
+        $endereco = EnderecoLogico::findOrFail($id);
+        $tag = $endereco->tag;
+        $endereco->delete();
 
         return redirect()->back()->with('success', "Endereço {$tag} excluído com sucesso!");
     }
+
 
     /**
      * Exportar lista de endereços para CSV

@@ -123,7 +123,9 @@ Route::middleware(['auth'])->group(function () {
     // Endereços Lógicos (Tags e Endereços PLC/Supervisório)
     Route::get('enderecos-logicos/export', [EnderecoLogicoController::class, 'export'])->name('enderecos-logicos.export');
     Route::post('enderecos-logicos/import', [EnderecoLogicoController::class, 'import'])->name('enderecos-logicos.import');
-    Route::resource('enderecos-logicos', EnderecoLogicoController::class);
+    Route::put('enderecos-logicos/{id}', [EnderecoLogicoController::class, 'update'])->name('enderecos-logicos.update');
+    Route::delete('enderecos-logicos/{id}', [EnderecoLogicoController::class, 'destroy'])->name('enderecos-logicos.destroy');
+    Route::resource('enderecos-logicos', EnderecoLogicoController::class)->except(['update', 'destroy']);
     
     // Perfil do usuário
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
