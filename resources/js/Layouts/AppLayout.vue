@@ -72,6 +72,18 @@
                         Inspeção Gerador
                     </Link>
 
+                    <!-- Endereços Lógicos (Tags / CLP / Supervisório) -->
+                    <Link href="/enderecos-logicos" 
+                          class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group"
+                          :class="isActive('/enderecos-logicos') ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                        <svg class="w-5 h-5 mr-3 transition-colors"
+                             :class="isActive('/enderecos-logicos') ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-400'"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        Endereços Lógicos
+                    </Link>
+
                     <!-- Equipamentos de Teste (para admins/super_admin) -->
                     <Link v-if="$page.props.auth.user && ($page.props.auth.user.role === 'admin' || $page.props.auth.user.role === 'super_admin')" 
                           href="/equipamento-tests" 
@@ -346,6 +358,7 @@ const pageSubtitle = computed(() => {
     if (url.startsWith('/inspecao-geradores') && url.includes('/edit')) return 'Editar inspeção'
     if (url.startsWith('/inspecao-geradores') && url.match(/\/\d+$/)) return 'Visualizar inspeção'
     if (url.startsWith('/inspecao-geradores')) return 'Gerenciar inspeções'
+    if (url.startsWith('/enderecos-logicos')) return 'Busca rápida de tags e endereços lógicos de PLC/Supervisório'
     
     return ''
 })

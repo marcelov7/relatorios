@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\InspecaoGeradorController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\EnderecoLogicoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -118,6 +119,11 @@ Route::middleware(['auth'])->group(function () {
     
     // Inspeções de Gerador
     Route::resource('inspecao-geradores', InspecaoGeradorController::class);
+    
+    // Endereços Lógicos (Tags e Endereços PLC/Supervisório)
+    Route::get('enderecos-logicos/export', [EnderecoLogicoController::class, 'export'])->name('enderecos-logicos.export');
+    Route::post('enderecos-logicos/import', [EnderecoLogicoController::class, 'import'])->name('enderecos-logicos.import');
+    Route::resource('enderecos-logicos', EnderecoLogicoController::class);
     
     // Perfil do usuário
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

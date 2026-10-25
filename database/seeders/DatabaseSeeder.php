@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             SetorSeeder::class,
             EquipamentoSeeder::class,
             RelatorioSeeder::class,
+            EnderecoLogicoSeeder::class,
         ]);
     }
 }
+

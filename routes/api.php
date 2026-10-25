@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\RelatorioApiController;
 use App\Http\Controllers\Api\SetorApiController;
 use App\Http\Controllers\Api\EquipamentoApiController;
 use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\EnderecoLogicoApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [UserApiController::class, 'show']);
         Route::put('/{id}', [UserApiController::class, 'update']);
         Route::delete('/{id}', [UserApiController::class, 'destroy']);
+    });
+
+    // Endereços Lógicos (Tags e Endereços PLC/Supervisório)
+    Route::prefix('enderecos-logicos')->group(function () {
+        Route::get('/', [EnderecoLogicoApiController::class, 'index']);
+        Route::post('/', [EnderecoLogicoApiController::class, 'store']);
+        Route::get('/{id}', [EnderecoLogicoApiController::class, 'show']);
+        Route::put('/{id}', [EnderecoLogicoApiController::class, 'update']);
+        Route::delete('/{id}', [EnderecoLogicoApiController::class, 'destroy']);
     });
 
     // Estatísticas e Dashboard

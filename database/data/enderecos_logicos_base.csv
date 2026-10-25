@@ -1,0 +1,972 @@
+TAGS;DESCRIÇÃO;ENDEREÇO
+K2C041;Corrente Motor;DVN1_N27_POL_I.Current_Motor
+K2P01C73;Curto Circuito - Programador Filtro Mangas;DVN2_N01_S00_POL_I.Data.0
+K2P01M1C73;Curto Circuito - Programador Filtro Mangas 1;DVN2_N01_S00_POL_I.Data.0
+K2P01M1C61;Retorno - Programador Filtro Mangas 1;DVN2_N01_S00_POL_I.Data.1
+K2P14M1C51;Liga Local - Rosca do Filtro 2;DVN2_N01_S00_POL_I.Data.10
+K2T01M1C73;Curto Circuito - Rosca de Transporte;DVN2_N01_S00_POL_I.Data.11
+K2T01M1C61;Retorno - Rosca de Transporte;DVN2_N01_S00_POL_I.Data.12
+K2T01M1C53;Desliga Local - Rosca de Transporte;DVN2_N01_S00_POL_I.Data.13
+K2T01M1C51;Liga Local - Rosca de Transporte;DVN2_N01_S00_POL_I.Data.14
+K2P05M1C73;Curto Circuito - Válvula Pendular do Filtro 1;DVN2_N01_S00_POL_I.Data.15
+K2P01M1P41;Pressão Mínima - Programador Filtro Mangas 1;DVN2_N01_S00_POL_I.Data.2
+K2P01P41;Pressão Mínima - Programador Filtro Mangas;DVN2_N01_S00_POL_I.Data.2
+K2P04M1C73;Curto Circuito - Rosca do Filtro 1;DVN2_N01_S00_POL_I.Data.3
+K2P04M1C61;Retorno - Rosca do Filtro 1;DVN2_N01_S00_POL_I.Data.4
+K2P04M1C53;Desliga Local - Rosca do Filtro 1;DVN2_N01_S00_POL_I.Data.5
+K2P04M1C51;Liga Local - Rosca do Filtro 1;DVN2_N01_S00_POL_I.Data.6
+K2P14M1C73;Curto Circuito - Rosca do Filtro 2;DVN2_N01_S00_POL_I.Data.7
+K2P14M1C61;Retorno - Rosca do Filtro 2;DVN2_N01_S00_POL_I.Data.8
+K2P14M1C53;Desliga Local - Rosca do Filtro 2;DVN2_N01_S00_POL_I.Data.9
+K2P05M1C61;Retorno - Válvula Pendular do Filtro 1;DVN2_N01_S01_POL_I.Data.0
+K2P05M1C53;Desliga Local - Válvula Pendular do Filtro 1;DVN2_N01_S01_POL_I.Data.1
+K2R01M1C73;Curto Circuito - Ventilador Axial 01;DVN2_N01_S01_POL_I.Data.10
+K2R01M1C61;Retorno - Ventilador Axial 01;DVN2_N01_S01_POL_I.Data.11
+K2R01M1C53;Desliga Local - Ventilador Axial 01;DVN2_N01_S01_POL_I.Data.12
+K2R01M1C51;Liga Local 1 - Ventilador Axial 01;DVN2_N01_S01_POL_I.Data.13
+K2R01M1C52;Liga Local 2 - Ventilador Axial 01;DVN2_N01_S01_POL_I.Data.14
+K2P05M1C51;Liga Local - Válvula Pendular do Filtro 1;DVN2_N01_S01_POL_I.Data.2
+K2P15M1C73;Curto Circuito - Válvula Pendular do Filtro 2;DVN2_N01_S01_POL_I.Data.3
+K2P15M1C61;Retorno - Válvula Pendular do Filtro 2;DVN2_N01_S01_POL_I.Data.4
+K2P15M1C53;Desliga Local - Válvula Pendular do Filtro 2;DVN2_N01_S01_POL_I.Data.5
+K2P15M1C51;Liga Local - Válvula Pendular do Filtro 2;DVN2_N01_S01_POL_I.Data.6
+K2P11C73;Curto Circuito - Programador Filtro Mangas Resfriador 2;DVN2_N01_S01_POL_I.Data.7
+K2P11C61;Retorno - Programador Filtro Mangas Resfriador 2;DVN2_N01_S01_POL_I.Data.8
+K2P11P41;Pressão Mínima - Programador Filtro Mangas Resfriador 2;DVN2_N01_S01_POL_I.Data.9
+K2R07M1C61;Retorno - Rosca do Trocador de Calor;DVN2_N01_S02_POL_I.Data.0
+K2R07M1C53;Desliga Local - Rosca do Trocador de Calor;DVN2_N01_S02_POL_I.Data.1
+K2R02M1C51;Liga Local 1 - Ventilador Axial 02;DVN2_N01_S02_POL_I.Data.10
+K2R02M1C52;Liga Local 2 - Ventilador Axial 02;DVN2_N01_S02_POL_I.Data.11
+K2R03M1C73;Curto Circuito - Ventilador Axial 03;DVN2_N01_S02_POL_I.Data.12
+K2R03M1C61;Retorno - Ventilador Axial 03;DVN2_N01_S02_POL_I.Data.13
+K2R03M1C53;Desliga Local - Ventilador Axial 03;DVN2_N01_S02_POL_I.Data.14
+K2R03M1C51;Liga Local 1 - Ventilador Axial 03;DVN2_N01_S02_POL_I.Data.15
+K2R07M1C51;Liga Local - Rosca do Trocador de Calor;DVN2_N01_S02_POL_I.Data.2
+K2T02M1C73;Curto Circuito - Cadeia Arrastadora;DVN2_N01_S02_POL_I.Data.3
+K2T02M1C61;Retorno - Cadeia Arrastadora;DVN2_N01_S02_POL_I.Data.4
+K2T02M1C53;Desliga Local - Cadeia Arrastadora;DVN2_N01_S02_POL_I.Data.5
+K2T02M1C51;Liga Local - Cadeia Arrastadora;DVN2_N01_S02_POL_I.Data.6
+K2R02M1C73;Curto Circuito - Ventilador Axial 02;DVN2_N01_S02_POL_I.Data.7
+K2R02M1C61;Retorno - Ventilador Axial 02;DVN2_N01_S02_POL_I.Data.8
+K2R02M1C53;Desliga Local - Ventilador Axial 02;DVN2_N01_S02_POL_I.Data.9
+K2R03M1C52;Liga Local 2 - Ventilador Axial 03;DVN2_N01_S03_POL_I.Data.0
+K2R04M1C73;Curto Circuito - Ventilador Axial 04;DVN2_N01_S03_POL_I.Data.1
+K2R04M1C61;Retorno - Ventilador Axial 04;DVN2_N01_S03_POL_I.Data.2
+K2R04M1C53;Desliga Local - Ventilador Axial 04;DVN2_N01_S03_POL_I.Data.3
+K2R04M1C51;Liga Local 1 - Ventilador Axial 04;DVN2_N01_S03_POL_I.Data.4
+K2R04M1C52;Liga Local 2 - Ventilador Axial 04;DVN2_N01_S03_POL_I.Data.5
+K2R08M1C73;Curto Circuito - Válvula Dupla Pendular Trocador de Calor;DVN2_N01_S03_POL_I.Data.6
+K2R08M1C61;Retorno - Válvula Dupla Pendular Trocador de Calor;DVN2_N01_S03_POL_I.Data.7
+K2R08M1C53;Desliga Local - Válvula Dupla Pendular Trocador de Calor;DVN2_N01_S03_POL_I.Data.8
+K2R08M1C51;Liga Local - Válvula Dupla Pendular Trocador de Calor;DVN2_N01_S03_POL_I.Data.9
+K2P01M1C31;Comando Liga - Filtro de Mangas;DVN2_N01_S04_POL_O.Data.0
+K2P11M1C31;Comando Liga - Filtro de Mangas;DVN2_N01_S04_POL_O.Data.1
+K2P05M1C31;Comando Liga - Válvula Pendular do Filtro 1;DVN2_N01_S04_POL_O.Data.2
+K2R08M1C31;Comando Liga - Válvula Dupla Pendular Trocador de Calor;DVN2_N01_S04_POL_O.Data.3
+K2T01M1C31;Comando Liga - Rosca de Transporte;DVN2_N01_S04_POL_O.Data.6
+K2P041;Corrente - Motor Rosca Transportadora;DVN2_N02_E3_POL_I.AverageFLA
+K2P141;Corrente - Motor Rosca Transportadora;DVN2_N03_E3_POL_I.AverageFLA
+K2P151;Corrente - Válvula Pendular;DVN2_N06_E3_POL_I.AverageFLA
+K2P02M1C73;Curto Circuito - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.1
+K2P03M1C73;Curto Circuito - Ventilador Refrigeração Motor;DVN2_N18_S00_POL_I.Data.12
+K2P03M1C61;Retorno - Ventilador Refrigeração Motor;DVN2_N18_S00_POL_I.Data.15
+K2P02M1C61;Retorno - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.2
+K2P02M2C61;Retorno - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.2
+K2P02M1C53;Desliga Local - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.3
+K2P02M2C53;Desliga Local - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.3
+K2P02M1C51;Liga Local - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.4
+K2P02M2C51;Liga Local - Exaustor Tiragem do Filtro;DVN2_N18_S00_POL_I.Data.4
+K2P02M2T41;Temperatura Alta - Reostato Eletele;DVN2_N18_S00_POL_I.Data.6
+K2P02M2L41;Nível Baixo - Reostato Eletele;DVN2_N18_S00_POL_I.Data.7
+K2P02M2L42;Nível Alto - Reostato Eletele;DVN2_N18_S00_POL_I.Data.8
+K2P02M2C73;Curto Circuito - Reostato Eletele;DVN2_N18_S00_POL_I.Data.9
+K2P03M1C53;Desliga Local - Ventilador Refrigeração Motor;DVN2_N18_S01_POL_I.Data.1
+K2R05M1C52;Liga Local 2 - Ventilador Axial 05;DVN2_N18_S01_POL_I.Data.10
+K2R06M1C73;Curto Circuito - Ventilador Axial 06;DVN2_N18_S01_POL_I.Data.11
+K2R06M1C61;Retorno - Ventilador Axial 06;DVN2_N18_S01_POL_I.Data.12
+K2R06M1C53;Desliga Local - Ventilador Axial 06;DVN2_N18_S01_POL_I.Data.13
+K2R06M1C51;Liga Local 1 - Ventilador Axial 06;DVN2_N18_S01_POL_I.Data.14
+K2R06M1C52;Liga Local 2 - Ventilador Axial 06;DVN2_N18_S01_POL_I.Data.15
+K2P03M1C51;Liga Local - Ventilador Refrigeração Motor;DVN2_N18_S01_POL_I.Data.2
+K2R05M1C73;Curto Circuito - Ventilador Axial 05;DVN2_N18_S01_POL_I.Data.6
+K2R05M1C61;Retorno - Ventilador Axial 05;DVN2_N18_S01_POL_I.Data.7
+K2R05M1C53;Desliga Local - Ventilador Axial 05;DVN2_N18_S01_POL_I.Data.8
+K2R05M1C51;Liga Local 1 - Ventilador Axial 05;DVN2_N18_S01_POL_I.Data.9
+K2R10Z1C73;Curto Circuito - Válvula Alívio Trocador de Calor;DVN2_N18_S02_POL_I.Data.0
+K2R10Z1Z41;Posição Fechada Válvula Alívio Trocador de Calor;DVN2_N18_S02_POL_I.Data.1
+K2R10Z1Z42;Posição Aberta Válvula Alívio Trocador de Calor;DVN2_N18_S02_POL_I.Data.9
+K1R15L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.11
+K1R16L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.12
+K1R17L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.13
+K1R18L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.14
+K1R19L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.15
+K1R14L41;Nível Alto - Bica Resfriador;DVN2_N18_S03_POL_I.Data.9
+K2P02M1C31;Comando Liga - Exaustor Tiragem do Filtro;DVN2_N18_S04_POL_O.Data.0
+K2R10Z1C31;Comando Liga - Válvula Alívio Trocador de Calor;DVN2_N18_S04_POL_O.Data.3
+K2P02M1C32;Comando Liga - Resistência de Aquecimento - Exaustor Tiragem do Filtro;DVN2_N18_S04_POL_O.Data.9
+K2P04M1S41;Sensor de Movimento - Rosca do Filtro 1;DVN2_N25_S00_POL_I.Data.0
+K2P14M1S41;Sensor de Movimento - Rosca do Filtro 2;DVN2_N25_S00_POL_I.Data.1
+K2T01M1S41;Sensor de Movimento - Rosca de Transporte;DVN2_N25_S00_POL_I.Data.2
+K2P05M1S41;Sensor de Movimento - Válvula Dupla Pendular Filtro 1;DVN2_N25_S00_POL_I.Data.3
+K2P15M1S41;Sensor de Movimento - Válvula Dupla Pendular Filtro 2;DVN2_N25_S00_POL_I.Data.4
+K2R07M1S41;Sensor de Movimento - Rosca do Trocador de Calor;DVN2_N25_S00_POL_I.Data.5
+K2T02M1S41;Sensor de Movimento - Cadeia Arrastadora;DVN2_N25_S00_POL_I.Data.6
+K2R08M1S41;Sensor de Movimento - Válvula Dupla Pendular Trocador de Calor;DVN2_N25_S00_POL_I.Data.7
+L2J03Z42;Descarrilhamento Transportador - Lado Ensaque;DVN2_N25_S00_POL_I.Data.8
+L2J03Z41;Descarrilhamento Transportador - Lado Britagem;DVN2_N25_S00_POL_I.Data.9
+K2R01P1;Pressão Cabeçote do Forno;DVN2_N25_S01_POL_I.Ch0Data
+K2P11P1;Pressão Diferencial Filtro Resfriador 2;DVN2_N25_S01_POL_I.Ch1Data
+K2P02T6A;Temperatura - Mancal LA - Exaustor do Filtro;DVN2_N25_S02_POL_I.Ch0Data
+K2P02T6B;Temperatura - Mancal LOA - Exaustor do Filtro;DVN2_N25_S02_POL_I.Ch1Data
+K2R10T1;Temperatura - Entrada do Trocador de Calor;DVN2_N25_S02_POL_I.Ch2Data
+K2R10T2;Temperatura - Saída do Trocador de Calor;DVN2_N25_S02_POL_I.Ch3Data
+K2P02T1A;Temperatura - Bobinado Fase R - Exaustor do Filtro;DVN2_N25_S02_POL_I.Ch4Data
+K2P02T1B;Temperatura - Bobinado Fase S - Exaustor do Filtro;DVN2_N25_S02_POL_I.Ch5Data
+K2P02T1C;Temperatura - Bobinado Fase T - Exaustor do Filtro;DVN2_N25_S02_POL_I.Ch6Data
+S2Q05Z2C73;Curto Circuito - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.10
+S2Q05Z1Z41;Posição Aberta - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.11
+S2Q05Z1Z42;Posição Fechada - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.12
+S2Q05Z1C73;Curto Circuito - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.13
+S2Q05Z2Z42;Posição Fechada - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.8
+S2Q05Z2Z41;Posição Aberta - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S00_POL_I.Data.9
+S2Q05L42;Nível Baixo - Moega Resíduo;DVN2_N36_S01_POL_I.Data.10
+S2Q05L41;Nível Alto - Moega Resíduo;DVN2_N36_S01_POL_I.Data.11
+S2J01M1S41;Sensor de Movimento - Elevador Moega de Recebimento;DVN2_N36_S01_POL_I.Data.12
+S2Q04L42;Nível Baixo - Moega Resíduo;DVN2_N36_S01_POL_I.Data.8
+S2Q04L41;Nível Alto - Moega Resíduo;DVN2_N36_S01_POL_I.Data.9
+K2A01C73;Curto-Circuito Canhões Torre Ciclone;DVN2_N36_S03_POL_I.Data.0
+CNH_TRRE;Retorno Canhões K2A01;DVN2_N36_S03_POL_I.Data.1
+K2C03Z1C73;Curto Circuito - Válvula Guilhotina Entrada de Pneu;DVN2_N36_S03_POL_I.Data.3
+K2C03Z1C71;Emergência - Válvula Guilhotina Entrada de Pneu (K2C03Z1 E K2C03Z2);DVN2_N36_S03_POL_I.Data.4
+S2Q06L41;Nível Alto - Silo Coque Moído;DVN2_N36_S03_POL_I.Data.8
+S2Q06L42;Nível Baixo - Silo Coque Moído;DVN2_N36_S03_POL_I.Data.8
+S2Q04M1C73;Curto Circuito - Balança Resíduo;DVN2_N36_S04_POL_I.Data.0
+S2Q04M1C71;Emergência - Balança Resíduo;DVN2_N36_S04_POL_I.Data.1
+K2C03Z1C31;Comando Abre - Válvula Guilhotina Entrada de Pneu;DVN2_N36_S05_POL_O.Data.11
+S2Q05Z1C31;Comando Abre - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S05_POL_O.Data.14
+S2Q05Z2C31;Comando Abre - Válvula Guilhotina - Alimentação Resíduo;DVN2_N36_S05_POL_O.Data.15
+K2A01C31;Comando Liga Sequenciador Canhões;DVN2_N36_S05_POL_O.Data.3
+131BC140H01C51;Sirene Abastecimento M Cru Vem PLC 431;DVN2_N36_S05_POL_O.Data.5
+DVN2_N36_S05_PL_;Aciona sirene do sistema de abastecimento moagem de cru 2;DVN2_N36_S05_POL_O.DATA.7
+K2C03Z2C31;Comando Abre - Válvula Guilhotina Entrada de Pneu;DVN2_N36_S05_POL_O.Data.9
+K2A01T2;Temperatura - Saída A01;DVN2_N36_S06_POL_I.Ch1Data
+K2A01P2;Pressão - Entrada A11;DVN2_N36_S06_POL_I.Ch3Data
+K2T011;Corrente - Motor Rosca Transportadora;DVN2_N43_POL_I.AverageFLA
+K2T021;Corrente Arrastador;DVN2_N49_POL_I.AverageFLA
+K2R15T1;Temperatura - Placa Câmara 2 - Lado Moinho de Coque;DVN2_N50_S00_POL_I.Ch0Data
+K2R15T2;Temperatura - Placa Câmara 2 - Lado Forno 1;DVN2_N50_S00_POL_I.Ch1Data
+K2R16T3;Temperatura - Placa Câmara 2 - Lado Moinho de Coque;DVN2_N50_S00_POL_I.Ch2Data
+K2R16T4;Temperatura - Placa Câmara 3 - Lado B Forno 1;DVN2_N50_S00_POL_I.Ch3Data
+K2R17T1;Temperatura - Placa Câmara 2 - Lado Moinho de Coque;DVN2_N50_S00_POL_I.Ch4Data
+K2R17T2;Temperatura - Placa Câmara 2 - Lado Forno 1;DVN2_N50_S00_POL_I.Ch5Data
+K2R18T1;Temperatura - Placa Câmara 5 - Lado A Moinho de Coque;DVN2_N50_S00_POL_I.Ch6Data
+K2R18T2;Temperatura - Placa Câmara 5 - Lado B Forno 1;DVN2_N50_S00_POL_I.Ch7Data
+K2R19T1;Temperatura - Placa Câmara 6 - Lado A Moinho de Coque;DVN2_N50_S01_POL_I.Ch0Data
+K2R19T2;Temperatura - Placa Câmara 6 - Lado B Forno 1;DVN2_N50_S01_POL_I.Ch1Data
+K2R15T5;Temperatura - Placa Câmara 2 - Central;DVN2_N50_S01_POL_I.Ch2Data
+K2R16T5;Temperatura - Placa Câmara 2 - Central;DVN2_N50_S01_POL_I.Ch3Data
+K2R17T5;Temperatura - Placa Câmara 2 - Central;DVN2_N50_S01_POL_I.Ch4Data
+K2R18T5;Temperatura - Placa Câmara 2 - Central;DVN2_N50_S01_POL_I.Ch5Data
+K2R19T5;Temperatura - Placa Câmara 2 - Central;DVN2_N50_S01_POL_I.Ch6Data
+K2R14V1A;Vibração - Ventilador V1A - Forno 2;DVN2_N50_S02_POL_I.Ch0Data
+K2R14V1B;Vibração - Ventilador V1B - Forno 2;DVN2_N50_S02_POL_I.Ch1Data
+K2R15V1A;Vibração - Ventilador V2 - Forno 2;DVN2_N50_S02_POL_I.Ch2Data
+K2R16V1A;Vibração - Ventilador V3 - Forno 2;DVN2_N50_S02_POL_I.Ch3Data
+K2R17V1A;Vibração - Ventilador V4 - Forno 2;DVN2_N50_S02_POL_I.Ch4Data
+K2R18V1A;Vibração - Ventilador V5 - Forno 2;DVN2_N50_S02_POL_I.Ch5Data
+K2R19V1A;Vibração - Ventilador V6 - Forno 2;DVN2_N50_S02_POL_I.Ch6Data
+K2P02V1B;Vibração Mancal LOA - Exaustor Filtro Resfriador 2;DVN2_N50_S03_POL_I.Ch0Data
+K2P02V1A;Vibração Mancal LA - Exaustor Filtro Resfriador 2;DVN2_N50_S03_POL_I.Ch2Data
+K2R17T3;Temperatura - Câmara 4 - Lado A Moinho de Coque;DVN2_N50_S04_POL_I.Ch0Data
+K2R14T2A;Temperatura - Mancal LA - Ventilador V1B;DVN2_N50_S04_POL_I.Ch1Data
+K2R18T3;Temperatura - Câmara 5 - Lado A Moinho de Coque;DVN2_N50_S04_POL_I.Ch2Data
+K2R16T1;Temperatura - Ventilador V3;DVN2_N50_S04_POL_I.Ch3Data
+K2R19T3;Temperatura - Câmara 6 - Lado B Moinho de Coque;DVN2_N50_S04_POL_I.Ch4Data
+K2R14T1A;Temperatura - Mancal LA - Ventilador V1A;DVN2_N50_S04_POL_I.Ch6Data
+K2R14T1B;Temperatura - Mancal LOA - Ventilador V1A;DVN2_N50_S04_POL_I.Ch7Data
+K2R14T2B;Temperatura - Mancal LOA - Ventilador V1B;DVN2_N50_S05_POL_I.Ch1Data
+K2R14T4_LX;Temperatura Placa Câmara 1C - Resfriador 2;DVN2_N50_S05_POL_I.Ch2Data
+K2R15T1A;Temperatura - Mancal LA - Ventilador V2;DVN2_N50_S05_POL_I.Ch2Data
+K2R14T4_LX_1;Temp. Placa Câmara 1C - Resfriador 2;DVN2_N50_S05_POL_I.Ch3Data
+K2R15T1B;Temperatura - Mancal LOA - Ventilador V2;DVN2_N50_S05_POL_I.Ch3Data
+K2R16T1A;Temperatura - Mancal LA - Ventilador V3;DVN2_N50_S05_POL_I.Ch4Data
+K2R16T1B;Temperatura - Mancal LOA - Ventilador V3;DVN2_N50_S05_POL_I.Ch5Data
+K2R17T1B;Temperatura - Mancal LOA - Ventilador V4;DVN2_N50_S05_POL_I.Ch7Data
+K2R18T1A;Temperatura - Mancal LA - Ventilador V5;DVN2_N50_S06_POL_I.Ch0Data
+K2R18T1B;Temperatura - Mancal LOA - Ventilador V5;DVN2_N50_S06_POL_I.Ch1Data
+K2R19T1A;Temperatura - Mancal LA - Ventilador V6;DVN2_N50_S06_POL_I.Ch2Data
+K2R19T1B;Temperatura - Mancal LOA - Ventilador V6;DVN2_N50_S06_POL_I.Ch3Data
+K2R15T3;Temperatura Câmara 2A - Resfriador 2;DVN2_N50_S06_POL_I.Ch4Data
+K2R17T1A;Temperatura - Mancal LA - Ventilador V4;DVN2_N50_S07_POL_I.Ch0Data
+K2B01T1A;Temperatura - Britador de Clínquer;DVN2_N50_S07_POL_I.Ch1Data
+K2R071;Corrente - Motor Rosca Transportadora;DVN2_N51_POL_I.AverageFLA
+K2P051;Corrente - Válvula Pendular;DVN2_N53_POL_I.AverageFLA
+K2B01M1C35;Reset Falha Britador Clinker;DVN2_N60_POL_O.ClearFault
+F2T14M1C51;Liga Local - Soprador Reserva dos Silos;DVN3_N01_S03_POL_I.Data.7
+F2P10C61;Retorno - Programador Filtro Silo Catalisador;DVN3_N01_S04_POL_I.Data.4
+CMD_CNH_MCRU;Comando Liga Canhão Entrada M cru 2;DVN3_N01_S05_POL_O.Data.0
+F2P16M1C32;Comando Liga - Exaustor Eletrofiltro;DVN3_N01_S05_POL_O.Data.12
+DVN3_N01_S05_PL_;Liga programador do filtro do silo do catalisador;DVN3_N01_S05_POL_O.DATA.15
+F2P10M1C31;Comando Liga Filtro Silo Catalisador;DVN3_N01_S05_POL_O.Data.15
+F2P22M1C73;Curto Circuito - Exaustor Filtro Mangas;DVN3_N13_S00_POL_I.Data.0
+F2P22M1C61;Retorno - Exaustor Filtro Mangas;DVN3_N13_S00_POL_I.Data.1
+F2P26M1C51;Liga Local - Válvula Rotativa do Filtro;DVN3_N13_S00_POL_I.Data.10
+F2P22M1C53;Desliga Local - Exaustor Filtro Mangas;DVN3_N13_S00_POL_I.Data.2
+F2P22M1C51;Liga Local - Exaustor Filtro Mangas;DVN3_N13_S00_POL_I.Data.3
+F2P21C73;Curto Circuito - Programador do Filtro;DVN3_N13_S00_POL_I.Data.4
+F2P21C61;Retorno - Programador Filtro Mangas;DVN3_N13_S00_POL_I.Data.5
+F2P26M1C73;Curto Circuito - Válvula Rotativa do Filtro;DVN3_N13_S00_POL_I.Data.7
+F2P26M1C61;Retorno - Válvula Rotativa do Filtro;DVN3_N13_S00_POL_I.Data.8
+F2P26M1C53;Desliga Local - Válvula Rotativa do Filtro;DVN3_N13_S00_POL_I.Data.9
+F2T06M1C73;Curto Circuito - Elevador de Caçambas;DVN3_N13_S02_POL_I.Data.1
+F2T07M1C51;Liga Local - Rosca Transportadora;DVN3_N13_S02_POL_I.Data.10
+F2T08M1C73;Curto Circuito - Soprador do Silo 2;DVN3_N13_S02_POL_I.Data.11
+F2T08M1C53;Desliga Local - Soprador do Silo 2;DVN3_N13_S02_POL_I.Data.13
+F2T08M1C51;Liga Local - Soprador do Silo 2;DVN3_N13_S02_POL_I.Data.14
+F2T12M1C73;Curto Circuito - Válvula Rotativa;DVN3_N13_S02_POL_I.Data.15
+F2T06M1C71;Emergência - Elevador de Caçambas;DVN3_N13_S02_POL_I.Data.2
+F2T06M1C61;Retorno - Elevador de Caçambas;DVN3_N13_S02_POL_I.Data.3
+F2T06M1C53;Desliga Local - Elevador de Caçambas;DVN3_N13_S02_POL_I.Data.4
+F2T06M1C51;Liga Local - Elevador de Caçambas;DVN3_N13_S02_POL_I.Data.5
+F2T07M1C71;Emergência - Rosca Transportadora;DVN3_N13_S02_POL_I.Data.7
+F2T07M1C53;Desliga Local - Rosca Transportadora;DVN3_N13_S02_POL_I.Data.9
+F2T12M1C53;Desliga Local - Válvula Rotativa;DVN3_N13_S03_POL_I.Data.1
+K2T09M1C51;Liga Local - Bomba - Injeção Água Saída Torre Ciclone;DVN3_N13_S03_POL_I.Data.10
+F2P11_CL;Status Limpeza Eletrofiltro;DVN3_N13_S03_POL_I.Data.15
+F2T12M1C51;Liga Local - Válvula Rotativa;DVN3_N13_S03_POL_I.Data.2
+F2T04M1C73;Curto Circuito - Rosca Saída Desv. F2T04;DVN3_N13_S03_POL_I.Data.3
+F2T04M1C61;Retorno - Rosca Saída Desv. F2T04;DVN3_N13_S03_POL_I.Data.4
+F2T04M1C53;Desliga Local - Rosca Saída Desv. F2T04;DVN3_N13_S03_POL_I.Data.5
+F2T04M1C51;Liga Local - Rosca Saída Desv. F2T04;DVN3_N13_S03_POL_I.Data.6
+K2T09M1C73;Curto Circuito - Bomba - Injeção Água Saída Torre Ciclone;DVN3_N13_S03_POL_I.Data.7
+K2T09M1C61;Retorno - Bomba - Injeção Água Saída Torre Ciclone;DVN3_N13_S03_POL_I.Data.8
+K2T09M1C53;Desliga Local - Bomba - Injeção Água Saída Torre Ciclone;DVN3_N13_S03_POL_I.Data.9
+F2P21M1C31;Comando Liga - Programador do Filtro;DVN3_N13_S04_POL_O.Data.0
+F2T12M1C35;Reset - Schenck;DVN3_N13_S04_POL_O.Data.1
+F2T12M1C36;Libera - Schenck;DVN3_N13_S04_POL_O.Data.2
+F2P11A6;Emissão Particulado - Chaminé Eletrofiltro;DVN3_N13_S05_POL_I.Ch0Data
+F2P11P2;Pressão - Saída Eletrofiltro;DVN3_N13_S05_POL_I.Ch1Data
+F2P16T1;Temperatura Exaustor Eletrofiltro;DVN3_N13_S05_POL_I.Ch2Data
+F2P11A4;Concentração de NO;DVN3_N13_S05_POL_I.Ch3Data
+F2P16T6A;Temperatura - Mancal LA Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch0Data
+F2P16T6B;Temperatura - Mancal LOA Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch1Data
+F2P16T1A;Temperatura - Bobinado Fase R - Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch2Data
+F2P16T1B;Temperatura - Bobinado Fase S - Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch3Data
+F2P16T1C;Temperatura - Bobinado Fase T - Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch4Data
+F2P16T7A;Temperatura - Mancal LOA Motor Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch5Data
+F2P16T7B;Temperatura - Mancal LA Motor Exaustor do Eletrofiltro;DVN3_N13_S07_POL_I.Ch6Data
+F2P11T4;Temperatura Eletrofiltro;DVN3_N13_S07_POL_I.Ch7Data
+F2P221;Corrente - Exaustor Filtro;DVN3_N14_E3_POL_I.AverageFLA
+F2P261;Corrente - Válvula Rotativa Filtro;DVN3_N15_E3_POL_I.AverageFLA
+F2T061;Corrente - Elevador Caçambas;DVN3_N19_E3_POL_I.AverageFLA
+312WF010F41;Falta Material Balança;DVN3_N24_S00_POL_I.Data.0
+F1P03M1S41;Sensor de Movimento - Complemento Rosca Eletrofiltro;DVN3_N24_S00_POL_I.Data.1
+F2T06M1S41;Sensor de Movimento - Elevador de Caçambas;DVN3_N24_S00_POL_I.Data.10
+F2T07M1S41;Sensor de Movimento - Rosca Transportadora;DVN3_N24_S00_POL_I.Data.11
+F2P12M1S41;Sensor de Movimento - Rosca do Eletrofiltro;DVN3_N24_S00_POL_I.Data.12
+F2P13M1S41;Sensor de Movimento - Válvula Rotativa;DVN3_N24_S00_POL_I.Data.13
+F2T01M1S41;Sensor de Movimento - Rosca da Torre;DVN3_N24_S00_POL_I.Data.14
+F2T02M1S41;Sensor de Movimento - Válvula Rotativa N1 Torre;DVN3_N24_S00_POL_I.Data.15
+F1T11M1S41;Sensor de Movimento - Ventilador Calha Eletrofiltro;DVN3_N24_S00_POL_I.Data.2
+F1T13M1S41;Sensor de Movimento - Rosca Antes Bomba F2T16;DVN3_N24_S00_POL_I.Data.3
+F1T06M1S41;Sensor de Movimento - Elevador de Caçambas;DVN3_N24_S00_POL_I.Data.4
+F2P03M1S41;Sensor de Movimento - Complemento Rosca Eletrofiltro;DVN3_N24_S00_POL_I.Data.7
+F2T11M1S41;Sensor de Movimento - Rosca Após Schenck;DVN3_N24_S00_POL_I.Data.8
+F2T13M1S41;Sensor de Movimento - Rosca Entrada do Elevador;DVN3_N24_S00_POL_I.Data.9
+F2T03M1S41;Sensor de Movimento - Ventilador Calha Eletrofiltro;DVN3_N24_S01_POL_I.Data.0
+F2T05M1S41;Sensor de Movimento - Cadeia Arrastadora;DVN3_N24_S01_POL_I.Data.1
+F2T04M1S41;Sensor de Movimento - Rosca Saída Desv. F2T04;DVN3_N24_S01_POL_I.Data.15
+F2T12M1S41;Sensor de Movimento - Válvula Rotativa;DVN3_N24_S01_POL_I.Data.3
+F2T06L41;Nível Alto - Pé do Elevador;DVN3_N24_S01_POL_I.Data.9
+F2R01U41;Falha Unidade - Analisador Saída Torre Ciclones;DVN3_N24_S02_POL_I.Data.9
+F2R01A1;Concentração CO - Torre 2;DVN3_N24_S03_POL_I.Ch0Data
+F2R01P1;Pressão - Entrada da Torre;DVN3_N24_S03_POL_I.Ch1Data
+F2P11P1;Pressão Entrada Eletrofiltro;DVN3_N24_S03_POL_I.Ch2Data
+F2R01A2;Concentração CO - Torre 2;DVN3_N24_S04_POL_I.Ch0Data
+F2R01A3;Concentração O2 - Torre 2;DVN3_N24_S04_POL_I.Ch1Data
+F2R01A4;Concentração O2 - Torre 2;DVN3_N24_S04_POL_I.Ch2Data
+F2P16M2C51;Liga Local - Reostato Eletele;DVN3_N25_S00_POL_I.Data.10
+F2P16M2C73;Curto Circuito 1 - Reostato Eletele;DVN3_N25_S00_POL_I.Data.11
+F2P16M2C61;Retorno 1 - Reostato Eletele;DVN3_N25_S00_POL_I.Data.12
+F2P16M2C62;Retorno 2 - Reostato Eletele;DVN3_N25_S00_POL_I.Data.13
+F2P12M1C73;Curto Circuito - Rosca do Eletrofiltro;DVN3_N25_S00_POL_I.Data.2
+F2P12M1C61;Retorno - Rosca do Eletrofiltro;DVN3_N25_S00_POL_I.Data.3
+F2P12M1C53;Desliga Local - Rosca do Eletrofiltro;DVN3_N25_S00_POL_I.Data.4
+F2P12M1C51;Liga Local - Rosca do Eletrofiltro;DVN3_N25_S00_POL_I.Data.5
+F2P13M1C73;Curto Circuito - Válvula Rotativa;DVN3_N25_S00_POL_I.Data.6
+F2P13M1C61;Retorno - Válvula Rotativa;DVN3_N25_S00_POL_I.Data.7
+F2P13M1C53;Desliga Local - Válvula Rotativa;DVN3_N25_S00_POL_I.Data.8
+F2P13M1C51;Liga Local - Válvula Rotativa;DVN3_N25_S00_POL_I.Data.9
+F2P16M2T41;Temperatura Alta - Reostato Eletele;DVN3_N25_S01_POL_I.Data.0
+F2P16M2L42;Nível Alto - Reostato Eletele;DVN3_N25_S01_POL_I.Data.1
+F2T02M1C53;Desliga Local - Válvula Rotativa N1 da Torre;DVN3_N25_S01_POL_I.Data.10
+F2T02M1C51;Liga Local - Válvula Rotativa N1 da Torre;DVN3_N25_S01_POL_I.Data.11
+F2P16M2L41;Nível Baixo - Reostato Eletele;DVN3_N25_S01_POL_I.Data.2
+F2P16M2C74;Curto Circuito 2 - Reostato Eletele;DVN3_N25_S01_POL_I.Data.3
+F2T01M1C61;Retorno - Rosca da Torre;DVN3_N25_S01_POL_I.Data.5
+F2T01M1C53;Desliga Local - Rosca da Torre;DVN3_N25_S01_POL_I.Data.6
+F2T01M1C51;Liga Local - Rosca da Torre;DVN3_N25_S01_POL_I.Data.7
+F2T02M1C73;Curto Circuito - Válvula Rotativa N1 da Torre;DVN3_N25_S01_POL_I.Data.8
+F2T02M1C61;Retorno - Válvula Rotativa N1 da Torre;DVN3_N25_S01_POL_I.Data.9
+F2P17M1C73;Curto Circuito - Refrigeração Exaustor Eletrofiltro;DVN3_N25_S02_POL_I.Data.0
+F2P17M1C61;Retorno - Refrigeração Exaustor Eletrofiltro;DVN3_N25_S02_POL_I.Data.1
+F2T05M1C73;Curto Circuito - Cadeia Arrastadora;DVN3_N25_S02_POL_I.Data.12
+F2T05M1C61;Retorno - Cadeia Arrastadora;DVN3_N25_S02_POL_I.Data.13
+F2T05M1C53;Desliga Local - Cadeia Arrastadora;DVN3_N25_S02_POL_I.Data.14
+F2T05M1C51;Liga Local - Cadeia Arrastadora;DVN3_N25_S02_POL_I.Data.15
+F2P17M1C53;Desliga Local - Refrigeração Exaustor Eletrofiltro;DVN3_N25_S02_POL_I.Data.2
+F2P17M1C51;Liga Local - Refrigeração Exaustor Eletrofiltro;DVN3_N25_S02_POL_I.Data.3
+F2R02M1C73;Curto Circuito - Bomba D'água N2 da Torre;DVN3_N25_S03_POL_I.Data.10
+F2R02M1C61;Retorno - Bomba D'água N2 da Torre;DVN3_N25_S03_POL_I.Data.11
+F2R02M1C53;Desliga Local - Bomba D'água N2 da Torre;DVN3_N25_S03_POL_I.Data.12
+F2R02M1C51;Liga Local - Bomba D'água N2 da Torre;DVN3_N25_S03_POL_I.Data.13
+F2P11X1C61;Retorno - Retificador Câmara 1;DVN3_N25_S04_POL_I.Data.10
+F2P11U1C51;Liga Local - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S04_POL_I.Data.15
+F2P11X1C51;Liga Local - Retificador Câmara 1;DVN3_N25_S04_POL_I.Data.8
+F2P11X1C73;Curto Circuito - Retificador Câmara 1;DVN3_N25_S04_POL_I.Data.9
+F2P11U1C73;Curto Circuito - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S05_POL_I.Data.1
+F2P11U2C51;Liga Local - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S05_POL_I.Data.10
+F2P11U2C73;Curto Circuito - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S05_POL_I.Data.12
+F2P11U1C61;Retorno - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S05_POL_I.Data.2
+F2P11X2C51;Liga Local - Retificador Câmara 2;DVN3_N25_S05_POL_I.Data.3
+F2P11X2C73;Curto Circuito - Retificador Câmara 2;DVN3_N25_S05_POL_I.Data.4
+F2P11X2C61;Retorno - Câmara Eletrofiltro;DVN3_N25_S05_POL_I.Data.5
+F2T01M1C52;Liga Local Esquerda - Rosca Transportadora - Torre Condicionamento;DVN3_N25_S06_POL_I.Data.10
+F2P11U3C73;Curto Circuito - Resistência Aquecimento - Eletrofiltro;DVN3_N25_S06_POL_I.Data.3
+F2P11X3C73;Curto Circuito - Retificador Câmara 3;DVN3_N25_S06_POL_I.Data.4
+F2P11X3C61;Retorno - Retificador Câmara 3;DVN3_N25_S06_POL_I.Data.5
+F2T01M1C62;Retorno 2 - Rosca da Torre;DVN3_N25_S06_POL_I.Data.9
+F2P16M1C73;Curto Circuito - Exaustor do Eletrofiltro FLS;DVN3_N25_S07_POL_I.Data.1
+F2P16M1C61;Retorno - Exaustor do Eletrofiltro FLS;DVN3_N25_S07_POL_I.Data.2
+F2P16M1C53;Desliga Local - Exaustor do Eletrofiltro FLS;DVN3_N25_S07_POL_I.Data.3
+F2P16M1C51;Liga Local - Exaustor do Eletrofiltro FLS;DVN3_N25_S07_POL_I.Data.4
+342WP483C62;Retorno Contactor Bomba;DVN3_N25_S07_POL_I.Data.5
+F2R02C62;Retorno Contator;DVN3_N25_S07_POL_I.Data.6
+F2T01M1C73;Curto Circuito - Rosca Transportadora - Torre Condicionamento;DVN3_N25_S07_POL_I.Data.7
+F2P16M2C31;Comando Liga 1 - Reostato Eletele;DVN3_N26_S00_POL_O.Data.1
+F2P11X1C31;Comando Liga - Retificador Câmara 1;DVN3_N26_S00_POL_O.Data.15
+F2P16M2C32;Comando Liga 2 - Reostato Eletele;DVN3_N26_S00_POL_O.Data.2
+F2P16M1C31;Comando Liga - Exaustor Eletrofiltro;DVN3_N26_S00_POL_O.Data.3
+F2P11M3C31;Comando Liga - Batedor 1 eletrodo entrada Eletrofiltro;DVN3_N26_S00_POL_O.Data.4
+F2P11M3C32;Comando Liga - Batedor 2 placas inferior Eletrofiltro;DVN3_N26_S00_POL_O.Data.5
+F2P11M3C33;Comando Liga - Batedor 3 eletrodo saída Eletrofiltro;DVN3_N26_S00_POL_O.Data.6
+F2P11U1C31;Comando Liga - Resistência Aquecimento - Eletrofiltro;DVN3_N26_S01_POL_O.Data.1
+F2P11_C1F123_CMAX3;CO MÁX 3;DVN3_N26_S01_POL_O.Data.10
+F2P11_CMAX3;Interbloqueio CO Máximo 3;DVN3_N26_S01_POL_O.Data.10
+QD3_C31;Comando Liga Circuito 3 - Iluminação Eletrofiltro;DVN3_N26_S01_POL_O.Data.11
+QD4_C31;Comando Liga Circuito 4 - Iluminação Eletrofiltro;DVN3_N26_S01_POL_O.Data.12
+QD5_C31;Comando Liga Circuito 5 - Iluminação Eletrofiltro;DVN3_N26_S01_POL_O.Data.13
+QD6_C31;Comando Liga Circuito 6 - Iluminação Eletrofiltro;DVN3_N26_S01_POL_O.Data.14
+SEL_342WP483;Comando Contato Bomba 342WP483;DVN3_N26_S01_POL_O.Data.15
+F2P11X2C31;Comando Liga - Retificador Câmara 2;DVN3_N26_S01_POL_O.Data.2
+F2P11U2C31;Comando Liga - Resistência Aquecimento - Eletrofiltro;DVN3_N26_S01_POL_O.Data.4
+F2P11X3C31;Comando Liga - Retificador Câmara 3;DVN3_N26_S01_POL_O.Data.5
+F2P11X3C32;Comando Liga - Retificador Câmara 3;DVN3_N26_S01_POL_O.Data.6
+F2P11_C1F3_BLMQ;Bloqueio Eletrofiltro;DVN3_N26_S01_POL_O.Data.7
+F2P11_BLMQ;Bloqueio Eletrofiltro;DVN3_N26_S01_POL_O.Data.7
+F2P11_C1F123_CMAX2;CO Máx 2;DVN3_N26_S01_POL_O.Data.9
+F2P11_CMAX2;Interbloqueio CO Máximo 2;DVN3_N26_S01_POL_O.Data.9
+322SM175C31;Amostrador Mcru 2;DVN3_N26_S02_POL_O.Data.0
+SEL_F2R02M1;Comando Contato Bomba F2R02;DVN3_N26_S02_POL_O.Data.2
+F2P11E1;Tensão Câmara 1 - Eletrofiltro;DVN3_N26_S03_POL_I.Ch0Data
+F2P11E2;Tensão Câmara 2 - Eletrofiltro;DVN3_N26_S03_POL_I.Ch1Data
+F2P16S1;Rotação - Exaustor F2P16M1;DVN3_N26_S03_POL_I.Ch2Data
+F2P111;Corrente Câmara 1 - Eletrofiltro;DVN3_N26_S03_POL_I.Ch3Data
+F2P112;Corrente Câmara 2 - Eletrofiltro;DVN3_N26_S04_POL_I.Ch0Data
+F2P161;Corrente - Exaustor F2P16M1;DVN3_N26_S04_POL_I.Ch1Data
+F2P11E3;Tensão Câmara 3 - Eletrofiltro;DVN3_N26_S04_POL_I.Ch2Data
+F2P113;Corrente Câmara 3 - Eletrofiltro;DVN3_N26_S04_POL_I.Ch3Data
+F2P16V1A;Vibração - Mancal LA Exaustor F2P16M1;DVN3_N26_S05_POL_I.Ch0Data
+F2P11T1;Temperatura - Entrada do Eletrofiltro;DVN3_N26_S05_POL_I.Ch1Data
+F2P16V1B;Vibração - Mancal LOA Exaustor F2P16M1;DVN3_N26_S05_POL_I.Ch3Data
+F2P11A1;Concentração de CO;DVN3_N26_S06_POL_I.Ch0Data
+F2P11A2;O2 - Analisador Saída Chaminé Eletrofiltro;DVN3_N26_S06_POL_I.Ch1Data
+F2P11A5;THC - Analisador Saída Chaminé Eletrofiltro;DVN3_N26_S06_POL_I.Ch2Data
+F2P11A3;Concentração de NO;DVN3_N26_S06_POL_I.Ch3Data
+F2P16S11;Setpoint Rotação Exaustor Eletrofiltro;DVN3_N26_S07_POL_O.Ch0Data
+F2R14Z11;Setpoint Válvula - Retorno Água Torre Condicionamento;DVN3_N26_S07_POL_O.Ch2Data
+F2P121;Corrente - Rosca Transportadora;DVN3_N27_POL_I.AverageFLA
+F2P131;Corrente - Rosca Transportadora;DVN3_N28_POL_I.AverageFLA
+F2T011;Corrente - Rosca Transportadora;DVN3_N29_POL_I.AverageFLA
+F2T021;Corrente - Válvula Rotativa;DVN3_N30_POL_I.AverageFLA
+F2T051;Corrente - Rosca Transportadora;DVN3_N33_E3_POL_I.AverageFLA
+F2R021;Corrente - Bomba Água Torre Condicionamento;DVN3_N35_E3_POL_I.AverageFLA
+F2T14M1C73;Curto Circuito - Válvula Rotativa Silo 2 P/ Moagem de Cimento;DVN3_N40_S00_POL_I.Data.4
+F2T14M1C61;Retorno - Válvula Rotativa Silo 2 P/ Moagem de Cimento;DVN3_N40_S00_POL_I.Data.5
+H2J07P1;Pressão - Dosador Farinha ao Forno 2;DVN3_N40_S02_POL_I.Ch2Data
+H2H04Z1Z42;Posição Fechada - Válvula Extração Silo 4;DVN3_N42_S00_POL_I.Data.10
+H2H04Z1Z41;Posição Aberta - Válvula Extração Silo 4;DVN3_N42_S00_POL_I.Data.11
+H2H04Z1C73;Curto Circuito - Válvula Extração Silo 4;DVN3_N42_S00_POL_I.Data.12
+H2H03Z1Z41;Posição Aberta - Válvula Extração Silo 3;DVN3_N42_S00_POL_I.Data.2
+H2H03Z1Z42;Posição Fechada - Válvula Extração Silo 3;DVN3_N42_S00_POL_I.Data.3
+H2H03Z1C73;Curto Circuito - Válvula Extração Silo 3;DVN3_N42_S00_POL_I.Data.4
+H2H03Z1C31;Comando Abre - Válvula Extração Silo 3;DVN3_N42_S02_POL_O.Data.1
+G2H01Z2C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S02_POL_O.Data.12
+G2H01Z3C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S02_POL_O.Data.13
+G2H01Z4C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S02_POL_O.Data.14
+G2H01Z5C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S02_POL_O.Data.15
+H2H04Z1C31;Comando Liga - Válvula Extração Silo 4;DVN3_N42_S02_POL_O.Data.5
+G2H01Z2_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.0
+G2H01Z2_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.1
+322BE180M2C51;Liga Local Giro Lento Elevador AUX FORNO 2;DVN3_N42_S04_POL_I.Data.10
+322BE180M2C52;Desliga Local Giro Lento Elevador AUX FORNO 2;DVN3_N42_S04_POL_I.Data.11
+322BE180M2C53;Sinal de curto circuito da chave ICV elevador do forno;DVN3_N42_S04_POL_I.Data.12
+322BE180M2C51_1;Desliga Local Elevador M cru 2 Giro Lento;DVN3_N42_S04_POL_I.Data.13
+322BE180M2C52_2;Liga Local Giro Lento Elevador M cru 2;DVN3_N42_S04_POL_I.Data.14
+322BE180M2C53_1;Sinal de curto circuito da chave ICV ELEVADOR DOS HOMOS;DVN3_N42_S04_POL_I.Data.15
+G2H01Z3_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.2
+G2H01Z3_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.3
+G2H01Z4_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.4
+G2H01Z4_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.5
+G2H01Z5_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.6
+G2H01Z5_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S04_POL_I.Data.7
+F2P26M1S41;Sensor de Movimento - Válvula Rotativa Filtro;DVN3_N42_S04_POL_I.Data.8
+F2P21P41;Pressão Mínima - Programador Filtro Mangas;DVN3_N42_S04_POL_I.Data.9
+G2H02Z1_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.0
+G2H02Z1_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.1
+H2T03M1Z43;Desalinhamento - Superior Direito - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.10
+H2T03M1Z44;Desalinhamento - Superior Esquerdo - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.11
+H2T03M1L41;Nível Alto - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.12
+H2T03M1S41;Sensor de Movimento - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.13
+H2T03M2S41;Sensor de Movimento - Auxiliar Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.14
+G2H02Z2_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.2
+G2H02Z2_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.3
+G2H02Z3_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.4
+G2H02Z3_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.5
+G2H02Z4_PFD;Posição Fechada - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.6
+G2H02Z4_PAB;Posição Aberta - Válvula Homo M. Cru 2;DVN3_N42_S05_POL_I.Data.7
+H2T03M1Z41;Desalinhamento - Inferior Direito - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.8
+H2T03M1Z42;Desalinhamento - Inferior Esquerdo - Elevador de Caçambas;DVN3_N42_S05_POL_I.Data.9
+G2H02Z1C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S06_POL_O.Data.0
+G2H02Z2C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S06_POL_O.Data.1
+G2H02Z3C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S06_POL_O.Data.2
+G2H02Z4C31;Comando Liga - Válvula Homo M. Cru 2;DVN3_N42_S06_POL_O.Data.3
+F2P11M2C61;Retorno - Batedor do Filtro C1F2;DVN3_N43_S00_POL_I.Data.10
+F2P11M2C74;Curto Circuito - Batedor do Filtro C1F2;DVN3_N43_S00_POL_I.Data.11
+F2P11M2C62;Retorno - Batedor do Filtro C1F2;DVN3_N43_S00_POL_I.Data.12
+332TK470D01L42;Nível Caixa D'água Resfriador;DVN3_N43_S00_POL_I.Data.14
+332TK470D01L41;Nível Caixa D'água Resfriador;DVN3_N43_S00_POL_I.Data.15
+F2R01L41;Nível Baixo - Tanque D'água;DVN3_N43_S00_POL_I.Data.2
+F2R01L42;Nível Alto - Tanque D'água;DVN3_N43_S00_POL_I.Data.3
+LANCAS_SCTC;Falta de Tensão Válvulas das Lanças;DVN3_N43_S00_POL_I.Data.4
+F2P11M1C73;Curto Circuito - Batedor do Filtro C1F1;DVN3_N43_S00_POL_I.Data.5
+F2P11M1C61;Retorno - Batedor do Filtro C1F1;DVN3_N43_S00_POL_I.Data.6
+F2P11M1C74;Curto Circuito - Batedor do Filtro C1F1;DVN3_N43_S00_POL_I.Data.7
+F2P11M1C62;Retorno - Batedor do Filtro C1F1;DVN3_N43_S00_POL_I.Data.8
+F2P11M2C73;Curto Circuito - Batedor do Filtro C1F2;DVN3_N43_S00_POL_I.Data.9
+CMDValve_L1;Comando Liga - Torre Cond. - Válvula Lança 1;DVN3_N43_S01_POL_O.Data.0
+CMDValve_L2;Comando Liga - Torre Cond. - Válvula Lança 2;DVN3_N43_S01_POL_O.Data.1
+CMDValve_L11;Comando Liga - Torre Cond. - Válvula Lança 11;DVN3_N43_S01_POL_O.Data.10
+CMDValve_L12;Comando Liga - Torre Cond. - Válvula Lança 12;DVN3_N43_S01_POL_O.Data.11
+F2P11M1C31;Comando Liga - Batedor câmara 1 placas do Filtro C1F1;DVN3_N43_S01_POL_O.Data.12
+F2P11M1C32;Comando Liga - Batedor câmara 1 eletrodos do Filtro C1F1;DVN3_N43_S01_POL_O.Data.13
+F2P11M2C31;Comando Liga - Batedor câmara 2 placas do Filtro C1F2;DVN3_N43_S01_POL_O.Data.14
+F2P11M2C32;Comando Liga - Batedor câmara 2 eletrodos do Filtro C1F2;DVN3_N43_S01_POL_O.Data.15
+CMDValve_L3;Comando Liga - Torre Cond. - Válvula Lança 3;DVN3_N43_S01_POL_O.Data.2
+CMDValve_L4;Comando Liga - Torre Cond. - Válvula Lança 4;DVN3_N43_S01_POL_O.Data.3
+A332TK470N01L01_LL;Envia Nível Baixo da Caixa de Água dos Bicos da Torre;DVN3_N43_S01_POL_O.Data.4
+CMDValve_L5;Comando Liga - Torre Cond. - Válvula Lança 5;DVN3_N43_S01_POL_O.Data.4
+CMDValve_L6;Comando Nível Baixo - Torre Cond. - Caixa D'água para lanças;DVN3_N43_S01_POL_O.Data.5
+SKD_START;Liga Ponto a Ponto Skid da Torre;DVN3_N43_S01_POL_O.Data.5
+CMDValve_L7;Comando Liga - Torre Cond. - Válvula Lança 7;DVN3_N43_S01_POL_O.Data.6
+SKD_STP;Desliga Skid da Torre;DVN3_N43_S01_POL_O.Data.6
+CMDValve_L8;Comando Liga - Torre Cond. - Válvula Lança 8;DVN3_N43_S01_POL_O.Data.7
+CMDValve_L10;Comando Liga - Torre Cond. - Válvula Lança 10;DVN3_N43_S01_POL_O.Data.8
+CMDValve_L9;Comando Liga - Torre Cond. - Válvula Lança 9;DVN3_N43_S01_POL_O.Data.9
+F2R05F1;Vazão Água Entrada Torre Condicionamento;DVN3_N43_S02_POL_I.Ch0Data
+F2R05F2;Vazão Água Retorno Torre Condicionamento;DVN3_N43_S02_POL_I.Ch1Data
+F2R01P4;Pressão Água Torre;DVN3_N43_S02_POL_I.Ch2Data
+F2R01T1;Temperatura - Entrada da Torre 2;DVN3_N43_S03_POL_I.Ch1Data
+F2R01T2;Temperatura Saída Torre Condicionamento;DVN3_N43_S03_POL_I.Ch2Data
+F2R01T2_1;Temperatura - Saída da Torre 2;DVN3_N43_S03_POL_I.Ch3Data
+F2R01T2_LX;Temperatura Saída Torre Condicionamento;DVN3_N43_S03_POL_I.Ch3Data
+F2R01P3;Pressão - Saída Bombas da Torre;DVN3_N43_S04_POL_I.Ch0Data
+F2R01L1;Nível - Caixa de Água da Torre;DVN3_N43_S04_POL_I.Ch1Data
+332CT470N01L01;Nível Condutividade Torre;DVN3_N43_S04_POL_I.Ch2Data
+332TK470N01L01;Nível Tanque Torre;DVN3_N43_S04_POL_I.Ch2Data
+F2P11T3;Temperatura Sala CCM Eletrofiltro F2;DVN3_N43_S04_POL_I.Ch3Data
+DVN3_N43_S05_PL_;Botão de Emergência Atuado;DVN3_N43_S05_POL_I.DATA.0
+332SKD_MEBT;Botão de Emergência Skid;DVN3_N43_S05_POL_I.Data.0
+DVN3_N43_S05_PL_;Sistema Funcionando;DVN3_N43_S05_POL_I.DATA.1
+332SKD_MRUN;Sistema Funcionando Skid;DVN3_N43_S05_POL_I.Data.1
+DVN3_N43_S05_PL_;Falha do Sistema;DVN3_N43_S05_POL_I.DATA.2
+332SKD_FAULT;Falha Skid Torre;DVN3_N43_S05_POL_I.Data.2
+DVN3_N43_S05_PL_;Remoto;DVN3_N43_S05_POL_I.DATA.3
+332SKD_REMT;Remoto Skid Torre;DVN3_N43_S05_POL_I.Data.3
+DVN3_N43_S05_PL_;Alarme de Temperatura;DVN3_N43_S05_POL_I.DATA.4
+332SKD_AL_TEMP;Alarme de Temperatura Skid;DVN3_N43_S05_POL_I.Data.4
+DVN3_N43_S05_PL_;Alarme de Vazão;DVN3_N43_S05_POL_I.DATA.5
+332SKD_AL_VAZA;Alarme de Vazão Skid;DVN3_N43_S05_POL_I.Data.5
+DVN3_N43_S05_PL_;Alarme de Pressão;DVN3_N43_S05_POL_I.DATA.6
+332SKD_AL_PRESSA;Alarme de Pressão Skid;DVN3_N43_S05_POL_I.Data.6
+DVN3_N43_S05_PL_;Seleção da Bomba Principal em 0 / Reserva em 1;DVN3_N43_S05_POL_I.DATA.7
+332SKD_SEL;Seleção Skid Bomba Principal / Reserva;DVN3_N43_S05_POL_I.Data.7
+F2R04Y1;Válvula - Água Torre 2;DVN3_N43_S05_POL_O.Ch0Data
+F2T14S1;Rotação - Válvula Rotativa Filtro;DVN3_N46_POL_I.Feedback
+F2T071;Corrente - Rosca Transportadora;DVN3_N47_POL_I.AverageFLA
+F2T081;Soprador Aeração Silo;DVN3_N48_POL_I.AverageFLA
+F2T121;Corrente - Válvula Rotativa;DVN3_N49_POL_I.AverageFLA
+F2T101;Corrente - Rosca Transportadora Silo;DVN3_N50_POL_I.AverageFLA
+H2F021;Corrente - Exaustor Filtro;DVN4_N01_POL_I.AverageFLA
+H2J041;Corrente - Ventilador Regueira;DVN4_N02_POL_I.AverageFLA
+H2T041;Corrente - Ventilador Regueira;DVN4_N04_POL_I.AverageFLA
+H2T042;Corrente - Ventilador Regueira;DVN4_N05_POL_I.AverageFLA
+H2H171;Corrente - Ventilador Regueira;DVN4_N06_POL_I.AverageFLA
+H2H181;Corrente - Soprador Aeração;DVN4_N07_POL_I.AverageFLA
+H2H191;Corrente - Soprador Aeração;DVN4_N08_POL_I.AverageFLA
+H2F041;Corrente - Rosca Transportadora Filtro;DVN4_N09_POL_I.AverageFLA
+H2H111;Corrente - Distribuidor de Ar;DVN4_N10_POL_I.AverageFLA
+H2T051;Corrente - Válvula Rotativa;DVN4_N12_POL_I.AverageFLA
+K2R101;Corrente - Motor Nose Ring 1;DVN4_N24_POL_I.AverageFLA
+K2R102;Corrente - Motor Nose Ring 2;DVN4_N25_POL_I.AverageFLA
+K2B01M1C62;Retorno - Britador de Clínquer - Soft Starter;DVN4_N29_POL_I.Data[0].1
+K2B01M1C32;Comando Desliga - Britador de Clínquer;DVN4_N29_POL_O.Data[0].0
+K2B01M1C31;Comando Liga - Britador de Clínquer;DVN4_N29_POL_O.Data[0].1
+L2J011;Corrente - Transportador Resfriador 2;DVN4_N35_POL_I.AverageFLA
+L2J061;Corrente - Transportador de Correia;DVN4_N37_POL_I.AverageFLA
+L2J041;Corrente - Motor Carro Transferência;DVN4_N39_POL_I.AverageFLA
+L2J051;Corrente - Motor Trip;DVN4_N40_POL_I.AverageFLA
+H2T03M1C71;Emergência - Elevador - Alimentação Forno;DVN4_N41_S00_POL_I.Data.0
+H2H13M1Z41;Posição Aberto - Válvula Controle - Extração Silo 3;DVN4_N41_S00_POL_I.Data.1
+K2J01M1Z41;Posição Aberta - Válvula Controle - Exaustor do Forno;DVN4_N41_S00_POL_I.Data.11
+K2J01M1Z42;Posição Fechada - Válvula Controle - Exaustor do Forno;DVN4_N41_S00_POL_I.Data.12
+K2J01M1C52;Liga Local Esquerda - Válvula Controle - Exaustor do Forno;DVN4_N41_S00_POL_I.Data.13
+K2J01M1W41;Torque Abrir - Válvula Controle - Exaustor do Forno;DVN4_N41_S00_POL_I.Data.14
+K2J01M1W42;Torque Fechar - Válvula Controle - Exaustor do Forno;DVN4_N41_S00_POL_I.Data.15
+H2H13M1Z42;Posição Fechada - Válvula Controle - Extração Silo 3;DVN4_N41_S00_POL_I.Data.2
+H2H13M1W41;Torque Abrir - Válvula Controle - Extração Silo 3;DVN4_N41_S00_POL_I.Data.4
+H2H13M1W42;Torque Fechar - Válvula Controle - Extração Silo 3;DVN4_N41_S00_POL_I.Data.5
+H2T03M1C51;Liga Local - Elevador Alimentação Forno;DVN4_N41_S00_POL_I.Data.6
+H2T03M1C53;Desliga Local - Elevador Alimentação Forno;DVN4_N41_S00_POL_I.Data.7
+K2J03M1Z41;Posição Aberta - Válvula Controle - Moagem de Cru;DVN4_N41_S01_POL_I.Data.0
+K2J03M1Z42;Posição Fechada - Válvula Controle - Moagem de Cru;DVN4_N41_S01_POL_I.Data.1
+K2J06M1Z41;Posição Aberta - Válvula Controle - Ar Frio;DVN4_N41_S01_POL_I.Data.10
+K2J06M1Z42;Posição Fechada - Válvula Controle - Ar Frio;DVN4_N41_S01_POL_I.Data.11
+K2J06M1C52;Liga Local - Válvula Controle - Ar Frio;DVN4_N41_S01_POL_I.Data.12
+K2J06M1W41;Torque Abrir - Válvula Controle - Ar Frio;DVN4_N41_S01_POL_I.Data.13
+K2J06M1W42;Torque Fechar - Válvula Controle - Ar Frio;DVN4_N41_S01_POL_I.Data.14
+K2R18M1C73;Curto Circuito - Ventilador Câmara 5 - Resfriador;DVN4_N41_S01_POL_I.Data.15
+K2J03M1C52;Liga Local Esquerda - Válvula Controle - Moagem de Cru;DVN4_N41_S01_POL_I.Data.2
+K2J03M1W41;Torque Abrir - Válvula Controle - Moagem de Cru;DVN4_N41_S01_POL_I.Data.3
+K2J03M1W42;Torque Fechar - Válvula Controle - Moagem de Cru;DVN4_N41_S01_POL_I.Data.4
+K2J05M1Z41;Posição Aberta - Válvula Controle - Saída Torre Ciclones;DVN4_N41_S01_POL_I.Data.5
+K2J05M1Z42;Posição Fechada - Válvula Controle - Saída Torre Ciclones;DVN4_N41_S01_POL_I.Data.6
+K2J05M1C52;Liga Local - Válvula Controle - Saída Torre Ciclones;DVN4_N41_S01_POL_I.Data.7
+K2J05M1W41;Torque Abrir - Válvula Controle - Saída Torre Ciclones;DVN4_N41_S01_POL_I.Data.8
+K2J05M1W42;Torque Fechar - Válvula Controle - Saída Torre Ciclones;DVN4_N41_S01_POL_I.Data.9
+K2R18M1C53;Desliga Local - Ventilador Câmara 5 - Resfriador;DVN4_N41_S02_POL_I.Data.1
+K2R16M1C51;Liga Local - Ventilador Câmara 3 - Resfriador;DVN4_N41_S02_POL_I.Data.10
+K2B01M1C73;Curto Circuito - Britador de Clínquer;DVN4_N41_S02_POL_I.Data.11
+K2B01M1C61;Retorno - Britador de Clínquer;DVN4_N41_S02_POL_I.Data.12
+K2B01M1C53;Desliga Local - Britador de Clínquer;DVN4_N41_S02_POL_I.Data.13
+K2B01M1C51;Liga Local - Britador de Clínquer;DVN4_N41_S02_POL_I.Data.14
+K2R18M1C51;Liga Local - Ventilador Câmara 5 - Resfriador;DVN4_N41_S02_POL_I.Data.2
+K2R15M1C73;Curto Circuito - Ventilador Câmara 2 - Resfriador;DVN4_N41_S02_POL_I.Data.3
+K2R15M1C53;Desliga Local - Ventilador Câmara 2 - Resfriador;DVN4_N41_S02_POL_I.Data.5
+K2R15M1C51;Liga Local - Ventilador Câmara 2 - Resfriador;DVN4_N41_S02_POL_I.Data.6
+K2R16M1C73;Curto Circuito - Ventilador Câmara 3 - Resfriador;DVN4_N41_S02_POL_I.Data.7
+K2R16M1C53;Desliga Local - Ventilador Câmara 3 - Resfriador;DVN4_N41_S02_POL_I.Data.9
+K2C03M2P41;Pressão Baixa - Ventilador Refrigeração Motor;DVN4_N41_S03_POL_I.Data.8
+L2J06M1C71;Emergência - Correia Transportadora;DVN4_N41_S04_POL_I.Data.12
+L2J02M1C52;Liga Local-E - Desviador Transporte Clinker;DVN4_N41_S04_POL_I.Data.15
+H2F01C73;Curto Circuito - Programador Filtro;DVN4_N41_S05_POL_I.Data.12
+H2F01C61;Retorno - Programador Filtro;DVN4_N41_S05_POL_I.Data.13
+H2F01P41;Pressão Mínima - Programador Filtro;DVN4_N41_S05_POL_I.Data.14
+K2C05M1C73;Curto Circuito - Ventilador 1 Casco Forno;DVN4_N41_S05_POL_I.Data.15
+L2J04M1C52;Liga Local-E - Desviador Galpão Clínquer;DVN4_N41_S05_POL_I.Data.4
+L2J05M1S41;Sensor de Movimento - Carro de Transferência;DVN4_N41_S05_POL_I.Data.8
+L2J05M1C52;Liga Local Esquerda - Carro de Transferência;DVN4_N41_S05_POL_I.Data.9
+K2C05M1C61;Retorno - Ventilador 1 Casco Forno;DVN4_N41_S06_POL_I.Data.0
+K2C05M2C73;Curto Circuito - Ventilador 2 Casco Forno;DVN4_N41_S06_POL_I.Data.1
+K2C05M5C61;Retorno - Ventilador 5 Casco Forno;DVN4_N41_S06_POL_I.Data.10
+K2C05M6C73;Curto Circuito - Ventilador 6 Casco Forno;DVN4_N41_S06_POL_I.Data.11
+K2C05M6C61;Retorno - Ventilador 6 Casco Forno;DVN4_N41_S06_POL_I.Data.12
+K2C05M7C73;Curto Circuito - Ventilador 7 Casco Forno;DVN4_N41_S06_POL_I.Data.13
+K2C05M7C61;Retorno - Ventilador 7 Casco Forno;DVN4_N41_S06_POL_I.Data.14
+K2C05M8C73;Curto Circuito - Ventilador 8 Casco Forno;DVN4_N41_S06_POL_I.Data.15
+K2C05M2C61;Retorno - Ventilador 2 Casco Forno;DVN4_N41_S06_POL_I.Data.2
+K2C05M3C73;Curto Circuito - Ventilador 3 Casco Forno;DVN4_N41_S06_POL_I.Data.3
+K2C05M3C61;Retorno - Ventilador 3 Casco Forno;DVN4_N41_S06_POL_I.Data.4
+K2C05M4C73;Curto Circuito - Ventilador 6 Casco Forno;DVN4_N41_S06_POL_I.Data.7
+K2C05M4C61;Retorno - Ventilador 5 Casco Forno;DVN4_N41_S06_POL_I.Data.8
+K2C05M5C73;Curto Circuito - Ventilador 5 Casco Forno;DVN4_N41_S06_POL_I.Data.9
+K2C05M8C61;Retorno - Ventilador 8 Casco Forno;DVN4_N41_S07_POL_I.Data.0
+K2C05M9C73;Curto Circuito - Ventilador 9 Casco Forno;DVN4_N41_S07_POL_I.Data.1
+K2C05M9C61;Retorno - Ventilador 9 Casco Forno;DVN4_N41_S07_POL_I.Data.2
+K2C05M10C73;Curto Circuito - Ventilador 10 Casco Forno;DVN4_N41_S07_POL_I.Data.3
+K2C05M10C61;Retorno - Ventilador 10 Casco Forno;DVN4_N41_S07_POL_I.Data.4
+K2C05M7C31;Comando Liga - Ventilador 7 Casco Forno;DVN4_N42_S00_POL_O.Data.10
+K2C05M8C31;Comando Liga - Ventilador 8 Casco Forno;DVN4_N42_S00_POL_O.Data.11
+K2C05M9C31;Comando Liga - Ventilador 9 Casco Forno;DVN4_N42_S00_POL_O.Data.12
+K2C05M10C31;Comando Liga - Ventilador 10 Casco Forno;DVN4_N42_S00_POL_O.Data.13
+H2F01C31;Comando Liga Filtro Mangas;DVN4_N42_S00_POL_O.Data.3
+K2C05M1C31;Comando Liga - Ventilador 1 Casco Forno;DVN4_N42_S00_POL_O.Data.4
+K2C05M2C31;Comando Liga - Ventilador 2 Casco Forno;DVN4_N42_S00_POL_O.Data.5
+K2C05M3C31;Comando Liga - Ventilador 3 Casco Forno;DVN4_N42_S00_POL_O.Data.6
+K2C05M4C31;Comando Liga - Ventilador 4 Casco Forno;DVN4_N42_S00_POL_O.Data.7
+K2C05M5C31;Comando Liga - Ventilador 5 Casco Forno;DVN4_N42_S00_POL_O.Data.8
+K2C05M6C31;Comando Liga - Ventilador 6 Casco Forno;DVN4_N42_S00_POL_O.Data.9
+K2C05M11C31;Comando Liga - Ventilador 11 Casco Forno;DVN4_N42_S01_POL_O.Data.0
+K2C05M13C31;Comando Liga - Ventilador 13 Casco Forno;DVN4_N42_S01_POL_O.Data.1
+QD7_C31;Comando Liga - Iluminação Plataforma do Forno e Resfriador;DVN4_N42_S01_POL_O.Data.11
+K2C05M12C31;Comando Liga - Ventilador 12 Casco Forno;DVN4_N42_S01_POL_O.Data.12
+K2R14M1C31;Comando Liga - Ventilador Câmara 1 - Resfriador;DVN4_N42_S01_POL_O.Data.13
+K2R17M1C31;Comando Liga - Ventilador Câmara 4 - Resfriador;DVN4_N42_S01_POL_O.Data.13
+K2C05M11C73;Curto Circuito - Ventilador 11 Casco Forno;DVN4_N42_S02_POL_I.Data.10
+K2C05M11C61;Retorno - Ventilador 11 Casco Forno;DVN4_N42_S02_POL_I.Data.11
+K2C05M12C73;Curto Circuito - Ventilador 12 Casco Forno;DVN4_N42_S02_POL_I.Data.12
+K2C05M12C61;Retorno - Ventilador 12 Casco Forno;DVN4_N42_S02_POL_I.Data.13
+K2C05M13C61;Retorno - Ventilador 13 Casco Forno;DVN4_N42_S02_POL_I.Data.8
+K2C05M13C73;Curto Circuito - Ventilador 13 Casco Forno;DVN4_N42_S02_POL_I.Data.9
+K2J04M2C61;Retorno - Bomba Hidro Reostato;DVN4_N43_S00_POL_I.Data.10
+K2J04M2C73;Curto Circuito - Bomba Hidro Reostato;DVN4_N43_S00_POL_I.Data.11
+K2J04M2C51;Liga Local - Bomba Hidro Reostato;DVN4_N43_S00_POL_I.Data.12
+K2J04M2C56;Reset - Hidro Reostato;DVN4_N43_S00_POL_I.Data.13
+K2J04M2C55;Remoto/Teste - Hidro Reostato;DVN4_N43_S00_POL_I.Data.14
+K2J04M2T41;Temperatura Alta - Hidro Reostato;DVN4_N43_S00_POL_I.Data.15
+K2J04M2L42;Nível Baixo - Hidro Reostato;DVN4_N43_S01_POL_I.Data.0
+K2J04M2L41;Nível Alto - Hidro Reostato;DVN4_N43_S01_POL_I.Data.1
+L2J03M1S42;Sensor de Movimento - Eixo - Transportador Metálico;DVN4_N43_S01_POL_I.Data.10
+L2J03M1S43;Sensor de Movimento - Eixo - Transportador Metálico;DVN4_N43_S01_POL_I.Data.15
+K2J04M2C62;Retorno - Contator de Curto Hidro Reostato;DVN4_N43_S01_POL_I.Data.2
+K2J04M1C73;Curto Circuito - Exaustor Forno;DVN4_N43_S01_POL_I.Data.3
+K2J04M1C53;Desliga Local - Exaustor Forno;DVN4_N43_S01_POL_I.Data.5
+K2J04M1C51;Liga Local - Exaustor Forno;DVN4_N43_S01_POL_I.Data.6
+H2F06M1S41;Sensor de Movimento - Válvula Rotativa;DVN4_N43_S01_POL_I.Data.7
+L2J03M1S41;Sensor de Movimento - Roldanas - Transportador Metálico;DVN4_N43_S01_POL_I.Data.8
+K2B01M1S41;Sensor de Movimento - Britador de Clínquer;DVN4_N43_S02_POL_I.Data.12
+H2F04M1S41;Sensor de Movimento - Rosca Transportadora;DVN4_N43_S02_POL_I.Data.2
+H2H11M1Z41;Posição Aberto - Distribuidor de Ar - Silo 3;DVN4_N43_S02_POL_I.Data.3
+H2T05M1S41;Sensor de Movimento - Válvula Rotativa;DVN4_N43_S02_POL_I.Data.8
+K2R29Y2CZ42;Posição Fechado - Válvula Superior Finos - Câmara 2;DVN4_N43_S03_POL_I.Data.10
+K2R29Y2CZ41;Posição Aberto - Válvula Superior Finos - Câmara 2;DVN4_N43_S03_POL_I.Data.11
+K2R29Y2DZ41;Posição Aberta - Válvula Inferior Finos - Câmara 3;DVN4_N43_S03_POL_I.Data.12
+K2R29Y2DZ42;Posição Fechada - Válvula Inferior Finos - Câmara 3;DVN4_N43_S03_POL_I.Data.13
+H2J01L41;Nível Muito Alto - Silo de Farinha Dosador;DVN4_N43_S04_POL_I.Data.10
+L2J06M1S41;Sensor de Movimento - Correia Transportadora;DVN4_N43_S04_POL_I.Data.10
+K2L11Z42;Posição Muito Baixa - Deslocamento Axial Forno;DVN4_N43_S04_POL_I.Data.6
+K2L11Z52;Posição Muito Alta - Deslocamento Axial Forno;DVN4_N43_S04_POL_I.Data.7
+L2J06M1Z41;Desalinhamento LA / LOA - Correia Transportadora;DVN4_N43_S04_POL_I.Data.9
+K2A01C61;Sistema Ligado - Analisador Entrada Forno;DVN4_N43_S05_POL_I.Data.1
+F2R01C44;Por Abr - Analisador Saída Torre Ciclones;DVN4_N43_S05_POL_I.Data.10
+K2C03M1C73;Curto Circuito - Motor Forno;DVN4_N43_S05_POL_I.Data.14
+K2C03M1C61;Retorno - Motor Forno;DVN4_N43_S05_POL_I.Data.15
+K2A01U41;Falha Unidade - Analisador Entrada Forno;DVN4_N43_S05_POL_I.Data.2
+K2A01F41;Falha Vazão - Analisador Entrada Forno;DVN4_N43_S05_POL_I.Data.3
+K2A01Z41;Sonda Inserida - Analisador Entrada Forno;DVN4_N43_S05_POL_I.Data.4
+K2A01C41;Em Limpeza - Analisador Entrada Forno;DVN4_N43_S05_POL_I.Data.5
+F2R01C43;Em Calibração - Analisador Saída Torre Ciclones;DVN4_N43_S05_POL_I.Data.7
+F2R01C41;Em Limpeza 1 - Analisador Saída Torre Ciclones;DVN4_N43_S05_POL_I.Data.8
+F2R01C42;Em Limpeza 2 - Analisador Saída Torre Ciclones;DVN4_N43_S05_POL_I.Data.9
+K2R11M1C61;Retorno - Grelha 1 - Resfriador;DVN4_N43_S06_POL_I.Data.1
+K2R21M1C61;Retorno - Grelha 2 - Resfriador;DVN4_N43_S06_POL_I.Data.3
+K2J04M2C32;Comando Liga - Contator de Curto - Hidro Reostato;DVN4_N44_S00_POL_O.Data.0
+K2J04M2C31;Comando Liga - Bomba - Hidro Reostato;DVN4_N44_S00_POL_O.Data.1
+K2R29Y2CC31;Comando Abre - Válvula Superior Finos - Câmara 2;DVN4_N44_S00_POL_O.Data.12
+CMSnda;Comando Sonda Forno;DVN4_N44_S00_POL_O.Data.14
+Puls_Scanner;Pulso Scanner Forno;DVN4_N44_S00_POL_O.Data.15
+K2R29Y2DC31;Comando Abre - Válvula Finos - Câmara 2;DVN4_N44_S00_POL_O.Data.9
+K2P02T7A;Temperatura - Mancal LA Motor - Exaustor - Filtro Resfriador;DVN4_N44_S02_POL_I.Ch1Data
+K2P02T7B;Temperatura - Mancal LOA Motor - Exaustor - Filtro Resfriador;DVN4_N44_S02_POL_I.Ch6Data
+K2C3_CCM_lx;Temperatura Sala CCM Forno 2;DVN4_N44_S03_POL_I.Ch7Data
+K2B01T1B;Temperatura - Mancal LOA - Britador de Clínquer;DVN4_N44_S04_POL_I.Ch0Data
+K2C3_CCM;Temperatura Sala CCM Forno 2;DVN4_N44_S04_POL_I.Ch1Data
+K2J04T1A;Temp. Enrolamento Fase R - Exaustor Forno 2;DVN4_N44_S04_POL_I.Ch2Data
+K2J04T1B;Temp. Enrolamento Fase S - Exaustor Forno 2;DVN4_N44_S04_POL_I.Ch3Data
+K2J04T1C;Temp. Enrolamento Fase T - Exaustor Forno 2;DVN4_N44_S04_POL_I.Ch4Data
+K2C03T3B;Temperatura - Aliança 2 - Forno 2;DVN4_N44_S04_POL_I.Ch6Data
+K2C03T3A;Temperatura - Aliança 1 - Forno 2;DVN4_N44_S04_POL_I.Ch7Data
+K2J04T8;Temp Mancal Motor Exaustor F2;DVN4_N44_S05_POL_I.Ch6Data
+K1C03T2A;Temperatura - Aliança 1 - Forno 1;DVN4_N44_S05_POL_I.Ch7Data
+K2J04T9;Temp Mancal Exaustor F2;DVN4_N44_S05_POL_I.Ch7Data
+DVN4_N44_S06_PL_;K2C03M1 Liga Campo;DVN4_N44_S06_POL_O.DATA.0
+DVN4_N44_S06_PL_;K2C03M1 Liga Running;DVN4_N44_S06_POL_O.DATA.1
+L1J03Z1C31;Comando Abre - Válvula - L1J03Z1;DVN4_N44_S06_POL_O.Data.13
+L2J03Z1C31;Comando Abre - Válvula - L2J03Z1;DVN4_N44_S06_POL_O.Data.14
+K2J04M1C32;Comando Abre Disjuntor - Exaustor;DVN4_N44_S06_POL_O.Data.6
+K2A01A1;CO - Analisador Caixa Fumaça;DVN4_N45_S00_POL_I.Ch0Data
+K2A01A2;O2 - Analisador Caixa Fumaça;DVN4_N45_S00_POL_I.Ch1Data
+K2A01A3;NO - Analisador Caixa Fumaça;DVN4_N45_S00_POL_I.Ch2Data
+F2R11A1;Concentração de CO - Eletrofiltro;DVN4_N45_S01_POL_I.Ch0Data
+K2R141;Corrente - Ventilador Câmara 1 - Resfriador;DVN4_N45_S01_POL_I.Ch0Data
+F2R11A2;Concentração de O2 - Eletrofiltro;DVN4_N45_S01_POL_I.Ch1Data
+L2J03T1;Temperatura - Clínquer;DVN4_N45_S02_POL_I.Ch0Data
+L2J03T2;Temperatura - Clínquer Transportadora L2;DVN4_N45_S02_POL_I.Ch3Data
+K2A21P4;Pressão - Duto A21;DVN4_N45_S03_POL_I.Ch1Data
+K2A11P1;Pressão - Duto A11;DVN4_N45_S03_POL_I.Ch2Data
+K2C03T2B;Temperatura da Aliança da Base 2;DVN4_N45_S04_POL_I.Ch0Data
+K2C03T2A;Temperatura da Aliança Base 3;DVN4_N45_S04_POL_I.Ch1Data
+K2A21P1;Pressão - Duto A21;DVN4_N45_S04_POL_I.Ch2Data
+K2A21P2;Pressão - Duto A21;DVN4_N45_S04_POL_I.Ch3Data
+K2A31P1_lx;Pressão - Duto A31;DVN4_N45_S05_POL_I.Ch0Data
+K2A31P1;Pressão Entrada Ciclone A31;DVN4_N45_S05_POL_I.Ch1Data
+K2A41P1;Pressão - Duto A41;DVN4_N45_S05_POL_I.Ch2Data
+K2J04P1;Pressão - Entrada do J04M1;DVN4_N45_S05_POL_I.Ch3Data
+K2A42P1;Pressão - Duto A42;DVN4_N46_S00_POL_I.Ch0Data
+K2A41T1;Temperatura - Entrada A41;DVN4_N46_S00_POL_I.Ch1Data
+K2R14P2;Pressão 2 - Câmara 1 Resfriador 2;DVN4_N45_S06_POL_I.Ch2Data
+K2R15P1;Pressão - Câmara 2 Resfriador 2;DVN4_N45_S06_POL_I.Ch3Data
+K2R16P1;Pressão - Câmara 3 Resfriador 2;DVN4_N45_S07_POL_I.Ch0Data
+K2R14F1;Vazão Ventilador - Câmara 1 Resfriador 2;DVN4_N45_S07_POL_I.Ch1Data
+K2R15F1;Pressão - Câmara 2;DVN4_N45_S07_POL_I.Ch2Data
+K2R16F1;Vazão Ventilador - Câmara 3 Resfriador 2;DVN4_N45_S07_POL_I.Ch3Data
+K2A42T2;Temperatura - Saída A42;DVN4_N46_S00_POL_I.Ch1Data
+K2A42T1;Temperatura - Saída A42;DVN4_N46_S00_POL_I.Ch2Data
+K2A41T3;Temperatura - Duto A41;DVN4_N46_S00_POL_I.Ch3Data
+K2A41T2;Temperatura - Saída A41;DVN4_N46_S01_POL_I.Ch0Data
+K2A31T2;Temperatura - Saída A31;DVN4_N46_S01_POL_I.Ch2Data
+K2A41P2;Pressão - Cone - Ciclone A41;DVN4_N46_S01_POL_I.Ch3Data
+K2A21T2_lx;Temperatura - Saída A21;DVN4_N46_S02_POL_I.Ch0Data
+K2A21T1;Temperatura - Entrada A21;DVN4_N46_S02_POL_I.Ch1Data
+K2A11T2;Temperatura - Saída A11;DVN4_N46_S02_POL_I.Ch2Data
+K2A11T1;Temperatura - Entrada A11;DVN4_N46_S02_POL_I.Ch3Data
+K2A01T1;Temperatura - Entrada A01;DVN4_N46_S03_POL_I.Ch1Data
+K1C03T1B;Temperatura - Aliança 2 - Forno 1;DVN4_N46_S03_POL_I.Ch2Data
+K2C01T4_lx;Temperatura Pirômetro Chama Forno 2;DVN4_N46_S03_POL_I.Ch2Data
+K1C03T1A;Temperatura - Aliança 1 - Forno 1;DVN4_N46_S03_POL_I.Ch3Data
+K2A21T2;Temperatura - Saída A21;DVN4_N46_S03_POL_I.Ch3Data
+K2C06F1D;Fluxo - Água - Aliança 2 Mancal 8;DVN4_N46_S04_POL_I.Ch2Data
+K2V01P3;Pressão - Ar Tangencial;DVN4_N46_S04_POL_I.Ch3Data
+K2V01P3_lx;Pressão - Ar Tangencial;DVN4_N46_S05_POL_I.Ch0Data
+K2V01P4;Pressão - Ar Externo;DVN4_N46_S05_POL_I.Ch2Data
+K2A11P4;Pressão - Diferencial - Duto A11;DVN4_N46_S05_POL_I.Ch3Data
+K2R10P1;Pressão - Saída - Resfriador de Clínquer;DVN4_N46_S06_POL_I.Ch0Data
+K2C05F1B;Fluxo - Água - Aliança 2 Mancal 10;DVN4_N46_S06_POL_I.Ch2Data
+K2J05Z1;Posição Válvula;DVN4_N46_S06_POL_I.Ch3Data
+K2J01Z1;Posição Válvula;DVN4_N46_S07_POL_I.Ch1Data
+K2J03Z1;Posição Válvula;DVN4_N46_S07_POL_I.Ch2Data
+K2J06Z1;Posição - Válvula de Ar Frio;DVN4_N47_S00_POL_I.Ch0Data
+K2P01P2;Pressão Filtro;DVN4_N47_S00_POL_I.Ch1Data
+K2C05F1C;Fluxo Água Aliança 1 - Mancal 11;DVN4_N47_S01_POL_I.Ch0Data
+K2V01P1;Pressão - Ar de Dispersão;DVN4_N47_S01_POL_I.Ch0Data
+K2P11P2;Pressão Resfriador;DVN4_N47_S01_POL_I.Ch1Data
+K2V01F1;Vazão - Gás do Queimador;DVN4_N47_S01_POL_I.Ch1Data
+K2V02F1;Vazão - Gás Pré-Cal;DVN4_N47_S01_POL_I.Ch2Data
+K2V01T1;Temperatura - Gás do Queimador;DVN4_N47_S01_POL_I.Ch3Data
+K2C07F1A;Fluxo - Água Aliança 2 Mancal 1;DVN4_N47_S02_POL_I.Ch2Data
+K2C07F1B;Fluxo - Água Aliança 2 Mancal 2;DVN4_N47_S02_POL_I.Ch3Data
+K2C07F1C;Fluxo - Água Aliança 2 Mancal 3;DVN4_N47_S03_POL_I.Ch0Data
+K2C07F1D;Fluxo - Água Aliança 2 Mancal 4;DVN4_N47_S03_POL_I.Ch1Data
+K2C06F1A;Fluxo - Água Aliança 2 Mancal 5;DVN4_N47_S03_POL_I.Ch2Data
+K2C06F1B;Fluxo - Água Aliança 2 Mancal 6;DVN4_N47_S03_POL_I.Ch3Data
+K2R14S11;Setpoint Inversor K2R14M1;DVN4_N47_S04_POL_O.Ch1Data
+K2R17S11;Setpoint Inversor K2R17M1;DVN4_N47_S04_POL_O.Ch1Data
+H2H41Z21;Setpoint Válvula;DVN4_N47_S04_POL_O.Ch3Data
+K2P02M1Y01;Rotação - Exaustor - Filtro Resfriador;DVN4_N47_S05_POL_O.Ch1Data
+K2J05Z21;Setpoint Gelosia;DVN4_N47_S05_POL_O.Ch2Data
+K2C03M1Y01;Rotação - Forno;DVN4_N47_S05_POL_O.Ch3Data
+K2J04M1C61;Retorno - Exaustor Forno;DVN4_N50_POL_I.Data.0
+K2J04M1_AUT;Disjuntor 1 = Auto / 0 = Manual;DVN4_N50_POL_I.Data.2
+K2J04M1U41;Trip Proteção - Motor Exaustor Forno 2;DVN4_N50_POL_I.Data.3
+K2J04M1C31;Comando Fecha Disjuntor Motor Exaustor Forno 2;DVN4_N50_POL_O.Data.1
+H2H121;Corrente - Distribuidor de Ar;DVN5_N01_POL_I.AverageFLA
+H2H201;Corrente - Soprador Aeração;DVN5_N03_POL_I.AverageFLA
+H2H211;Corrente - Soprador Aeração;DVN5_N04_POL_I.AverageFLA
+K2C041Lx;Corrente - Motor Giro Lento Forno 2;DVN5_N13_POL_I.AverageCurrent
+K2R14M2C31;Comando Liga - Ventilador Câmara 1- Resfriador - Inversor de Frequência;DVN5_N27_POL_O.CMDRun
+K2R14M2C73;Curto Circuito - Ventilador Câmara 1- Resfriador;DVN5_N28_S00_POL_I.Data.0
+K2R14M2C53;Desliga Local - Ventilador Câmara 1- Resfriador;DVN5_N28_S00_POL_I.Data.2
+K2R14M2C51;Liga Local - Ventilador Câmara 1- Resfriador;DVN5_N28_S00_POL_I.Data.3
+H2H14M1Z41;Posição Aberta - Válvula Controle - Extração Silo 4;DVN5_N28_S02_POL_I.Data.0
+H2H14M1Z42;Posição Fechada - Válvula Controle - Extração Silo 4;DVN5_N28_S02_POL_I.Data.1
+K2R17M1C73;Curto Circuito - Ventilador Câmara 4 - Resfriador;DVN5_N28_S02_POL_I.Data.15
+H2H14M1W41;Torque Abrir - Válvula Controle - Extração Silo 4;DVN5_N28_S02_POL_I.Data.3
+H2H14M1W42;Torque Fechar - Válvula Controle - Extração Silo 4;DVN5_N28_S02_POL_I.Data.4
+K2R17M1C53;Desliga Local - Ventilador Câmara 4 - Resfriador;DVN5_N28_S03_POL_I.Data.1
+DVN5_N28_S03_PL_;Liga local chave ICV;DVN5_N28_S03_POL_I.DATA.11
+DVN5_N28_S03_PL_;Falta tensão/Desliga local;DVN5_N28_S03_POL_I.DATA.12
+L2J03M1C73_CV;Curto Circuito Chave CV;DVN5_N28_S03_POL_I.Data.12
+K2R17M1C51;Liga Local - Ventilador Câmara 4 - Resfriador;DVN5_N28_S03_POL_I.Data.2
+K2R14M1C73;Curto Circuito - Ventilador Câmara 1 - Resfriador;DVN5_N28_S03_POL_I.Data.3
+K2R14M1C61_LX;Retorno - Ventilador Câmara 1 - Resfriador;DVN5_N28_S03_POL_I.Data.4
+K2R14M1C53;Desliga Local - Ventilador Câmara 1 - Resfriador;DVN5_N28_S03_POL_I.Data.5
+K2R14M1C51;Liga Local - Ventilador Câmara 1 - Resfriador;DVN5_N28_S03_POL_I.Data.6
+L2J03M1C73;Curto Circuito - Transportador Metálico;DVN5_N28_S04_POL_I.Data.0
+L2J03M1C71;Emergência - Transportador Metálico;DVN5_N28_S04_POL_I.Data.1
+L2J03M1C53;Desliga Local - Transportador Metálico;DVN5_N28_S04_POL_I.Data.2
+L2J03M1C51;Liga Local - Transportador Metálico;DVN5_N28_S04_POL_I.Data.3
+K2R14M1C61;Retorno - Ventilador Câmara 1 - Resfriador;DVN5_N28_S04_POL_I.Data.6
+K2R17M1C61;Retorno - Ventilador Câmara 4 - Resfriador;DVN5_N28_S04_POL_I.Data.6
+K2R14P1;Pressão 1 - Câmara 1 Resfriador 2;DVN5_N28_S05_POL_I.Ch0Data
+741CP020M0101;Corrente Compressor;DVN5_N28_S05_POL_I.Ch1Data
+741CP050M0101;Corrente Compressor;DVN5_N28_S05_POL_I.Ch2Data
+H2H12M1Z41;Posição Aberto - Distribuidor de Ar - Silo 4;DVN5_N29_S00_POL_I.Data.0
+K2R32M1S41;Sensor de Movimento - Válvula Rotativa;DVN5_N29_S00_POL_I.Data.1
+L1J03M1S41;Sensor de Movimento - Transportador de Correia;DVN5_N29_S00_POL_I.Data.2
+L1J06M1S41;Sensor de Movimento - Transportador de Correia;DVN5_N29_S00_POL_I.Data.3
+L1J07M1S41;Sensor de Movimento - Transportador de Correia;DVN5_N29_S00_POL_I.Data.5
+K2C04Z41;Posição Desacoplado - Motor Auxiliar do Forno;DVN5_N29_S03_POL_I.Data.2
+K2C04Z42;Posição Acoplado - Motor Auxiliar do Forno;DVN5_N29_S03_POL_I.Data.3
+H2H14Z1;Posição Válvula - Extração Silo 2;DVN5_N30_S00_POL_I.Ch0Data
+K2P021;Corrente - Motor Exaustor Resfriador 2;DVN5_N30_S01_POL_I.Ch1Data
+K2R17F1;Vazão Ventilador - Câmara 4 Resfriador 2;DVN5_N30_S01_POL_I.Ch2Data
+K2R18F1;Vazão Ventilador - Câmara 5 Resfriador 2;DVN5_N30_S01_POL_I.Ch3Data
+K2R19F1;Vazão Ventilador - Câmara 6 Resfriador 2;DVN5_N30_S02_POL_I.Ch0Data
+K2R17P1;Pressão - Câmara 4;DVN5_N30_S02_POL_I.Ch1Data
+K2R19P1;Pressão - Câmara 6 Resfriador 2;DVN5_N30_S02_POL_I.Ch2Data
+K2R18P1;Pressão - Câmara 5 Resfriador 2;DVN5_N30_S02_POL_I.Ch3Data
+H2H13Z1;Posição Válvula - Extração Silo 1;DVN5_N30_S03_POL_I.Ch0Data
+K1A01P2;Pressão - Saída - Caixa de Fumaça;DVN5_N30_S03_POL_I.Ch2Data
+K1A11T2;Temperatura - Entrada - Forno 1;DVN5_N30_S03_POL_I.Ch3Data
+H1H061;Corrente - Compressor;DVN5_N30_S04_POL_I.Ch0Data
+K1J04T2;Temperatura - Antes Exaustor - Forno 1;DVN5_N30_S05_POL_I.Ch0Data
+K1R15P1;Pressão - Câmara 2 - Forno 1;DVN5_N30_S05_POL_I.Ch1Data
+K1C01T2;Temperatura - Cabeçote - Forno 1;DVN5_N30_S05_POL_I.Ch2Data
+K2R29Y2C73;Curto Circuito - Válvula Finos - Câmara 2;DVN5_N31_S00_POL_I.Data.2
+K2R29Y2C61;Retorno - Válvula Finos - Câmara 2;DVN5_N31_S00_POL_I.Data.3
+K2C07Z41;Deslocamento Máximo - Aliança Lado Torre Forno 2;DVN5_N31_S01_POL_I.Data.0
+K2R23L8;Nível Mínimo Graxa - Lub. Grelhas;DVN5_N31_S01_POL_I.Data.0
+K2C07Z42;Deslocamento Máximo - Aliança Lado Resfriador Forno 2;DVN5_N31_S01_POL_I.Data.1
+K2R21M1S41;Sensor de Movimento - Grelha 2 - Resfriador;DVN5_N31_S01_POL_I.Data.11
+K2R18L41;Nível Alto - Moega do Resfriador;DVN5_N31_S01_POL_I.Data.12
+K2R19L41;Nível Alto - Moega do Resfriador;DVN5_N31_S01_POL_I.Data.13
+K2R14L41;Nível Alto - Moega do Resfriador;DVN5_N31_S01_POL_I.Data.14
+K2R16L41;Nível Alto - Moega do Resfriador;DVN5_N31_S01_POL_I.Data.15
+L2J01M1S41;Sensor de Movimento - Cadeia de Arraste - Saída Resfriador;DVN5_N31_S01_POL_I.Data.2
+L2J01M1C71;Emergência - Cadeia de Arraste - Saída Resfriador;DVN5_N31_S01_POL_I.Data.3
+K2R11Z41;Braço 1 Quebrado - Grelha 1;DVN5_N31_S01_POL_I.Data.4
+K2R11Z42;Braço 2 Quebrado - Grelha 1;DVN5_N31_S01_POL_I.Data.5
+K2R11M1S41;Emergência - Grelha 1 - Resfriador;DVN5_N31_S01_POL_I.Data.6
+K2R21Z41;Braço 1 Quebrado - Grelha 2;DVN5_N31_S01_POL_I.Data.7
+K2R21Z42;Braço 2 Quebrado - Grelha 2;DVN5_N31_S01_POL_I.Data.8
+K2R21M1S41_lx;Sensor de Movimento - Grelha 2 - Resfriador;DVN5_N31_S01_POL_I.Data.9
+Valve_G1SA;Comando Abre Válvula Finos inferior - Grupo 01 (R29Y3C);DVN5_N31_S02_POL_O.Data.0
+Valve_G1SF;Comando Fecha Válvula Finos inferior - Grupo 01 (R29Y3C);DVN5_N31_S02_POL_O.Data.1
+Valve_G3A;Comando Abre Válvula Finos Inferior - Grupo 03 (R31Y5B,R31Y5D,R31Y5F e R31Y5H);DVN5_N31_S02_POL_O.Data.10
+Valve_G3F;Comando Fecha Válvula Finos Inferior - Grupo 03 (R31Y5B,R31Y5D,R31Y5F e R31Y5H);DVN5_N31_S02_POL_O.Data.11
+Valve_G4A;Comando Abre Válvula Finos Inferior - Grupo 04 (R32Y6B,R32Y6D e R32Y6H);DVN5_N31_S02_POL_O.Data.12
+Valve_G4F;Comando Fecha Válvula Finos Inferior - Grupo 04 (R32Y6B,R32Y6D e R31Y6H);DVN5_N31_S02_POL_O.Data.13
+Valve_G4SA;Comando Abre Válvula Finos Superior - Grupo 04 (R32Y6A,R32Y6C e R32Y6G);DVN5_N31_S02_POL_O.Data.14
+Valve_G4SF;Comando Fecha Válvula Finos Superior - Grupo 04 (R32Y6A,R32Y6C e R32Y6G);DVN5_N31_S02_POL_O.Data.15
+Valve_G1A;Comando Abre Válvula Finos superior - Grupo 01 (R29Y3D);DVN5_N31_S02_POL_O.Data.2
+Valve_G1F;Comando Fecha Válvula Finos superior - Grupo 01 (R29Y3D);DVN5_N31_S02_POL_O.Data.3
+Valve_G3SA;Comando Abre Válvula Finos Superior - Grupo 03 (R31Y5A,R31Y5C,R31Y5E e R31Y5G);DVN5_N31_S02_POL_O.Data.4
+Valve_G3SF;Comando Fecha Válvula Finos Superior - Grupo 03 (R31Y5A,R31Y5C,R31Y5E e R31Y5G);DVN5_N31_S02_POL_O.Data.5
+Valve_G2SA;Comando Abre Válvula Finos inferior - Grupo 02 (R30Y3A, R30Y4A, R30Y4C, R30Y4E e R30Y4G);DVN5_N31_S02_POL_O.Data.6
+Valve_G2SF;Comando Fecha Válvula Finos inferior - Grupo 02 (R30Y3A, R30Y4A, R30Y4C, R30Y4E e R30Y4G);DVN5_N31_S02_POL_O.Data.7
+Valve_G2A;Comando Abre Válvula Finos superior - Grupo 02 (R30Y3B, R30Y4B, R30Y4D, R30Y4F e R30Y4H);DVN5_N31_S02_POL_O.Data.8
+Valve_G2F;Comando Fecha Válvula Finos superior - Grupo 02 (R30Y3B, R30Y4B, R30Y4D, R30Y4F e R30Y4H);DVN5_N31_S02_POL_O.Data.9
+DVN5_N31_S03_PL_;Iluminação Câmaras Resfriador;DVN5_N31_S03_POL_O.DATA.0
+K2R01C2;Comando Canhão 2 - Resfriador 2;DVN5_N31_S03_POL_O.Data.1
+K2R01C11;Comando Canhão 11 - Resfriador 2;DVN5_N31_S03_POL_O.Data.10
+K2R01C1;Comando Canhão 1 - Resfriador 2;DVN5_N31_S03_POL_O.Data.14
+K2R01C3;Comando Canhão 3 - Resfriador 2;DVN5_N31_S03_POL_O.Data.15
+K2R01C4;Comando Canhão 4 - Resfriador 2;DVN5_N31_S03_POL_O.Data.3
+K2R01C5;Comando Canhão 5 - Resfriador 2;DVN5_N31_S03_POL_O.Data.4
+K2R01C6;Comando Canhão 6 - Resfriador 2;DVN5_N31_S03_POL_O.Data.5
+K2R01C7;Comando Canhão 7 - Resfriador 2;DVN5_N31_S03_POL_O.Data.6
+K2R01C8;Comando Canhão 8 - Resfriador 2;DVN5_N31_S03_POL_O.Data.7
+K2R01C9;Comando Canhão 9 - Resfriador 2;DVN5_N31_S03_POL_O.Data.8
+K2R01C10;Comando Canhão 10 - Resfriador 2;DVN5_N31_S03_POL_O.Data.9
+K2R16T2;Temperatura Câmara 3B - Resfriador 2;DVN5_N31_S04_POL_I.Ch0Data
+K2R15T4;Temperatura Câmara 2B - Resfriador 2;DVN5_N31_S04_POL_I.Ch1Data
+K2R14T1;Temperatura - Placas Câmara 1A;DVN5_N31_S05_POL_I.Ch0Data
+K2R14T3;Temperatura - Placas Câmara 1C;DVN5_N31_S05_POL_I.Ch1Data
+K2R14T4;Temp. Placa Câmara 1C - Resfriador 2;DVN5_N31_S05_POL_I.Ch3Data
+K2R14F2;Vazão Ventilador - Câmara 1B Resfriador 2;DVN5_N31_S05_POL_I.Ch4Data
+K2T14P2;Pressão Óleo Diesel;DVN5_N31_S05_POL_I.Ch5Data
+K2C01T2;Temperatura - Cabeçote do Forno 2;DVN5_N31_S05_POL_I.Ch6Data
+K2L32M1C73;Curto Circuito - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.0
+K2L32M1C61;Retorno - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.1
+K2L30M1C53;Desliga Local - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.10
+K2L30M1C51;Liga Local - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.11
+K2C05M15C73;Curto Circuito - Ventilador 15 Casco Forno;DVN5_N32_S00_POL_I.Data.12
+K2C05M15C61;Retorno - Ventilador 15 Casco Forno;DVN5_N32_S00_POL_I.Data.13
+K2L32M1C53;Desliga Local - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.2
+K2L32M1C51;Liga Local - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.3
+K2C05M14C73;Curto Circuito - Ventilador 14 Casco Forno;DVN5_N32_S00_POL_I.Data.4
+K2C05M14C61;Retorno - Ventilador 14 Casco Forno;DVN5_N32_S00_POL_I.Data.5
+K2L30M1C73;Curto Circuito - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.8
+K2L30M1C61;Retorno - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S00_POL_I.Data.9
+K2L28M1C73;Curto Circuito - Bomba Reserva - Redutor do Forno;DVN5_N32_S01_POL_I.Data.0
+K2L28M1C61;Retorno - Bomba Reserva - Redutor do Forno;DVN5_N32_S01_POL_I.Data.1
+K2L26M1C53;Desliga Local - Mancal 7 Aliança 2;DVN5_N32_S01_POL_I.Data.10
+K2L26M1C51;Liga Local - Mancal 7 Aliança 2;DVN5_N32_S01_POL_I.Data.11
+K2L25M1C73;Curto Circuito - Mancal 8 Aliança 2;DVN5_N32_S01_POL_I.Data.12
+K2L25M1C61;Retorno - Mancal 8 Aliança 2;DVN5_N32_S01_POL_I.Data.13
+K2L25M1C53;Desliga Local - Mancal 8 Aliança 2;DVN5_N32_S01_POL_I.Data.14
+K2L25M1C51;Liga Local - Mancal 8 Aliança 2;DVN5_N32_S01_POL_I.Data.15
+K2L28M1C53;Desliga Local - Bomba Reserva - Redutor do Forno;DVN5_N32_S01_POL_I.Data.2
+K2L28M1C51;Liga Local - Bomba Reserva - Redutor do Forno;DVN5_N32_S01_POL_I.Data.3
+K2C05M16C73;Curto Circuito - Ventilador 16 Casco Forno;DVN5_N32_S01_POL_I.Data.4
+K2C05M16C61;Retorno - Ventilador 16 Casco Forno;DVN5_N32_S01_POL_I.Data.5
+K2L26M1C73;Curto Circuito - Mancal 7 Aliança 2;DVN5_N32_S01_POL_I.Data.8
+K2L26M1C61;Retorno - Mancal 7 Aliança 2;DVN5_N32_S01_POL_I.Data.9
+K2L24M1C73;Curto Circuito - Mancal 9 Aliança 1;DVN5_N32_S02_POL_I.Data.0
+K2L24M1C61;Retorno - Mancal 9 Aliança 1;DVN5_N32_S02_POL_I.Data.1
+K2L21M1C73;Curto Circuito - Bomba - Redutor do Forno;DVN5_N32_S02_POL_I.Data.12
+K2L21M1C61;Retorno - Bomba - Redutor do Forno;DVN5_N32_S02_POL_I.Data.13
+K2L21M1C53;Desliga Local - Bomba - Redutor do Forno;DVN5_N32_S02_POL_I.Data.14
+K2L21M1C51;Liga Local - Bomba - Redutor do Forno;DVN5_N32_S02_POL_I.Data.15
+K2L24M1C53;Desliga Local - Mancal 9 Aliança 1;DVN5_N32_S02_POL_I.Data.2
+K2L24M1C51;Liga Local - Mancal 9 Aliança 1;DVN5_N32_S02_POL_I.Data.3
+K2C05M17C73;Curto Circuito - Ventilador 17 Casco Forno;DVN5_N32_S02_POL_I.Data.4
+K2C05M17C61;Retorno - Ventilador 17 Casco Forno;DVN5_N32_S02_POL_I.Data.5
+K2C05M18C73;Curto Circuito - Ventilador 18 Casco Forno;DVN5_N32_S02_POL_I.Data.8
+K2C05M18C61;Retorno - Ventilador 18 Casco Forno;DVN5_N32_S02_POL_I.Data.9
+K2R11M1C73;Curto Circuito - Grelha 1 - Resfriador;DVN5_N32_S03_POL_I.Data.5
+K2R21M1C73;Curto Circuito - Grelha 2 - Resfriador;DVN5_N32_S03_POL_I.Data.6
+K2L11Z71;Posição Muito Alta Forno 2;DVN5_N32_S03_POL_I.Data.9
+K2L32M1C31;Comando Liga - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S04_POL_O.Data.1
+K2C05M17C31;Comando Liga - Ventilador 17 Casco Forno;DVN5_N32_S04_POL_O.Data.10
+K2L21M1C31;Comando Liga - Bomba Lubrificação Redutor Forno;DVN5_N32_S04_POL_O.Data.11
+K2C05M18C31;Comando Liga - Ventilador 18 Casco Forno;DVN5_N32_S04_POL_O.Data.13
+K2C05M14C31;Comando Liga - Ventilador 14 Casco Forno;DVN5_N32_S04_POL_O.Data.2
+K2L30M1C31;Comando Liga - Bomba Centralina - Mancais Aliança 3;DVN5_N32_S04_POL_O.Data.3
+K2C05M15C31;Comando Liga - Ventilador 15 Casco Forno;DVN5_N32_S04_POL_O.Data.4
+K2L28M1C31;Comando Liga - Bomba Lubrificação Redutor Forno;DVN5_N32_S04_POL_O.Data.5
+K2C05M16C31;Comando Liga - Ventilador 16 Casco Forno;DVN5_N32_S04_POL_O.Data.6
+K2L26M1C31;Comando Liga - Bomba Centralina - Mancais Aliança 2;DVN5_N32_S04_POL_O.Data.7
+K2L25M1C31;Comando Liga - Bomba Centralina - Mancais Aliança 2;DVN5_N32_S04_POL_O.Data.8
+K2L24M1C31;Comando Liga - Bomba Centralina - Mancais Aliança 1;DVN5_N32_S04_POL_O.Data.9
+K2C03V1A;Vibração - Motor Forno 2;DVN5_N32_S05_POL_I.Ch0Data
+K2J04T2;Temperatura - Antes Exaustor do Forno;DVN5_N32_S05_POL_I.Ch1Data
+K2J04V1A;Vibração - Mancal LA - Exaustor Forno;DVN5_N32_S06_POL_I.Ch0Data
+K2J04V1B;Vibração - Mancal LOA - Exaustor Forno;DVN5_N32_S06_POL_I.Ch1Data
+K2C031;Corrente - Acionamento do Forno;DVN5_N32_S06_POL_I.Ch2Data
+K2C03S1;Velocidade - Forno Rotativo;DVN5_N32_S06_POL_I.Ch3Data
+K2L11P1;Pressão - Circuito Hidráulico Topadores;DVN5_N32_S07_POL_I.Ch0Data
+K2L21P1;Pressão - Bomba Redutor Forno 2;DVN5_N32_S07_POL_I.Ch2Data
+K2C05F1A;Fluxo - Água - Aliança 2 Mancal 9;DVN5_N32_S07_POL_I.Ch3Data
+K2C03T2;Temperatura - Enrolamento Fase S - Motor Forno;DVN5_N41_S00_POL_I.Ch0Data
+K2C03T1;Temperatura - Enrolamento Fase R - Motor Forno;DVN5_N41_S00_POL_I.Ch1Data
+K2C03T3;Temperatura - Enrolamento Fase T - Motor Forno;DVN5_N41_S00_POL_I.Ch2Data
+K2C08T1B;Temperatura - Mancal Coroa Lado B - Forno;DVN5_N41_S00_POL_I.Ch3Data
+K2C06T1B;Temperatura - Mancal Anel 2 Lado B - Forno;DVN5_N41_S00_POL_I.Ch4Data
+K2J04T6;Temperatura Mancal Exaustor Forno;DVN5_N41_S00_POL_I.Ch5Data
+K2L22T1;Temperatura - Óleo - Redutor do Forno;DVN5_N41_S00_POL_I.Ch5Data
+K2C05T1C;Temperatura - Mancal Anel 1 Lado C - Forno;DVN5_N41_S00_POL_I.Ch6Data
+SL_K2C03;Temperatura Sala Positron;DVN5_N41_S00_POL_I.Ch7Data
+K2C05T1B;Temperatura - Mancal Anel 1 Lado B - Forno;DVN5_N41_S01_POL_I.Ch0Data
+K2C08T1A;Temperatura - Mancal Coroa Lado A - Forno;DVN5_N41_S01_POL_I.Ch1Data
+K2J04T7;Temperatura - Mancal LOA - Exaustor do Forno;DVN5_N41_S01_POL_I.Ch2Data
+K2C07T1A;Temperatura - Mancal Anel 3 Lado A - Forno;DVN5_N41_S01_POL_I.Ch3Data
+K2C07T1B;Temperatura - Mancal Anel 3 Lado B - Forno;DVN5_N41_S01_POL_I.Ch4Data
+K2C07T1C;Temperatura - Mancal Anel 3 Lado C - Forno;DVN5_N41_S01_POL_I.Ch5Data
+K2C07T1D;Temperatura - Mancal Anel 3 Lado D - Forno;DVN5_N41_S01_POL_I.Ch6Data
+K2C06T1A;Temperatura - Mancal Anel 2 Lado A - Forno;DVN5_N41_S01_POL_I.Ch7Data
+K2C06T1C;Temperatura - Mancal Anel 2 Lado C - Forno;DVN5_N41_S02_POL_I.Ch0Data
+K2C06T1D;Temperatura - Mancal Anel 2 Lado D - Forno;DVN5_N41_S02_POL_I.Ch1Data
+K2C05T1D;Temperatura - Mancal 1 Anel 1 Lado D - Forno;DVN5_N41_S02_POL_I.Ch3Data
+K2C08T2;Temperatura Óleo Coroa Forno;DVN5_N41_S02_POL_I.Ch4Data
+K2C05T1A;Temperatura - Mancal Anel 1 Lado A - Forno;DVN5_N41_S02_POL_I.Ch5Data
+K2C03T16;Temperatura - 06 Mancal - Redutor Principal Forno 2;DVN5_N41_S02_POL_I.Ch7Data
+K2C03T11;Temperatura - 01 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch0Data
+K2C03T12;Temperatura - 02 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch1Data
+K2C03T13;Temperatura - 03 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch2Data
+K2C03T14;Temperatura - 04 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch3Data
+K2C03T15;Temperatura - 05 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch4Data
+K2C03T16_lx;Temperatura - 06 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch5Data
+K2C03T17;Temperatura - 07 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch6Data
+K2C03T18;Temperatura - 08 Mancal - Redutor Principal Forno 2;DVN5_N41_S03_POL_I.Ch7Data
+K2L32F1;Vazão - Óleo Centralina - Mancal Aliança 3;DVN5_N41_S04_POL_I.Ch0Data
+K2L32M1F1;Vazão - Óleo Centralina - Mancal Aliança 3;DVN5_N41_S04_POL_I.Ch0Data
+K2L32M1P1;Pressão - Óleo Centralina - Mancal Aliança 3;DVN5_N41_S04_POL_I.Ch1Data
+K2L32P1;Pressão - Óleo Centralina - Mancal Aliança 3;DVN5_N41_S04_POL_I.Ch1Data
+K2C05F1D;Fluxo - Água - Aliança 2 Mancal 12;DVN5_N41_S04_POL_I.Ch2Data
+K2J04T2_TST;Temperatura Teste Exaustor Forno;DVN5_N41_S04_POL_I.Ch3Data
+K2C06F1C;Fluxo - Água - Aliança 2 Mancal 7;DVN5_N41_S04_POL_I.Ch4Data
+K2L11Z1;Sensor Deslocamento Forno;DVN5_N41_S04_POL_I.Ch7Data
+K2J04M3PFC61;Retorno PFC Exaustor Forno;DVN5_N51_POL_I.Active
+K2J04M3PFC32;Comando Liga Start PFC Exaustor Forno;DVN5_N51_POL_O.Start
+K2J04M3PFC31;Comando Desliga Stop PFC Exaustor Forno;DVN5_N51_POL_O.Stop
