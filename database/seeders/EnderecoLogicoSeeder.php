@@ -62,7 +62,7 @@ class EnderecoLogicoSeeder extends Seeder
                 $area = 'Silos / Homogeneização';
             }
 
-            EnderecoLogico::withoutTenancy()->updateOrCreate(
+            EnderecoLogico::updateOrCreate(
                 [
                     'tenant_id' => $tenantId,
                     'tag' => $tag,
